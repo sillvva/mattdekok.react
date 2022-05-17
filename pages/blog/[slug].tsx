@@ -1,24 +1,35 @@
 import type { NextPage } from 'next'
-import path from 'path';
+import Link from 'next/link';
+import Image from 'next/image';
+import { PropsWithChildren } from 'react';
 import { readFile } from "node:fs/promises";
+import path from 'path';
+import ReactMarkdown from 'react-markdown';
+import matter from 'gray-matter';
+import remarkGfm from 'remark-gfm';
+import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
+import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
+import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
+import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
+import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
+import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+
 import { menuItems } from '../../store/main-layout.context';
-import PageHeader from '../../components/page-header'
 import Layout from '../../layouts/layout';
+import PageHeader from '../../components/page-header'
 import Page from '../../components/page';
 import { PostProps } from '../../components/blog';
-import matter from 'gray-matter';
-import { PropsWithChildren } from 'react';
 import PageMeta from '../../components/meta';
-import ReactMarkdown from 'react-markdown';
+// import CodePenEmbed from '../../components/codepen';
 import styles from '../../styles/Blog.module.scss';
-import Image from 'next/image';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-// import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import Link from 'next/link';
-import Head from 'next/head';
-import CodePenEmbed from '../../components/codepen';
+
+SyntaxHighlighter.registerLanguage('js', js);
+SyntaxHighlighter.registerLanguage('javascript', js);
+SyntaxHighlighter.registerLanguage('ts', ts);
+SyntaxHighlighter.registerLanguage('typescript', ts);
+SyntaxHighlighter.registerLanguage('yml', yaml);
+SyntaxHighlighter.registerLanguage('yaml', yaml);
+SyntaxHighlighter.registerLanguage('json', json);
 
 interface ServerProps {
   data: PostProps;
@@ -81,26 +92,26 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
       )
     },
 
-    pre(pre: any) {
-      const { node, children } = pre;
-      if (node.children[0].tagName === 'code') {
-        const code = node.children[0];
-        const { properties, children } = code;
-        const { className } = properties;
-        const { value } = children[0];
-        const language = ((className || [""])[0] || "").split('-')[1];
-        if (language == "codepen") {
-          try {
-            const codepen = JSON.parse(value.trim());
-            return <CodePenEmbed title={codepen.title} user={codepen.user} hash={codepen.hash} />
-          }
-          catch (err) {
-            return <code>{children}</code>;
-          }
-        }
-      }
-      return <code>{children}</code>;
-    },
+    // pre(pre: any) {
+    //   const { node, children } = pre;
+    //   if (node.children[0].tagName === 'code') {
+    //     const code = node.children[0];
+    //     const { properties, children } = code;
+    //     const { className } = properties;
+    //     const { value } = children[0];
+    //     const language = ((className || [""])[0] || "").split('-')[1];
+    //     if (language == "codepen") {
+    //       try {
+    //         const codepen = JSON.parse(value.trim());
+    //         return <CodePenEmbed title={codepen.title} user={codepen.user} hash={codepen.hash} />
+    //       }
+    //       catch (err) {
+    //         return <code>{children}</code>;
+    //       }
+    //     }
+    //   }
+    //   return <code>{children}</code>;
+    // },
 
     code(code: any) {
       const { className, children } = code;
