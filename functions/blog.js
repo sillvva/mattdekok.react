@@ -1,29 +1,40 @@
 const admin = require("firebase-admin");
 const path = require('path');
-const { readdirSync, readFileSync, rmSync, mkdirSync, existsSync, writeFileSync, rmdirSync } = require('fs');
+const { readdirSync, readFileSync, rmSync, mkdirSync, existsSync, writeFileSync } = require('fs');
 const matter = require("gray-matter");
 
 const contentDir = "content";
 const publicDir = "public/content";
-const storageDir = "blog/articles";
+const storageContent = "blog/articles";
+const storageImages = "blog/images";
 const contentJSON = 'content.json';
 
 async function fetchPosts() {
   if (!existsSync(`${contentDir}/`)) mkdirSync(contentDir);
   if (!existsSync(`${publicDir}/`)) mkdirSync(publicDir);
-  // if (existsSync(`.next`)) rmdirSync('.next');
+  if (existsSync(`.next`)) rmSync('.next', { recursive: true, force: true });
 
   admin.initializeApp({
     credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIAL || "")),
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   });
 
-  const bucket = await admin.storage().bucket().getFiles({ directory: storageDir });
-  const bucketFiles = bucket[0].filter(file => {
+  const bucketFiles = [];
+  
+  const contentBucket = await admin.storage().bucket().getFiles({ directory: storageContent });
+  contentBucket[0].forEach(file => {
     const filePath = file.name || "";
     const fileExtension = path.extname(filePath);
-    return !!fileExtension;
+    if(!!fileExtension) bucketFiles.push(file);
   });
+
+  const imagesBucket = await admin.storage().bucket().getFiles({ directory: storageImages });
+  imagesBucket[0].forEach(file => {
+    const filePath = file.name || "";
+    const fileExtension = path.extname(filePath);
+    if(!!fileExtension) bucketFiles.push(file);
+  });
+
   const contentFiles = [...readdirSync(contentDir), ...readdirSync(publicDir)];
   const fileUpdates = compareFiles(bucketFiles, contentFiles);
 
@@ -35,23 +46,23 @@ async function fetchPosts() {
 
   await Promise.all(fileUpdates.added.map(file => {
     return new Promise((resolve) => {
-      const filePath = file.name || "";
-      const fileExtension = path.extname(filePath);
-      const baseFileName = path.basename(filePath, fileExtension);
-      const createPath = `${fileExtension == '.md' ? contentDir : publicDir}/${baseFileName}${fileExtension}`;
-      
+      const createPath = getPath(file.name || "");
       try {
-        let fileContent = "";
-        file
-          .createReadStream()
-          .on("data", (chunk) => {
-            fileContent += chunk.toString();
-          })
-          .on("end", async () => {
-            writeFileSync(createPath, fileContent);
-            console.log(`Created: ${createPath}`);
-            resolve(true);
-          });
+        admin.storage()
+          .bucket()
+          .file(file.name)
+          .download({ destination: createPath });
+        // let fileContent = "";
+        // file
+        //   .createReadStream()
+        //   .on("data", (chunk) => {
+        //     fileContent += chunk.toString();
+        //   })
+        //   .on("end", async () => {
+        //     writeFileSync(createPath, fileContent);
+        //     console.log(`Created: ${createPath}`);
+        //     resolve(true);
+        //   });
       } catch (err) {
         console.log("Error:", createPath);
         console.log(err);
@@ -62,10 +73,7 @@ async function fetchPosts() {
 
   await Promise.all(fileUpdates.removed.map((fileName) => {
     return new Promise(resolve => {
-      const filePath = fileName || "";
-      const fileExtension = path.extname(filePath);
-      const baseFileName = path.basename(filePath, fileExtension);
-      const removePath = `${fileExtension == '.md' ? contentDir : publicDir}/${baseFileName}${fileExtension}`;
+      const removePath = getPath(fileName || "");
       if (existsSync(removePath)) rmSync(removePath);
       console.log(`Removed: ${removePath}`);
       resolve(removePath);
@@ -73,6 +81,12 @@ async function fetchPosts() {
   }));
 
   createContentJSON();
+}
+
+const getPath = function (filePath) {
+  const fileExtension = path.extname(filePath);
+  const baseFileName = path.basename(filePath, fileExtension);
+  return `${fileExtension == '.md' ? contentDir : publicDir}/${baseFileName}${fileExtension}`;
 }
 
 const createContentJSON = async function() {
@@ -96,11 +110,13 @@ const createContentJSON = async function() {
 function compareFiles(bucketFiles, contentFiles) {
   const result = { added: [], removed: [] };
   bucketFiles.forEach((file) => {
-    if (!contentFiles.find(fileName => file.name == `${storageDir}/${fileName}`)) result.added.push(file);
+    const downloaded = contentFiles.find(fileName => file.name == `${storageContent}/${fileName}` || file.name == `${storageImages}/${fileName}`);
+    if (!downloaded) result.added.push(file);
   });
   contentFiles.forEach((fileName) => {
     if (fileName == contentJSON) return;
-    if (!bucketFiles.find((file) => file.name == `${storageDir}/${fileName}`)) result.removed.push(fileName);
+    const uploaded = bucketFiles.find((file) => file.name == `${storageContent}/${fileName}` || file.name == `${storageImages}/${fileName}`);
+    if (!uploaded) result.removed.push(fileName);
   });
   return result;
 }
