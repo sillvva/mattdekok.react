@@ -51,7 +51,10 @@ async function fetchPosts() {
         admin.storage()
           .bucket()
           .file(file.name)
-          .download({ destination: createPath });
+          .download({ destination: createPath }).then(() => {
+            console.log(`Created: ${createPath}`);
+            resolve(true);
+          });
         // let fileContent = "";
         // file
         //   .createReadStream()
