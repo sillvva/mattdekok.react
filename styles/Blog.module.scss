@@ -1,0 +1,86 @@
+.BlogDirectory {
+  @apply flex flex-wrap;
+  .BlogPost {
+    @apply basis-full md:basis-6/12 xl:basis-4/12 p-3;
+    .BlogPost__Container {
+      @apply flex overflow-hidden h-full shadow-lg ring-1 rounded-lg ring-gray-900/5;
+      transition: box-shadow 0.5s;
+      &:hover {
+        --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+      }
+      .BlogPost__Image {
+        @apply relative bg-clip-content bg-cover bg-center h-full text-white;
+        min-width: 128px;
+        max-width: 30%;
+      }
+      @media (max-width: 430px) {
+        @apply flex-col;
+        .BlogPost__Image {
+          @apply min-w-full max-w-full;
+          height: 156px;
+        }
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    @apply -m-3;
+    .BlogPost {
+      @apply p-1;
+    }
+  }
+}
+
+.BlogArticle {
+  .BlogContent {
+    @apply mb-4;
+    h1, h2, h3, h4 {
+      @apply font-semibold mb-2 mt-4;
+    }
+    h1 {
+      @apply text-4xl;
+    }
+    h2 {
+      @apply text-2xl;
+    }
+    h3 {
+      @apply text-lg;
+    }
+    h4 {
+      @apply text-base;
+    }
+    p {
+      @apply mb-3;
+      code {
+        @apply px-1 outline outline-1 rounded-sm bg-white/10
+      }
+    }
+    pre {
+      @apply text-sm mb-4 p-4 bg-gray-800 rounded-lg overflow-x-auto;
+    }
+    .BlogFigure {
+      @apply flex flex-col mb-6 mt-6;
+      .BlogImage {
+        @apply relative flex justify-center w-full mb-2 mx-auto aspect-video;
+        max-width: 800px;
+        @media (max-width: 767px) {
+          img {
+            object-fit: cover !important;
+          }
+        }
+      }
+      figcaption {
+        @apply block text-white/70 text-sm text-center;
+      }
+    }
+  }
+}
+
+.CodePenWrapper {
+  @apply hidden lg:block;
+}
+.CodePenFallback {
+  @apply block lg:hidden;
+}
+.CodePen {
+  @apply hidden lg:block;
+}

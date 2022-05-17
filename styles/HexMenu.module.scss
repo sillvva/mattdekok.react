@@ -1,0 +1,109 @@
+.HexWrapper {
+  display: inline-block;
+  --scale: 0.8;
+  margin: 50px 0;
+  @media (max-width: 1264px) {
+    --scale: 0.6;
+  }
+  @media (max-width: 359px) {
+    --scale: 0.4;
+  }
+  &.Rotated {
+    margin: 20px 0 calc(120px * var(--tw-scale-y) * var(--scale));
+  }
+  .HexRow {
+    &.Shift {
+      margin-left: calc(98px * var(--tw-scale-y) * var(--scale));
+    }
+  }
+}
+
+.HexRow {
+  display: flex;
+}
+
+.HexMenuItem {
+  --baseYMargin: 30px;
+  --baseXMargin: 4px;
+  --item-color: var(--menuColor1);
+  --active-color: var(--menuColor2);
+  --hover-color: var(--menuColor2);
+  --text-color: var(--menuText);
+  // float: left;
+  position: relative;
+  margin: calc(var(--baseYMargin) * var(--scale)) calc(var(--baseXMargin) * var(--scale));
+  margin-left: calc(2px * var(--scale));
+  width: calc(190px * var(--scale));
+  height: calc(110px * var(--scale));
+  z-index: 1;
+  text-decoration: none;
+  text-align: center;
+  &.Actove,
+  &.Empty {
+    cursor: default;
+  }
+  &.Empty {
+    .Face {
+      background-color: transparent;
+    }
+  }
+  &.Active {
+    .Face {
+      background-color: var(--active-color);
+    }
+  }
+  &:hover:not(.Empty) {
+    z-index: 2;
+    .Face {
+      background-color: var(--hover-color);
+      transition: background-color 500ms ease, -webkit-transform 1s ease-in-out;
+    }
+  }
+  .ItemLabel {
+    line-height: calc(110px * var(--scale));
+    font-family: sans-serif;
+    white-space: nowrap;
+    font-size: calc(1.8em * var(--scale));
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    color: var(--text-color);
+    letter-spacing: 1px;
+  }
+  .Face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: inherit;
+    background: var(--item-color);
+    z-index: -1;
+    backface-visibility: hidden;
+  }
+  .Face1 {
+    transform: rotate(60deg);
+  }
+  .Face2 {
+    transform: rotate(0);
+  }
+  .Face3 {
+    transform: rotate(-60deg);
+  }
+  &.Rotated {
+    --baseYMargin: 45px;
+    --baseXMargin: -20px;
+    &:nth-child(2n) {
+      top: calc(100px * var(--scale));
+    }
+    .Face1 {
+      transform: rotate(30deg);
+    }
+    .Face2 {
+      transform: rotate(90deg);
+    }
+    .Face3 {
+      transform: rotate(-30deg);
+    }
+  }
+}

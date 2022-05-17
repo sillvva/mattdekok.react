@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+@mixin light-theme {
+  --background: #e5e5e5;
+  --background-transparent: rgba(246, 246, 246, 0.8);
+  --link: #0070e7;
+  --dropShadow: #888888;
+  --text: #2a2a2a;
+  --altText: #f5f5f5;
+  --article: #ffffff;
+  --toast: #111111;
+  --GitHub: #0d0d0d;
+  --LinkedIn: #000000;
+  --menuColor1: var(--link);
+  --menuColor2: #90bbff;
+  --menuText: #ffffff;
+}
+
+@mixin dark-theme {
+  --background: #202125;
+  --background-transparent: rgba(0, 0, 0, 0.8);
+  --link: #0ba; /* #66c252; */
+  --dropShadow: #181818;
+  --text: #f5f5f5;
+  --altText: #4a4a4a;
+  --article: #2f2f2f;
+  --toast: #f3f3f3;
+  --GitHub: #ffffff;
+  --LinkedIn: #ffffff;
+  --menuColor1: var(--link);
+  --menuColor2: #055; /* #1f6521; */
+  --menuText: #ffffff;
+}
+
+@mixin universal-theme {
+  --darkBackground: #222629;
+  --blogHeaderShade: #181818;
+  --blogHeaderText: #f5f5f5;
+  --PayPal1: #003087;
+  --PayPal2: #009cde;
+  --Stripe: #007bff;
+}
+
+.app {
+  &, .light, .dark {
+    @include universal-theme();
+  }
+  &, .light {
+    @include light-theme();
+  }
+  &.dark, .dark {
+    @include dark-theme();
+  }
+  @media(prefers-color-scheme: dark) {
+    &.light, .light {
+      @include light-theme();
+    }
+    &, .dark {
+      @include dark-theme();
+    }
+  }
+  & {
+    background: var(--background) !important;
+    color: var(--text) !important;
+    transition: background 0.5s linear;
+  }
+  .mdi {
+    color: var(--text);
+  }
+  a {
+    color: var(--link);
+    text-decoration: none;
+  }
+}
+
+.bg-transparent {
+  --background: transparent;
+}
+
+.rating {
+  .mdi {
+    font-size: medium;
+    color: var(--altText);
+    &.mdi-star {
+      color: rgb(200, 125, 0) !important;
+    }
+    &.mdi-star-half-full {
+      color: rgb(200, 125, 0) !important;
+    }
+  }
+  .dark & {
+    .mdi {
+      &.mdi-star {
+        color: gold !important;
+      }
+      &.mdi-star-half-full {
+        color: rgb(255, 240, 158) !important;
+      }
+    }
+  }
+}

@@ -3,22 +3,37 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "fetch-posts": "node builds.js",
+    "dev": "npm run fetch-posts && next dev",
+    "build": "npm run fetch-posts && next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.1",
+    "firebase-admin": "^10.2.0",
+    "gray-matter": "^4.0.3",
+    "js-cookie": "^3.0.1",
     "next": "12.1.6",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-markdown": "^8.0.3",
+    "react-syntax-highlighter": "^15.5.0",
+    "remark-gfm": "^3.0.1"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.2",
     "@types/node": "17.0.33",
     "@types/react": "18.0.9",
     "@types/react-dom": "18.0.4",
+    "@types/react-syntax-highlighter": "^15.5.1",
+    "autoprefixer": "^10.4.7",
+    "dotenv": "^8.2.0",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
+    "postcss": "^8.4.13",
+    "sass": "^1.51.0",
+    "tailwindcss": "^3.0.24",
     "typescript": "4.6.4"
   }
 }

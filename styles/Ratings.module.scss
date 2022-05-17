@@ -1,0 +1,28 @@
+.Header {
+  @apply text-xl mb-4 font-bold md:block lg:block xl:block 2xl:block;
+}
+.Body {
+  @apply flex flex-wrap -m-3;
+}
+.Columns {
+  @apply flex flex-wrap -m-3 mt-4 mb-2;
+}
+.Column {
+  @apply p-3 pt-0.5 basis-0 grow;
+  &:nth-child(even) {
+    @apply text-right max-w-max;
+  }
+}
+
+.Entry {
+  @apply basis-full md:basis-6/12 xl:basis-4/12 p-3 grow-0;
+}
+.EntryRow {
+  @apply flex -m-3;
+}
+.EntryCol {
+  @apply p-3 pt-0.5 basis-0 grow;
+  @nth-child (even) {
+    @apply text-right max-w-max;
+  }
+}

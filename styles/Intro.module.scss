@@ -1,0 +1,54 @@
+.IntroHeader {
+  @apply fixed bg-transparent w-full;
+}
+
+.Me {
+  @apply h-screen grid grid-cols-12 grid-rows-6;
+  background-image: url("/images/me2x.webp");
+  background-image: image-set("/images/me1x.webp" 1x, "/images/me2x.webp" 2x, "/images/me3x.webp" 3x, "/images/me4x.webp" 4x);
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  @media (min-width: 1500px) {
+    background-size: contain;
+    background-image: image-set("/images/me3x.webp" 1x, "/images/me4x.webp" 2x);
+  }
+  @media (min-width: 1200px) {
+    background-size: contain;
+    background-image: image-set("/images/me2x.webp" 1x, "/images/me3x.webp" 2x, "/images/me4x.webp" 3x);
+  }
+  @media (max-width: 1024px) {
+    background-position-x: 10%;
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 80vh;
+      background-image: linear-gradient(transparent, var(--background-transparent));
+    }
+  }
+  @media (max-width: 768px) {
+    background-position-x: 20%;
+  }
+}
+
+.Intro {
+  @apply col-start-6 col-span-6 row-start-2 row-span-3 2xl:col-start-5;
+}
+
+.IntroSubject {
+  @apply mt-0 fixed bottom-12 left-0 right-0 z-10 text-center lg:relative lg:text-right lg:bottom-0;
+  font-family: "Montserrat", sans-serif;
+  text-shadow: 2px 2px var(--background), 1px 1px 5px var(--background);
+}
+
+.IntroName {
+  @apply text-3xl sm:text-5xl lg:text-5xl font-semibold tracking-widest;
+}
+
+.IntroTitle {
+  @apply text-xl sm:text-3xl xl:text-4xl font-medium tracking-normal;
+}
