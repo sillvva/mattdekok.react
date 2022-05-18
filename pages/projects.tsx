@@ -26,7 +26,7 @@ const Projects: NextPage = (props: any) => {
           </div>
         </div>
       </Page.Body>
-    </Layout >
+    </Layout>
   )
 }
 
@@ -35,11 +35,11 @@ export default Projects
 export async function getServerSideProps(context: any) {
   const docRef = doc(firestore, 'website/projects');
   const document = await getDoc(docRef);
-  const projects = document.data()?.data;
+  const projects = document.data()?.data || [];
 
   return {
     props: {
-      projects: projects || []
+      projects
     }
   }
 }

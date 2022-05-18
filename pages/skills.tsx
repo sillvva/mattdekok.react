@@ -22,7 +22,7 @@ const Skills: NextPage = (props: any) => {
         <Page.Article className="w-full sm:w-9/12 md:w-10/12 lg:w-9/12">
           {props.skills.map((section: any, i: number) => (
             <Rating.Section key={i} name={section.section} columns={cols}>
-              {section.skills.map((skill: any, j: number) => <Rating.Item key={j} name={skill.name} rating={skill.rating} />)}
+              {section.skills.map((skill: any, j: number) => <Rating.Item key={`${i}-${j}`} name={skill.name} rating={skill.rating} />)}
             </Rating.Section>
           ))}
         </Page.Article>

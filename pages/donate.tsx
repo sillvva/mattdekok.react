@@ -62,7 +62,7 @@ const Donate: NextPage = () => {
           </Page.Section>
         </Page.Article>
       </Page.Body >
-    </Layout >
+    </Layout>
   )
 }
 
