@@ -52,7 +52,7 @@ export async function getServerSideProps() {
     props: {
       skills: skills.map(section => ({ 
         ...section, 
-        skills: section.skills.sort((a, b) => a.name > b.name ? 1 : -1) 
+        skills: section.skills.sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1) 
       }))
     }
   }
