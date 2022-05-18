@@ -6,7 +6,7 @@ import Page from '../components/page';
 import styles from '../styles/Gallery.module.scss'
 import GalleryItem from '../components/gallery';
 import PageMeta from '../components/meta';
-import { firestore, doc, getDoc } from '../functions/firebase'
+import { doc, getDoc } from '../functions/firebase'
 
 const Projects: NextPage = (props: any) => {
   return (
@@ -32,14 +32,26 @@ const Projects: NextPage = (props: any) => {
 
 export default Projects
 
+interface Project {
+  title: string;
+  subtitle: string;
+  description: string;
+  image: string;
+  link?: string;
+  sort: number | null;
+}
+
 export async function getServerSideProps(context: any) {
-  const docRef = doc(firestore, 'website/projects');
+  const docRef = doc('website/projects');
   const document = await getDoc(docRef);
-  const projects = document.data()?.data || [];
+  const projects: Project[] = document.data()?.data || [];
 
   return {
     props: {
-      projects
+      projects: projects.map((p, i) => ({
+        ...p,
+        sort: p.sort !== null ? p.sort : i
+      })).sort((a, b) => a.sort < b.sort ? 1 : -1)
     }
   }
 }
