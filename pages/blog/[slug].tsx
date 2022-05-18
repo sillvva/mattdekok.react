@@ -2,7 +2,8 @@ import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
-import { readFile } from "node:fs/promises";
+import axios from 'axios';
+import { readFileSync, writeFileSync, rmSync, existsSync, statSync, mkdirSync } from "node:fs";
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
@@ -14,6 +15,7 @@ import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 
+import { storage, ref, getDownloadURL, firebaseConfig, getMetadata } from '../../functions/firebase'
 import { menuItems } from '../../store/main-layout.context';
 import Layout from '../../layouts/layout';
 import PageHeader from '../../components/page-header'
@@ -67,19 +69,34 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
     h1(h: any) {
       const { children } = h;
       const text = flattenChildren(children);
-      return <h1 id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}>{children}</h1>
+      return (
+        <h1>
+          <span id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}></span>
+          {children}
+        </h1>
+      )
     },
 
     h2(h: any) {
       const { children } = h;
       const text = flattenChildren(children);
-      return <h2 id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}>{children}</h2>
+      return (
+        <h2>
+          <span id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}></span>
+          {children}
+        </h2>
+      )
     },
 
     h3(h: any) {
       const { children } = h;
       const text = flattenChildren(children);
-      return <h3 id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}>{children}</h3>
+      return (
+        <h3>
+          <span id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}></span>
+          {children}
+        </h3>
+      )
     },
 
     a(anchor: any) {
@@ -157,20 +174,57 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
 
 export default Blog
 
+/**
+ * Use local file if it exists. If it does not, fetch it from Firebase Storage, and store it.
+ * If the file in Firebase Storage is newer, fetch it and store it.
+ * With this, only the latest version should show, and this should reduce the calls to Firebase Storage.
+ * 
+ * @param context 
+ * @returns Server Side Properties
+ */
 export async function getServerSideProps(context: any) {
   const { params } = context;
   const { slug } = params;
 
-  const contentPath = path.join(process.cwd(), 'content');
-  const mdFile = await readFile(`${contentPath}/${slug}.md`, "utf8");
-  const { content, data } = matter(mdFile);
+  // Local directory
+  let dirPath = path.join(process.cwd(), 'content');
+  // Vercel directory, because the cwd() directory is read-only
+  if (!existsSync(dirPath) && existsSync('/tmp')) dirPath = '/tmp';
+  const filePath = `${dirPath}/${slug}.md`;
 
+  const storageRef = ref(storage, `${firebaseConfig.storageContent}/${slug}.md`);
+  const meta = await getMetadata(storageRef);
+
+  let result = { data: "" };
+  let write = false;
+  if (existsSync(filePath)) {
+    const stat = statSync(filePath);
+    const tdiff = (new Date(meta.timeCreated).getTime() - stat.ctime.getTime()) / 1000;
+    // console.log({
+    //   file: slug,
+    //   storageDate: new Date(meta.timeCreated),
+    //   localDate: stat.ctime
+    // });
+    if (tdiff > 0) {
+      write = true;
+      rmSync(filePath);
+    }
+    else result.data = readFileSync(filePath, 'utf8');
+  }
+  else write = true;
+
+  if (write) {
+    const url = await getDownloadURL(storageRef);
+    result = await axios.get(url);
+    writeFileSync(filePath, result.data);
+  }
+
+  const { content, data } = matter(result.data);
   for (let key in data) {
     if (data[key] instanceof Date) {
       data[key] = data[key].toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
     }
   }
-  // const data: PostProps[] = JSON.parse(contentFiles);
 
   return {
     props: {

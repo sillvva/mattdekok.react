@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import styles from '../styles/Blog.module.scss'
 
 export interface PostProps {
@@ -29,10 +29,12 @@ function BlogDirectory(props: PropsWithChildren<DirectoryProps>) {
 export default BlogDirectory;
 
 function BlogPost({ post }: PropsWithChildren<{ post: PostProps }>) {
+  const [ active, setActive ] = useState(false);
+
   return (
     <Link href={post.link ? post.link : `/blog/${post.slug}`}>
-      <a className={styles.BlogPost} target={post.link ? '_blank' : ''} rel={post.link ? 'noreferrer noopener' : ''}>
-        <div style={{ backgroundColor: 'var(--article)' }} className={styles.BlogPost__Container}>
+      <a className={styles.BlogPost} target={post.link ? '_blank' : ''} rel={post.link ? 'noreferrer noopener' : ''} onClick={() => { setActive(true) }}>
+        <div className={[styles.BlogPost__Container, ...(active && !post.link ? [styles.Focus] : [])].join(' ')}>
           <div className={styles.BlogPost__Image}>
             <Image src={post.image} alt={post.title} layout="fill" objectFit="cover" objectPosition="center" />
           </div>

@@ -13,7 +13,7 @@ interface GalleryItemProps {
 function GalleryItem(props: PropsWithChildren<GalleryItemProps>) {
   return (
     <GalleryItemWrapper link={props.link || ""}>
-      {props.image && <Image src={`/images/preview-${props.image}.jpg`} alt={props.title} width={400} height={400} />}
+      {props.image && <Image src={props.image.startsWith('http') ? props.image : `/images/preview-${props.image}.jpg`} alt={props.title} width={400} height={400} />}
       <div className={styles.Cover}>
         <h3>{props.title}</h3>
         {props.subtitle && <h4>{props.subtitle}</h4>}

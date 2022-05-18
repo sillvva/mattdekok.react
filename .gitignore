@@ -9,7 +9,6 @@
 /coverage
 /content/*.md
 /content/*.json
-/public/content/**.*
 
 # next.js
 /.next/
@@ -30,7 +29,6 @@ yarn-error.log*
 
 # local env files
 .env*.local
-.env
 
 # vercel
 .vercel
