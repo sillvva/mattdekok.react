@@ -24,11 +24,7 @@ const Blog: NextPage<DirectoryProps> = (props: DirectoryProps) => {
 
 export default Blog
 
-export async function getServerSideProps() {
-  // const contentPath = path.join(process.cwd(), 'content');
-  // const contentFiles = await readFile(`${contentPath}/content.json`, "utf8");
-  // const data: PostProps[] = JSON.parse(contentFiles);
-
+export async function getServerSideProps(context: any) {
   const docRef = doc(firestore, firebaseConfig.storageContent);
   const document = await getDoc(docRef);
   const data: any = Object.values(JSON.parse(JSON.stringify(document.data())));

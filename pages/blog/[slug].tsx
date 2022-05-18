@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 import axios from 'axios';
-import { readFile } from "node:fs/promises";
+import { readFileSync, writeFileSync, rmSync, existsSync, statSync } from "node:fs";
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
@@ -15,7 +15,7 @@ import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 
-import { storage, ref, getDownloadURL, firebaseConfig } from '../../functions/firebase'
+import { storage, ref, getDownloadURL, firebaseConfig, getMetadata } from '../../functions/firebase'
 import { menuItems } from '../../store/main-layout.context';
 import Layout from '../../layouts/layout';
 import PageHeader from '../../components/page-header'
@@ -159,19 +159,44 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
 
 export default Blog
 
+/**
+ * Use local file if it exists. If it does not, fetch it from Firebase Storage, and store it.
+ * If the file in Firebase Storage is newer, fetch it and store it.
+ * With this, only the latest version should show, and this should reduce the calls to Firebase Storage.
+ * 
+ * @param context 
+ * @returns Server Side Properties
+ */
 export async function getServerSideProps(context: any) {
   const { params } = context;
   const { slug } = params;
 
-  // const contentPath = path.join(process.cwd(), 'content');
-  // const mdFile = await readFile(`${contentPath}/${slug}.md`, "utf8");
-  // const { content, data } = matter(mdFile);
+  const dirPath = path.join(process.cwd(), 'content');
+  const filePath = `${dirPath}/${slug}.md`;
 
   const storageRef = ref(storage, `${firebaseConfig.storageContent}/${slug}.md`);
-  const url = await getDownloadURL(storageRef);
-  const result = await axios.get(url);
-  const { content, data } = matter(result.data);
+  const meta = await getMetadata(storageRef);
 
+  let result = { data: "" };
+  let write = false;
+  if (existsSync(filePath)) {
+    const stat = statSync(filePath);
+    const tdiff = (new Date(meta.timeCreated).getTime() - stat.ctime.getTime()) / 1000;
+    if (tdiff > 0) {
+      write = true;
+      rmSync(filePath);
+    }
+    else result.data = readFileSync(filePath, 'utf8');
+  }
+  else write = true;
+
+  if (write) {
+    const url = await getDownloadURL(storageRef);
+    result = await axios.get(url);
+    writeFileSync(filePath, result.data);
+  }
+
+  const { content, data } = matter(result.data);
   for (let key in data) {
     if (data[key] instanceof Date) {
       data[key] = data[key].toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
