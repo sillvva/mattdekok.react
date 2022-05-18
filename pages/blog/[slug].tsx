@@ -187,7 +187,7 @@ export async function getServerSideProps(context: any) {
   const { slug } = params;
 
   let dirPath = path.join(process.cwd(), 'content');
-  if (!existsSync(dirPath)) dirPath = process.cwd();
+  if (!existsSync(dirPath) && existsSync('/tmp')) dirPath = '/tmp';
   const filePath = `${dirPath}/${slug}.md`;
 
   const storageRef = ref(storage, `${firebaseConfig.storageContent}/${slug}.md`);
