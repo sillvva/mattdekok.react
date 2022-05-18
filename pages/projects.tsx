@@ -6,7 +6,7 @@ import Page from '../components/page';
 import styles from '../styles/Gallery.module.scss'
 import GalleryItem from '../components/gallery';
 import PageMeta from '../components/meta';
-import { firestore, doc, getDoc, setDoc } from '../functions/firebase'
+import { firestore, doc, getDoc } from '../functions/firebase'
 
 const Projects: NextPage = (props: any) => {
   return (

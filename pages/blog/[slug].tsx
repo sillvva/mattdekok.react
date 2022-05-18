@@ -186,7 +186,9 @@ export async function getServerSideProps(context: any) {
   const { params } = context;
   const { slug } = params;
 
+  // Local directory
   let dirPath = path.join(process.cwd(), 'content');
+  // Vercel directory, because the cwd() directory is read-only
   if (!existsSync(dirPath) && existsSync('/tmp')) dirPath = '/tmp';
   const filePath = `${dirPath}/${slug}.md`;
 
