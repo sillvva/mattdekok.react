@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
+import axios from 'axios';
 import { readFile } from "node:fs/promises";
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
@@ -14,6 +15,7 @@ import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 
+import { storage, ref, getDownloadURL, firebaseConfig } from '../../functions/firebase'
 import { menuItems } from '../../store/main-layout.context';
 import Layout from '../../layouts/layout';
 import PageHeader from '../../components/page-header'
@@ -161,16 +163,20 @@ export async function getServerSideProps(context: any) {
   const { params } = context;
   const { slug } = params;
 
-  const contentPath = path.join(process.cwd(), 'content');
-  const mdFile = await readFile(`${contentPath}/${slug}.md`, "utf8");
-  const { content, data } = matter(mdFile);
+  // const contentPath = path.join(process.cwd(), 'content');
+  // const mdFile = await readFile(`${contentPath}/${slug}.md`, "utf8");
+  // const { content, data } = matter(mdFile);
+
+  const storageRef = ref(storage, `${firebaseConfig.storageContent}/${slug}.md`);
+  const url = await getDownloadURL(storageRef);
+  const result = await axios.get(url);
+  const { content, data } = matter(result.data);
 
   for (let key in data) {
     if (data[key] instanceof Date) {
       data[key] = data[key].toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
     }
   }
-  // const data: PostProps[] = JSON.parse(contentFiles);
 
   return {
     props: {
