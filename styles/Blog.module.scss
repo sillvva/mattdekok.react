@@ -4,6 +4,7 @@
     @apply basis-full md:basis-6/12 xl:basis-4/12 p-3;
     .BlogPost__Container {
       @apply flex overflow-hidden h-full shadow-lg ring-1 rounded-lg ring-gray-900/5;
+      background-color: var(--article);
       transition: box-shadow 0.5s;
       &:hover {
         --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
@@ -20,6 +21,37 @@
           height: 156px;
         }
       }
+      &.Focus {
+        position: relative;
+        z-index: 0;
+        &::before {
+          content: "";
+          position: absolute;
+          z-index: -2;
+          left: -50%;
+          top: -50%;
+          width: 200%;
+          height: 200%;
+          background-color: var(--background);
+          background-repeat: no-repeat;
+          background-size: 51% 51%, 50% 50%;
+          background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+          background-image: linear-gradient(var(--article), var(--article)), linear-gradient(var(--article), var(--link)),
+            linear-gradient(var(--article), var(--article)), linear-gradient(var(--link), var(--article));
+          animation: rotate 4s linear infinite;
+        }
+        &::after {
+          content: "test";
+          position: absolute;
+          z-index: -1;
+          left: 6px;
+          top: 6px;
+          width: calc(100% - 12px);
+          height: calc(100% - 12px);
+          background: var(--article);
+          border-radius: 5px;
+        }
+      }
     }
   }
   @media (max-width: 767px) {
@@ -30,10 +62,45 @@
   }
 }
 
+@keyframes rotate {
+  25% {
+    left: -50%;
+    top: -200%;
+    width: 200%;
+    height: 500%;
+    transform: rotate(0.25turn);
+  }
+  50% {
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    transform: rotate(0.5turn);
+  }
+  75% {
+    left: -50%;
+    top: -200%;
+    width: 200%;
+    height: 500%;
+    transform: rotate(0.75turn);
+  }
+  100% {
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    transform: rotate(1turn);
+  }
+}
+
+
 .BlogArticle {
   .BlogContent {
     @apply mb-4;
-    h1, h2, h3, h4 {
+    h1,
+    h2,
+    h3,
+    h4 {
       @apply font-semibold mb-2 mt-4;
     }
     h1 {
@@ -51,7 +118,7 @@
     p {
       @apply mb-3;
       code {
-        @apply px-1 outline outline-1 rounded-sm bg-white/10
+        @apply px-1 outline outline-1 rounded-sm bg-white/10;
       }
     }
     pre {
