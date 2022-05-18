@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 import axios from 'axios';
-import { readFileSync, writeFileSync, rmSync, existsSync, statSync } from "node:fs";
+import { readFileSync, writeFileSync, rmSync, existsSync, statSync, mkdirSync } from "node:fs";
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
@@ -188,6 +188,10 @@ export async function getServerSideProps(context: any) {
 
   const dirPath = path.join(process.cwd(), 'content');
   const filePath = `${dirPath}/${slug}.md`;
+
+  if (!existsSync(dirPath)) {
+    mkdirSync(dirPath);
+  }
 
   const storageRef = ref(storage, `${firebaseConfig.storageContent}/${slug}.md`);
   const meta = await getMetadata(storageRef);
