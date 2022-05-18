@@ -4,13 +4,15 @@
   "private": true,
   "scripts": {
     "fetch-posts": "node builds.js",
-    "dev": "npm run fetch-posts && next dev",
-    "build": "npm run fetch-posts && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "axios": "^0.27.2",
+    "firebase": "^9.8.1",
     "firebase-admin": "^10.2.0",
     "gray-matter": "^4.0.3",
     "js-cookie": "^3.0.1",
