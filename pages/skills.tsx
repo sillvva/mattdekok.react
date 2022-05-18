@@ -33,14 +33,27 @@ const Skills: NextPage = (props: any) => {
 
 export default Skills
 
+interface Skill {
+  name: string;
+  rating: number;
+}
+
+interface SkillSection {
+  section: string;
+  skills: Skill[];
+}
+
 export async function getServerSideProps() {
   const docRef = doc('website/skills');
   const document = await getDoc(docRef);
-  const skills = document.data()?.data || [];
+  const skills: SkillSection[] = document.data()?.data || [];
 
   return {
     props: {
-      skills
+      skills: skills.map(section => ({ 
+        ...section, 
+        skills: section.skills.sort((a, b) => a.name > b.name ? 1 : -1) 
+      }))
     }
   }
 }
