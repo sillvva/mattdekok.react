@@ -9,7 +9,6 @@
 /coverage
 /content/*.md
 /content/*.json
-/public/content/**.*
 
 # next.js
 /.next/
