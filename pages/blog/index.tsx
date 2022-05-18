@@ -1,6 +1,4 @@
 import type { NextPage } from 'next'
-import path from 'path';
-import { readFile } from "node:fs/promises";
 import { menuItems } from '../../store/main-layout.context';
 import PageHeader from '../../components/page-header'
 import Layout from '../../layouts/layout';
@@ -24,7 +22,7 @@ const Blog: NextPage<DirectoryProps> = (props: DirectoryProps) => {
 
 export default Blog
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps() {
   const docRef = doc(firestore, firebaseConfig.storageContent);
   const document = await getDoc(docRef);
   const data: any = Object.values(JSON.parse(JSON.stringify(document.data())));

@@ -1,5 +1,5 @@
 const { initializeApp } = require("firebase/app");
-const { getFirestore, doc, setDoc, getDoc } = require("firebase/firestore");
+const { getFirestore, doc, setDoc, getDoc, getDocs } = require("firebase/firestore");
 const { getStorage, ref, getDownloadURL, list, getMetadata } = require("firebase/storage");
 
 const firebaseConfig = {
@@ -28,5 +28,6 @@ module.exports = {
   firestore,
   doc,
   setDoc,
-  getDoc
+  getDoc,
+  getDocs
 }

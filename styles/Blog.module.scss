@@ -101,7 +101,10 @@
     h2,
     h3,
     h4 {
-      @apply font-semibold mb-2 mt-4;
+      @apply font-semibold mb-2 mt-4 relative;
+      span {
+        @apply absolute -top-20
+      }
     }
     h1 {
       @apply text-4xl;

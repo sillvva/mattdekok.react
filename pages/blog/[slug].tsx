@@ -69,19 +69,34 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
     h1(h: any) {
       const { children } = h;
       const text = flattenChildren(children);
-      return <h1 id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}>{children}</h1>
+      return (
+        <h1>
+          <span id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}></span>
+          {children}
+        </h1>
+      )
     },
 
     h2(h: any) {
       const { children } = h;
       const text = flattenChildren(children);
-      return <h2 id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}>{children}</h2>
+      return (
+        <h2>
+          <span id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}></span>
+          {children}
+        </h2>
+      )
     },
 
     h3(h: any) {
       const { children } = h;
       const text = flattenChildren(children);
-      return <h3 id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}>{children}</h3>
+      return (
+        <h3>
+          <span id={text.replace(/[^a-z]{1,}/gi, '-').toLowerCase()}></span>
+          {children}
+        </h3>
+      )
     },
 
     a(anchor: any) {
@@ -182,6 +197,11 @@ export async function getServerSideProps(context: any) {
   if (existsSync(filePath)) {
     const stat = statSync(filePath);
     const tdiff = (new Date(meta.timeCreated).getTime() - stat.ctime.getTime()) / 1000;
+    // console.log({
+    //   file: slug,
+    //   storageDate: new Date(meta.timeCreated),
+    //   localDate: stat.ctime
+    // });
     if (tdiff > 0) {
       write = true;
       rmSync(filePath);
