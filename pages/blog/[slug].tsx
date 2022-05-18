@@ -15,7 +15,7 @@ import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 
-import { storage, ref, getDownloadURL, firebaseConfig, getMetadata } from '../../functions/firebase'
+import { ref, getDownloadURL, firebaseConfig, getMetadata } from '../../functions/firebase'
 import { menuItems } from '../../store/main-layout.context';
 import Layout from '../../layouts/layout';
 import PageHeader from '../../components/page-header'
@@ -192,7 +192,7 @@ export async function getServerSideProps(context: any) {
   if (!existsSync(dirPath) && existsSync('/tmp')) dirPath = '/tmp';
   const filePath = `${dirPath}/${slug}.md`;
 
-  const storageRef = ref(storage, `${firebaseConfig.storageContent}/${slug}.md`);
+  const storageRef = ref(`${firebaseConfig.storageContent}/${slug}.md`);
   const meta = await getMetadata(storageRef);
 
   let result = { data: "" };

@@ -5,7 +5,7 @@ import Page from '../components/page';
 import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
 import PageMeta from '../components/meta';
-import { firestore, doc, getDoc } from '../functions/firebase'
+import { doc, getDoc } from '../functions/firebase'
 
 const Skills: NextPage = (props: any) => {
   const cols = {
@@ -33,8 +33,8 @@ const Skills: NextPage = (props: any) => {
 
 export default Skills
 
-export async function getServerSideProps(context: any) {
-  const docRef = doc(firestore, 'website/skills');
+export async function getServerSideProps() {
+  const docRef = doc('website/skills');
   const document = await getDoc(docRef);
   const skills = document.data()?.data || [];
 

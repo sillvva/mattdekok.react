@@ -41,7 +41,7 @@ interface Project {
   sort: number | null;
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps() {
   const docRef = doc('website/projects');
   const document = await getDoc(docRef);
   const projects: Project[] = document.data()?.data || [];

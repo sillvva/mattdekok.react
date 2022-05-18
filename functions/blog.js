@@ -6,8 +6,8 @@ const firebase = require('./firebase.js');
 const storageContent = "blog/articles";
 
 async function fetchPosts() {
-  const { storage, ref, getDownloadURL, getMetadata, list, statSync } = firebase;
-  const { firestore, doc, setDoc, getDoc } = firebase;
+  const { ref, getDownloadURL, getMetadata, list } = firebase;
+  const { doc, setDoc, getDoc } = firebase;
 
   const storageRef = ref(storage, storageContent);
   const contentList = await list(storageRef);
