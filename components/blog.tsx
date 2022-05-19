@@ -33,16 +33,16 @@ function BlogPost({ post }: PropsWithChildren<{ post: PostProps }>) {
 
   return (
     <Link href={post.link ? post.link : `/blog/${post.slug}`}>
-      <a className={styles.BlogPost} target={post.link ? '_blank' : ''} rel={post.link ? 'noreferrer noopener' : ''} onClick={() => { setActive(true) }}>
+      <a className={[styles.BlogPost, !post.slug && !post.link ? 'loading' : null].join(' ')} target={post.link ? '_blank' : ''} rel={post.link ? 'noreferrer noopener' : ''} onClick={() => { setActive(true) }}>
         <div className={[styles.BlogPost__Container, ...(active && !post.link ? [styles.Focus] : [])].join(' ')}>
           <div className={styles.BlogPost__Image}>
-            <Image src={post.image} alt={post.title} layout="fill" objectFit="cover" objectPosition="center" />
+            {post.image ? <Image src={post.image} alt={post.title} layout="fill" objectFit="cover" objectPosition="center" /> : ''}
           </div>
-          <div className="p-3"> 
+          {post.slug || post.link ?<div className="p-3"> 
             <h1 className="text-lg font-semibold">{post.title}</h1>
             <p className="text-gray-500">{new Date(post.date).toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"})}</p>
             <p style={{ color: 'var(--text)' }}>{post.description}</p>
-          </div>
+          </div> : ""}
         </div>
       </a>
     </Link>

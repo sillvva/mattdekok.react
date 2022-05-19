@@ -2,17 +2,7 @@ import React, { useContext } from 'react';
 import MainLayoutContext from '../store/main-layout.context';
 import styles from '../styles/MainLayout.module.scss'
 import PageMenu from './page-menu';
-
-const toggleTheme = () => {
-  let newTheme: string;
-  if (document.body.classList.contains('dark')) {
-    document.body.classList.replace('dark', 'light');
-    newTheme = 'light';
-  } else {
-    document.body.classList.replace('light', 'dark');
-    newTheme = 'dark';
-  }
-}
+import cookie from 'js-cookie';
 
 interface PageHeaderProps {
   classes?: string | string[];
@@ -23,6 +13,18 @@ interface PageHeaderProps {
 
 const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
   const { drawer } = useContext(MainLayoutContext);
+
+  function toggleTheme() {
+    let newTheme: string;
+    if (document.body.classList.contains('dark')) {
+      document.body.classList.replace('dark', 'light');
+      newTheme = 'light';
+    } else {
+      document.body.classList.replace('light', 'dark');
+      newTheme = 'dark';
+    }
+    cookie.set('theme', newTheme);
+  }
 
   return (
     <header className={[styles.PageHeader, ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes : ['']))].join(' ')}>

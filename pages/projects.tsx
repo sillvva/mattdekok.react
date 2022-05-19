@@ -6,7 +6,7 @@ import Page from '../components/page';
 import styles from '../styles/Gallery.module.scss'
 import GalleryItem from '../components/gallery';
 import PageMeta from '../components/meta';
-import { doc, getDoc } from '../functions/firebase'
+import { doc, getDoc, setDoc } from '../functions/firebase'
 
 const Projects: NextPage = (props: any) => {
   return (
@@ -38,7 +38,6 @@ interface Project {
   description: string;
   image: string;
   link?: string;
-  sort: number | null;
 }
 
 export async function getServerSideProps() {
@@ -50,7 +49,7 @@ export async function getServerSideProps() {
     props: {
       projects: projects.map((p, i) => ({
         ...p,
-        sort: p.sort !== null ? p.sort : i
+        sort: i
       })).sort((a, b) => a.sort < b.sort ? 1 : -1)
     }
   }

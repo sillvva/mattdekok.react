@@ -5,7 +5,7 @@ import Page from '../components/page';
 import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
 import PageMeta from '../components/meta';
-import { doc, getDoc, setDoc } from '../functions/firebase'
+import { doc, getDoc } from '../functions/firebase'
 
 const Skills: NextPage = (props: any) => {
   const cols = {
