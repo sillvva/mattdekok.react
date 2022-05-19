@@ -18,21 +18,21 @@ const Experience: NextPage = () => {
               <Page.SectionItem image="/images/ddb.png">
                 <h3>Forum, Twitch, and Discord Moderator</h3>
                 <h4>
-                  <a href="https://www.dndbeyond.com/" title="DND Beyond"> D&amp;D Beyond </a>
+                  <a href="https://www.dndbeyond.com/" target="_blank" rel="noreferrer noopener"> D&amp;D Beyond </a>
                 </h4>
                 <h5>2019 - Present</h5>
               </Page.SectionItem>
               <Page.SectionItem image="/images/valmont.jpg">
                 <h3>Front End Web Developer</h3>
                 <h4>
-                  <a href="http://www.valmont.com/" title="Valmont Industries, Inc."> Valmont Industries, Inc. </a>
+                  <a href="http://www.valmont.com/" target="_blank" rel="noreferrer noopener"> Valmont Industries, Inc. </a>
                 </h4>
                 <h5>2019 - Present</h5>
               </Page.SectionItem>
               <Page.SectionItem image="/images/agsense.png">
                 <h3>Web Developer</h3>
                 <h4>
-                  <a href="http://agsense.com/" title="AgSense, LLC."> AgSense, LLC. </a>
+                  <a href="http://agsense.com/" target="_blank" rel="noreferrer noopener"> AgSense, LLC. </a>
                 </h4>
                 <h5>2012 - Present</h5>
               </Page.SectionItem>
@@ -44,14 +44,14 @@ const Experience: NextPage = () => {
               <Page.SectionItem image="/images/dsu.png">
                 <h3>Computer and Information Systems Security/Information Assurance</h3>
                 <h4>
-                  <a href="https://dsu.edu/academics/degrees-and-programs/computer-information-systems-bs" title="Dakota State University"> Dakota State University </a>
+                  <a href="https://dsu.edu/academics/degrees-and-programs/computer-information-systems-bs" target="_blank" rel="noreferrer noopener"> Dakota State University </a>
                 </h4>
                 <h5>Bachelor of Science Degree</h5>
               </Page.SectionItem>
               <Page.SectionItem image="/images/mti.png">
                 <h3>Computer Software and Media Applications</h3>
                 <h4>
-                  <a href="https://www.mitchelltech.edu/academics/programs-we-offer/online/administrative-office-specialist" title="Mitchell Technical Institute">
+                  <a href="https://www.mitchelltech.edu/academics/programs-we-offer/online/administrative-office-specialist" target="_blank" rel="noreferrer noopener">
                     Mitchell Technical Institute
                   </a>
                 </h4>
@@ -60,18 +60,18 @@ const Experience: NextPage = () => {
             </Page.SectionItems>
           </Page.Section>
           <Page.Section>
-            <h2 className="text-xl font-bold">Licenses &nbsp; Certifications</h2>
+            <h2 className="text-xl font-bold">Licenses &amp; Certifications</h2>
             <Page.SectionItems>
               <Page.SectionItem image="/images/mos.png">
                 <h3>Microsoft Office Specialist</h3>
                 <h4>Microsoft Excel - Mitchell Tech</h4>
                 <h5>
-                  <a href="https://www.microsoft.com/en-us/learning/dashboard.aspx"> Credential ID 6154048 </a>
+                  <a href="https://www.microsoft.com/en-us/learning/dashboard.aspx" target="_blank" rel="noreferrer noopener"> Credential ID 6154048 </a>
                 </h5>
               </Page.SectionItem>
               <Page.SectionItem image="/images/udemy.svg">
                 <h3>
-                  <a href="https://www.udemy.com/react-the-complete-guide-incl-redux/"> React - The Complete Guide </a>
+                  <a href="https://www.udemy.com/react-the-complete-guide-incl-redux/" target="_blank" rel="noreferrer noopener"> React - The Complete Guide </a>
                 </h3>
                 <h4>Udemy - Academind by Maximilian Schwarzmülle</h4>
                 <h5>
@@ -80,7 +80,16 @@ const Experience: NextPage = () => {
               </Page.SectionItem>
               <Page.SectionItem image="/images/udemy.svg">
                 <h3>
-                  <a href="https://www.udemy.com/course/understanding-typescript/"> Understanding TypeScript </a>
+                  <a href="https://www.udemy.com/course/nextjs-react-the-complete-guide/" target="_blank" rel="noreferrer noopener"> Next.js &amp; React - The Complete Guide</a>
+                </h3>
+                <h4>Udemy - Academind by Maximilian Schwarzmülle</h4>
+                <h5>
+                  <a target="_blank" rel="noreferrer noopener" href="http://ude.my/UC-9057120f-61f0-480b-aaf0-8b3e77b095bb"> Certificate </a>
+                </h5>
+              </Page.SectionItem>
+              <Page.SectionItem image="/images/udemy.svg">
+                <h3>
+                  <a href="https://www.udemy.com/course/understanding-typescript/" target="_blank" rel="noreferrer noopener"> Understanding TypeScript </a>
                 </h3>
                 <h4>Udemy - Academind by Maximilian Schwarzmülle</h4>
                 <h5>
@@ -89,7 +98,7 @@ const Experience: NextPage = () => {
               </Page.SectionItem>
               <Page.SectionItem image="/images/udemy.svg">
                 <h3>
-                  <a href="https://www.udemy.com/nuxtjs-vuejs-on-steroids/"> Nuxt.js - Vue.js on Steroids </a>
+                  <a href="https://www.udemy.com/nuxtjs-vuejs-on-steroids/" target="_blank" rel="noreferrer noopener"> Nuxt.js - Vue.js on Steroids </a>
                 </h3>
                 <h4>Udemy - Academind by Maximilian Schwarzmülle</h4>
                 <h5>

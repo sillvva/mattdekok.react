@@ -5,7 +5,7 @@ import Page from '../components/page';
 import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
 import PageMeta from '../components/meta';
-import { firestore, doc, getDoc } from '../functions/firebase'
+import { doc, getDoc, setDoc } from '../functions/firebase'
 
 const Skills: NextPage = (props: any) => {
   const cols = {
@@ -21,7 +21,7 @@ const Skills: NextPage = (props: any) => {
       <Page.Body>
         <Page.Article className="w-full sm:w-9/12 md:w-10/12 lg:w-9/12">
           {props.skills.map((section: any, i: number) => (
-            <Rating.Section key={i} name={section.section} columns={cols}>
+            <Rating.Section key={i} name={section.name} columns={cols}>
               {section.skills.map((skill: any, j: number) => <Rating.Item key={`${i}-${j}`} name={skill.name} rating={skill.rating} />)}
             </Rating.Section>
           ))}
@@ -33,14 +33,28 @@ const Skills: NextPage = (props: any) => {
 
 export default Skills
 
-export async function getServerSideProps(context: any) {
-  const docRef = doc(firestore, 'website/skills');
+interface Skill {
+  [name: string]: number
+}
+
+interface SkillSection {
+  [section: string]: Skill
+}
+
+export async function getServerSideProps() {
+  const docRef = doc('website/skills');
   const document = await getDoc(docRef);
-  const skills = document.data()?.data || [];
+  const sections: SkillSection = document.data() || {};
 
   return {
     props: {
-      skills
+      skills: Object.entries(sections).sort((a, b) => a[0] > b[0] ? 1 : -1).map(([section, skills]) => ({
+        name: section.replace(/^\d+\. /, ''),
+        skills: Object.entries(skills).map(([skill, rating]) => ({
+          name: skill,
+          rating: rating
+        })).sort((a, b) => a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1)
+      }))
     }
   }
 }

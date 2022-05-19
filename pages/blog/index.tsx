@@ -5,8 +5,7 @@ import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import BlogDirectory, { DirectoryProps, PostProps } from '../../components/blog';
 import PageMeta from '../../components/meta';
-
-import { firestore, doc, getDoc, firebaseConfig } from '../../functions/firebase'
+import { doc, getDoc, firebaseConfig } from '../../functions/firebase'
 
 const Blog: NextPage<DirectoryProps> = (props: DirectoryProps) => {
   return (
@@ -23,7 +22,7 @@ const Blog: NextPage<DirectoryProps> = (props: DirectoryProps) => {
 export default Blog
 
 export async function getServerSideProps() {
-  const docRef = doc(firestore, firebaseConfig.storageContent);
+  const docRef = doc(firebaseConfig.storageContent);
   const document = await getDoc(docRef);
   const data: any = Object.values(JSON.parse(JSON.stringify(document.data())));
 

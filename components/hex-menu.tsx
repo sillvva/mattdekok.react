@@ -96,13 +96,19 @@ interface HexMenuItemProps {
 
 const HexMenuItem = (props: React.PropsWithRef<HexMenuItemProps>) => {
   const menuItem = (
-    <a className={[styles.HexMenuItem, !props.label ? styles.Empty : '', props.active ? styles.Active : '', props.rotated ? styles.Rotated : '', ...props.classes].join(' ')}
-        style={{ 
-          ...(props.color && { '--item-color': props.color }), 
-          ...(props.hoverColor && { '--hover-color': props.hoverColor }),
-          ...(props.activeColor && { '--active-color': props.activeColor }),
-          ...(props.textColor && { '--text-color': props.textColor }),
-        } as React.CSSProperties}>
+    <a className={[
+        styles.HexMenuItem, 
+        !props.label ? styles.Empty : '', 
+        props.active ? styles.Active : '', 
+        props.rotated ? styles.Rotated : '', 
+        ...props.classes
+      ].join(' ')}
+      style={{ 
+        ...(props.color && { '--item-color': props.color }), 
+        ...(props.hoverColor && { '--hover-color': props.hoverColor }),
+        ...(props.activeColor && { '--active-color': props.activeColor }),
+        ...(props.textColor && { '--text-color': props.textColor }),
+      } as React.CSSProperties}>
         <span className={styles.ItemLabel}>{props.label}</span>
         <div className={`${styles.Face} ${styles.Face1}`}></div>
         <div className={`${styles.Face} ${styles.Face2}`}></div>
