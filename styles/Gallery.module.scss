@@ -1,12 +1,15 @@
 .GalleryItem,
 .LinkedGalleryItem {
-  @apply w-full relative block shadow-lg rounded-md shadow-lg overflow-hidden bg-black;
+  @apply w-full relative block shadow-lg rounded-md overflow-hidden bg-black;
+  --tw-shadow-color: var(--shadowColor);
+  --tw-shadow: var(--tw-shadow-colored);
   transition: all 0.5s;
   > span {
     @apply aspect-video;
     display: block !important;
   }
   .Cover {
+    @apply absolute bottom-0 left-0 right-0 flex flex-col justify-end;
     padding: 10px;
     background: rgba(255, 255, 255, 0.01);
     background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.01) 50%, var(--darkBackground) 100%);
@@ -20,14 +23,6 @@
                   endColorstr='#000000',
                   GradientType=0
               );
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     * {
       color: white;
     }
@@ -54,7 +49,9 @@
   }
 }
 .LinkedGalleryItem:hover {
-  --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 1), 0 4px 6px -4px rgb(0 0 0 / 0.1) !important;
+  @apply shadow-xl;
+  --tw-shadow-color: var(--shadowHover);
+  --tw-shadow: var(--tw-shadow-colored);
   // @apply outline outline-1;
 }
 
