@@ -5,7 +5,6 @@ import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import BlogDirectory, { DirectoryProps, PostProps } from '../../components/blog';
 import PageMeta from '../../components/meta';
-
 import { doc, getDoc, firebaseConfig } from '../../functions/firebase'
 
 const Blog: NextPage<DirectoryProps> = (props: DirectoryProps) => {

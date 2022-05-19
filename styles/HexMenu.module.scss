@@ -29,7 +29,6 @@
   --active-color: var(--menuColor2);
   --hover-color: var(--menuColor2);
   --text-color: var(--menuText);
-  // float: left;
   position: relative;
   margin: calc(var(--baseYMargin) * var(--scale)) calc(var(--baseXMargin) * var(--scale));
   margin-left: calc(2px * var(--scale));
@@ -38,7 +37,7 @@
   z-index: 1;
   text-decoration: none;
   text-align: center;
-  &.Actove,
+  &.Active,
   &.Empty {
     cursor: default;
   }
@@ -52,11 +51,21 @@
       background-color: var(--active-color);
     }
   }
-  &:hover:not(.Empty) {
-    z-index: 2;
-    .Face {
-      background-color: var(--hover-color);
-      transition: background-color 500ms ease, -webkit-transform 1s ease-in-out;
+  &:hover,
+  &:focus {
+    &:not(.Empty) {
+      z-index: 2;
+      .Face {
+        background: var(--hover-color);
+        transition: background-color 500ms ease, -webkit-transform 1s ease-in-out;
+      }
+      &:active {
+        .Face {
+          &::after {
+            opacity: 1;
+          }
+        }
+      }
     }
   }
   .ItemLabel {
@@ -80,6 +89,17 @@
     background: var(--item-color);
     z-index: -1;
     backface-visibility: hidden;
+    &::after {
+      content: "";
+      position: absolute;
+      background-color: rgba(0,0,0,0.4);
+      opacity: 0;
+      transition: opacity 500ms ease;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   }
   .Face1 {
     transform: rotate(60deg);
