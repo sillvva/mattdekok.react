@@ -14,16 +14,6 @@ const Skills: NextPage = (props: any) => {
     xl: 4,
   };
 
-  const skills: any = [];
-  props.skills.forEach((section: SkillSection) => {
-    const sSkills: any = [];
-    section.skills.forEach((skill: Skill) => {
-      sSkills.push([skill.name, skill.rating])
-    })
-    skills.push([section.section, Object.fromEntries(sSkills)]);
-  })
-  console.log(JSON.stringify(Object.fromEntries(skills)));
-
   return (
     <Layout>
       <PageMeta title="Skills" />
