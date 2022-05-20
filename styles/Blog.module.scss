@@ -2,7 +2,6 @@
   @apply flex flex-wrap w-full;
   .BlogPost {
     @apply basis-full md:basis-6/12 xl:basis-4/12 p-3;
-    min-height: 150px;
     .BlogPost__Container {
       @apply flex overflow-hidden h-full shadow-lg ring-1 rounded-lg ring-gray-900/5;
       --tw-shadow-color: var(--shadowColor);
@@ -15,7 +14,7 @@
         --tw-shadow: var(--tw-shadow-colored);
       }
       .BlogPost__Image {
-        @apply relative bg-clip-content bg-cover bg-center h-full text-white bg-gray-500/50;
+        @apply relative bg-clip-content bg-cover bg-center h-full text-white bg-gray-500/60;
         min-width: 128px;
         max-width: 30%;
       }

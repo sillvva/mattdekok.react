@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
       }
 
-      res.setHeader("Cache-Control", "public, max-age=3600");
+      res.setHeader("Cache-Control", "public, max-age=21600");
       return res.status(200).json({
         posts: posts.sort((a, b) => (a.date < b.date ? 1 : -1)),
       });

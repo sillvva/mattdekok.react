@@ -12,8 +12,8 @@ const Blog: NextPage<DirectoryProps> = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const loaders: PostProps[] = Array(6).fill({
-    title: "", date: "", image: "",
-    description: "", slug: "", link: ""
+    title: "Test", date: "", image: "",
+    description: "Item is loading...", slug: "", link: ""
   });
 
   useEffect(() => {
