@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { PropsWithChildren } from 'react';
 import { menuItems } from '../store/main-layout.context';
 import PageHeader from '../components/page-header'
 import Page from '../components/page';
@@ -7,7 +8,7 @@ import Layout from '../layouts/layout';
 import PageMeta from '../components/meta';
 import { doc, getDoc } from '../functions/firebase'
 
-const Skills: NextPage = (props: any) => {
+const Skills: NextPage<SkillProps> = (props: PropsWithChildren<SkillProps>) => {
   const cols = {
     sm: 12,
     md: 6,
@@ -20,9 +21,9 @@ const Skills: NextPage = (props: any) => {
       <PageHeader title="Skills" items={menuItems} />
       <Page.Body>
         <Page.Article className="w-full sm:w-9/12 md:w-10/12 lg:w-9/12">
-          {props.skills.map((section: any, i: number) => (
+          {props.skills.map((section, i) => (
             <Rating.Section key={i} name={section.name} columns={cols}>
-              {section.skills.map((skill: any, j: number) => <Rating.Item key={`${i}-${j}`} name={skill.name} rating={skill.rating} />)}
+              {section.skills.map((skill, j) => <Rating.Item key={`${i}-${j}`} name={skill.name} rating={skill.rating} />)}
             </Rating.Section>
           ))}
         </Page.Article>
@@ -39,6 +40,20 @@ interface Skill {
 
 interface SkillSection {
   [section: string]: Skill
+}
+
+interface SkillPropsSkill {
+  name: string;
+  rating: number;
+}
+
+interface SkillPropsSection {
+  name: string;
+  skills: SkillPropsSkill[];
+}
+
+interface SkillProps {
+  skills: SkillPropsSection[];
 }
 
 export async function getServerSideProps() {

@@ -192,7 +192,7 @@ export async function getServerSideProps(context: any) {
   if (!existsSync(dirPath) && existsSync('/tmp')) dirPath = '/tmp';
   const filePath = `${dirPath}/${slug}.md`;
 
-  const storageRef = ref(`${firebaseConfig.storageContent}/${slug}.md`);
+  const storageRef = ref(`${firebaseConfig.blogContent}/${slug}.md`);
   const meta = await getMetadata(storageRef);
 
   let result = { data: "" };

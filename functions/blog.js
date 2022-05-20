@@ -3,18 +3,16 @@ const axios = require('axios');
 const matter = require("gray-matter");
 const firebase = require('./firebase.js');
 
-const storageContent = "blog/articles";
-
 async function fetchPosts() {
   const { ref, getDownloadURL, getMetadata, list } = firebase;
   const { doc, setDoc, getDoc } = firebase;
 
-  const storageRef = ref(storage, storageContent);
+  const storageRef = ref(storage, firebase.firebaseConfig.blogContent);
   const contentList = await list(storageRef);
 
   console.log(`Found ${contentList.items.length} files`);
 
-  const docRef = doc(firestore, `${storageContent}`);
+  const docRef = doc(firestore, `${firebase.firebaseConfig.blogContent}`);
   const store = await getDoc(docRef);
   const files = store.data() || {};
 

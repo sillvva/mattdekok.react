@@ -1,4 +1,5 @@
 import type { NextPage } from 'next'
+import { PropsWithChildren } from 'react';
 import { menuItems } from '../store/main-layout.context';
 import PageHeader from '../components/page-header'
 import Layout from '../layouts/layout';
@@ -6,9 +7,9 @@ import Page from '../components/page';
 import styles from '../styles/Gallery.module.scss'
 import GalleryItem from '../components/gallery';
 import PageMeta from '../components/meta';
-import { doc, getDoc, setDoc } from '../functions/firebase'
+import { doc, getDoc } from '../functions/firebase'
 
-const Projects: NextPage = (props: any) => {
+const Projects: NextPage<ProjectProps> = (props: PropsWithChildren<ProjectProps>) => {
   return (
     <Layout>
       <PageMeta title="Projects" />
@@ -17,7 +18,7 @@ const Projects: NextPage = (props: any) => {
         <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
           <div className="p-2 basis-full 2xl:basis-11/12">
             <div className={styles.Projects}>
-              {props.projects.map((project: any, i: number) => (
+              {props.projects.map((project, i) => (
                 <div className={styles.Project} key={`project-${i}`}>
                   <GalleryItem image={project.image} title={project.title} subtitle={project.subtitle} description={project.description} link={project.link} />
                 </div>
@@ -38,6 +39,11 @@ interface Project {
   description: string;
   image: string;
   link?: string;
+  sort?: number;
+}
+
+interface ProjectProps {
+  projects: Project[];
 }
 
 export async function getServerSideProps() {

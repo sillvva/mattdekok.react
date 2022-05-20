@@ -53,25 +53,3 @@ const Blog: NextPage<DirectoryProps> = () => {
 }
 
 export default Blog
-
-// export async function getServerSideProps() {
-//   const docRef = doc(firebaseConfig.storageContent);
-//   const document = await getDoc(docRef);
-//   const data: any = Object.values(JSON.parse(JSON.stringify(document.data())));
-
-//   const posts: PostProps[] = [];
-//   for(let doc of data) {
-//     posts.push({
-//       slug: doc.name.replace(/\.[^/.]+$/, ""),
-//       ...doc.data,
-//       ...(doc.data.date && { date: new Date(doc.data.date.seconds * 1000).toISOString() }),
-//       ...(doc.data.updated && { updated: new Date(doc.data.updated.seconds * 1000).toISOString() }),
-//     })
-//   }
-
-//   return {
-//     props: {
-//       posts: posts.sort((a, b) => a.date < b.date ? 1 : -1)
-//     }
-//   }
-// }
