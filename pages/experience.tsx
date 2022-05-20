@@ -5,7 +5,7 @@ import PageHeader from '../components/page-header'
 import Page from '../components/page';
 import Layout from '../layouts/layout';
 import PageMeta from '../components/meta';
-import { doc, getDoc, setDoc } from '../functions/firebase'
+import { doc, getDoc } from '../functions/firebase'
 
 const Experience: NextPage<ExperienceProps> = (props: PropsWithChildren<ExperienceProps>) => {
   return (

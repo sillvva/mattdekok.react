@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import MainLayoutContext from '../store/main-layout.context';
 import styles from '../styles/MainLayout.module.scss'
 import PageMenu from './page-menu';
-import cookie from 'js-cookie';
 
 interface PageHeaderProps {
   classes?: string | string[];
@@ -12,19 +11,7 @@ interface PageHeaderProps {
 }
 
 const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
-  const { drawer } = useContext(MainLayoutContext);
-
-  function toggleTheme() {
-    let newTheme: string;
-    if (document.body.classList.contains('dark')) {
-      document.body.classList.replace('dark', 'light');
-      newTheme = 'light';
-    } else {
-      document.body.classList.replace('light', 'dark');
-      newTheme = 'dark';
-    }
-    cookie.set('theme', newTheme);
-  }
+  const { drawer, theme } = useContext(MainLayoutContext);
 
   return (
     <header className={[styles.PageHeader, ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes : ['']))].join(' ')}>
@@ -36,7 +23,7 @@ const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
           <PageMenu items={props.items} />
         </div>
         <h1 className={`${[styles.PageTitle, props.smallTitle ? styles.SmallTitle : ''].join(' ')} block lg:hidden flex-1`}>{props.title}</h1>
-        <button type="button" onClick={toggleTheme} className={`${styles.Fab} my-3`}>
+        <button type="button" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
           <i className="mdi mdi-brightness-6"></i>
         </button >
       </nav>

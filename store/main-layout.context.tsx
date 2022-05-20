@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import cookie from 'js-cookie';
 import styles from '../styles/MainLayout.module.scss'
 
 export const menuItems = [
@@ -18,8 +19,15 @@ interface DrawerProps {
   reset: () => void;
 }
 
+interface ThemeProps {
+  state: string;
+  toggle: () => void;
+  set: (theme: string) => void;
+}
+
 interface MainLayoutProps {
-  drawer: DrawerProps
+  drawer: DrawerProps;
+  theme: ThemeProps;
 }
 
 const initState = {
@@ -30,14 +38,21 @@ const initState = {
     toggle: function () { },
     reset: function () { }
   },
+  theme: {
+    state: 'dark',
+    toggle: function() { },
+    set: function(theme: string) { }
+  }
 };
 
 const MainLayoutContext = React.createContext<MainLayoutProps>(initState);
 
+export default MainLayoutContext;
+
 export const MainLayoutContextProvider = (props: React.PropsWithChildren<any>) => {
   const [context, setContext] = useState<MainLayoutProps>(initState);
 
-  function toggleHandler() {
+  function drawerToggleHandler() {
     const drawer = context.drawer;
     if (drawer.menuClasses.length) return;
 
@@ -66,7 +81,7 @@ export const MainLayoutContextProvider = (props: React.PropsWithChildren<any>) =
     setContext({ ...context, drawer: drawer });
   }
 
-  function resetHandler() {
+  function drawerResetHandler() {
     const drawer = context.drawer;
     drawer.state = false;
     drawer.menuClasses = "";
@@ -74,12 +89,41 @@ export const MainLayoutContextProvider = (props: React.PropsWithChildren<any>) =
     setContext({ ...context, drawer: drawer });
   }
 
+  function themeToggleHandler() {
+    if (context.theme.state == 'dark') {
+      document.body.classList.replace('dark', 'light');
+      context.theme.state = 'light';
+    } else {
+      document.body.classList.replace('light', 'dark');
+      context.theme.state = 'dark';
+    }
+    cookie.set('theme', context.theme.state);
+    setContext({ ...context, theme: context.theme });
+  }
+
+  function themeSetHandler(theme: string) {
+    if (theme == 'light') {
+      document.body.classList.replace('dark', 'light');
+      context.theme.state = 'light';
+    } else {
+      document.body.classList.replace('light', 'dark');
+      context.theme.state = 'dark';
+    }
+    cookie.set('theme', context.theme.state);
+    setContext({ ...context, theme: context.theme });
+  }
+
   const ctx = {
     ...context,
     drawer: {
       ...context.drawer,
-      toggle: toggleHandler,
-      reset: resetHandler
+      toggle: drawerToggleHandler,
+      reset: drawerResetHandler
+    },
+    theme: {
+      ...context.theme,
+      toggle: themeToggleHandler,
+      set: themeSetHandler
     }
   };
 
@@ -89,5 +133,3 @@ export const MainLayoutContextProvider = (props: React.PropsWithChildren<any>) =
     </MainLayoutContext.Provider>
   );
 }
-
-export default MainLayoutContext;

@@ -5,10 +5,12 @@ import { menuItems } from '../store/main-layout.context';
 import styles from '../styles/MainLayout.module.scss'
 
 const MainLayout = (props: React.PropsWithChildren<any>) => {
-  const { drawer } = useContext(MainLayoutContext);
+  const { drawer, theme } = useContext(MainLayoutContext);
 
   useEffect(() => {
     drawer.reset();
+    if (document.body.classList.contains('dark')) theme.set('dark');
+    if (document.body.classList.contains('light')) theme.set('light');
   }, [])
 
   return (
