@@ -44,7 +44,7 @@ function BlogPost({ post }: PropsWithChildren<{ post: PostProps }>) {
           {post.slug || post.link ?
             <div className="p-3">
               <h1 className="text-lg font-semibold">{post.title}</h1>
-              <p className="text-gray-500">
+              <p className="text-gray-400">
                 {new Date(post.date).toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}
               </p>
               <p style={{ color: 'var(--text)' }}>{post.description}</p>
