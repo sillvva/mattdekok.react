@@ -22,6 +22,7 @@ import PageHeader from '../../components/page-header'
 import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
 import PageMeta from '../../components/meta';
+import ReactCodepen from '../../components/codepen';
 
 SyntaxHighlighter.registerLanguage('js', js);
 SyntaxHighlighter.registerLanguage('javascript', js);
@@ -102,26 +103,26 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
       )
     },
 
-    // pre(pre: any) {
-    //   const { node, children } = pre;
-    //   if (node.children[0].tagName === 'code') {
-    //     const code = node.children[0];
-    //     const { properties, children } = code;
-    //     const { className } = properties;
-    //     const { value } = children[0];
-    //     const language = ((className || [""])[0] || "").split('-')[1];
-    //     if (language == "codepen") {
-    //       try {
-    //         const codepen = JSON.parse(value.trim());
-    //         return <CodePenEmbed title={codepen.title} user={codepen.user} hash={codepen.hash} />
-    //       }
-    //       catch (err) {
-    //         return <code>{children}</code>;
-    //       }
-    //     }
-    //   }
-    //   return <code>{children}</code>;
-    // },
+    pre(pre: any) {
+      const { node, children } = pre;
+      if (node.children[0].tagName === 'code') {
+        const code = node.children[0];
+        const { properties, children } = code;
+        const { className } = properties;
+        const { value } = children[0];
+        const language = ((className || [""])[0] || "").split('-')[1];
+        if (language == "codepen") {
+          try {
+            const codepen = JSON.parse(value.trim());
+            return <ReactCodepen {...codepen} />
+          }
+          catch (err) {
+            return <code>{children}</code>;
+          }
+        }
+      }
+      return <code>{children}</code>;
+    },
 
     code(code: any) {
       const { className, children } = code;
@@ -143,8 +144,7 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
       <PageHeader title={data.title} items={menuItems} smallTitle={true} />
       <Page.Body>
         <Page.Article className={[blogStyles.BlogArticle, 'w-full xl:w-9/12 2xl:w-8/12'].join(' ')}>
-          <Page.Section className="aspect-video" bgImage={data.image}>
-          </Page.Section>
+          {!data.full && <Page.Section className="aspect-video" bgImage={data.image} />}
           <Page.Section>
             <p className="mb-4 text-gray-400" aria-label="Date published">{data.date} {data.updated && `(Updated: ${data.updated})`}</p>
             <div className={blogStyles.BlogContent}>

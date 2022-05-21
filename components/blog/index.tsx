@@ -14,6 +14,7 @@ export interface PostProps {
   tags: string[];
   image: string;
   link?: string;
+  full?: boolean;
 }
 
 export interface DirectoryProps {
