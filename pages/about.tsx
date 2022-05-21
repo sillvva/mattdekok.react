@@ -1,5 +1,5 @@
 import type { NextPage } from 'next'
-import styles from '../styles/MainLayout.module.scss'
+import styles from '../layouts/main/MainLayout.module.scss'
 import { menuItems } from '../store/main-layout.context';
 import PageHeader from '../components/page-header'
 import { PageMenuItem } from '../components/page-menu';

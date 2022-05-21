@@ -1,7 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { PropsWithChildren, useState } from "react";
-import styles from '../styles/Blog.module.scss'
+import styles from './Blog.module.scss'
+
+export const blogStyles = styles;
 
 export interface PostProps {
   slug: string;
@@ -12,6 +14,7 @@ export interface PostProps {
   tags: string[];
   image: string;
   link?: string;
+  full?: boolean;
 }
 
 export interface DirectoryProps {

@@ -13,7 +13,7 @@ const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
   const ogProperties: any = {
     title: dtitle,
     description: description,
-    image: props.image ? `https://matt.dekok.app${props.image}` : "https://matt.dekok.app/images/preview-me2.jpg",
+    image: `https://matt.dekok.app${props.image || '/images/preview-me2.jpg'}`,
     url: "https://matt.dekok.app",
   };
   const twProperties: any = {
@@ -32,7 +32,6 @@ const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
           return <meta key={`${m}:${t}`} name={`${m}:${t}`} content={properties[m][t]} />;
         });
       })}
-      {/* <script src="https://cpwebassets.codepen.io/assets/embed/ei.js" type="text/javascript" async /> */}
     </Head>
   )
 }

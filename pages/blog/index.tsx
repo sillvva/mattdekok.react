@@ -6,14 +6,16 @@ import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import BlogDirectory, { DirectoryProps, PostProps } from '../../components/blog';
 import PageMeta from '../../components/meta';
+import PageMessage from '../../components/page-message';
+
 
 const Blog: NextPage<DirectoryProps> = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const loaders: PostProps[] = Array(6).fill({
-    title: "Test", date: "", image: "",
-    description: "Item is loading...", slug: "", link: ""
+    title: "", date: "", image: "",
+    description: "", slug: "", link: ""
   });
 
   useEffect(() => {
@@ -37,13 +39,9 @@ const Blog: NextPage<DirectoryProps> = () => {
         {loading ? (
           <BlogDirectory posts={loaders} />
         ) : error ? (
-          <div className="flex flex-col justify-center py-20 text-2xl">
-            <h1 className="text-2xl">{error}</h1>
-          </div>
+          <PageMessage>{error}</PageMessage>
         ) : !posts.length ? (
-          <div className="flex flex-col justify-center py-20 text-2xl">
-            <h1 className="text-2xl">No posts found.</h1>
-          </div>
+          <PageMessage>No posts found.</PageMessage>
         ) : (
           <BlogDirectory posts={posts} />
         )}

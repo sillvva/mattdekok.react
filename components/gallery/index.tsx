@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React, { PropsWithChildren } from "react";
-import styles from '../styles/Gallery.module.scss'
+import styles from './Gallery.module.scss'
+
+export const galleryStyles = styles;
 
 interface GalleryItemProps {
   link: string | null | undefined;

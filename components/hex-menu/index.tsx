@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link'
-import styles from '../styles/HexMenu.module.scss'
+import styles from './HexMenu.module.scss'
 import { useRouter } from 'next/router';
 
 export interface Item {

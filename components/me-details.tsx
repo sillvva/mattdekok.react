@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/MainLayout.module.scss'
+import styles from '../layouts/main/MainLayout.module.scss'
 
 interface MeDetailsProps {
   name: string;

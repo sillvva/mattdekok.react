@@ -1,0 +1,6 @@
+.Projects {
+  @apply flex flex-wrap -m-2;
+}
+.Project {
+  @apply p-3 basis-full md:basis-6/12 lg:basis-4/12;
+}

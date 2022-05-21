@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import { PropsWithChildren } from 'react';
-import { menuItems } from '../store/main-layout.context';
-import PageHeader from '../components/page-header'
-import Layout from '../layouts/layout';
-import Page from '../components/page';
-import styles from '../styles/Gallery.module.scss'
-import GalleryItem from '../components/gallery';
-import PageMeta from '../components/meta';
-import { doc, getDoc } from '../functions/firebase'
+import { menuItems } from '../../store/main-layout.context';
+import Layout from '../../layouts/layout';
+import PageHeader from '../../components/page-header'
+import Page from '../../components/page';
+import GalleryItem from '../../components/gallery';
+import PageMeta from '../../components/meta';
+import { doc, getDoc } from '../../functions/firebase'
+import projectStyles from './Projects.module.scss';
 
 const Projects: NextPage<ProjectProps> = (props: PropsWithChildren<ProjectProps>) => {
   return (
@@ -17,9 +17,9 @@ const Projects: NextPage<ProjectProps> = (props: PropsWithChildren<ProjectProps>
       <Page.Body>
         <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
           <div className="p-2 basis-full 2xl:basis-11/12">
-            <div className={styles.Projects}>
+            <div className={projectStyles.Projects}>
               {props.projects.map((project, i) => (
-                <div className={styles.Project} key={`project-${i}`}>
+                <div className={projectStyles.Project} key={`project-${i}`}>
                   <GalleryItem image={project.image} title={project.title} subtitle={project.subtitle} description={project.description} link={project.link} />
                 </div>
               ))}
