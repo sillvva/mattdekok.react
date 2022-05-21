@@ -1,6 +1,6 @@
 import React from 'react';
-import ratingStyles from '../styles/Ratings.module.scss'
-import Page from './page';
+import ratingStyles from './Ratings.module.scss'
+import Page from '../page';
 
 interface RatingColumnBreakpoints {
   sm?: number;

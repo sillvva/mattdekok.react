@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import MainLayoutContext from '../store/main-layout.context';
-import styles from '../styles/MainLayout.module.scss'
+import styles from '../layouts/main/MainLayout.module.scss'
 import PageMenu from './page-menu';
 
 interface PageHeaderProps {

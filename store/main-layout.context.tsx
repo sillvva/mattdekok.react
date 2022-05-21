@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import cookie from 'js-cookie';
-import styles from '../styles/MainLayout.module.scss'
+import styles from '../layouts/main/MainLayout.module.scss'
 
 export const menuItems = [
   { link: "/", label: "Intro" },

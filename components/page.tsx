@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import styles from '../styles/MainLayout.module.scss'
+import styles from '../layouts/main/MainLayout.module.scss'
 
 const PageBody = (props: React.PropsWithChildren<any>) => {
   return (

@@ -20,10 +20,8 @@ import { menuItems } from '../../store/main-layout.context';
 import Layout from '../../layouts/layout';
 import PageHeader from '../../components/page-header'
 import Page from '../../components/page';
-import { PostProps } from '../../components/blog';
+import { blogStyles, PostProps } from '../../components/blog';
 import PageMeta from '../../components/meta';
-// import CodePenEmbed from '../../components/codepen';
-import styles from '../../styles/Blog.module.scss';
 
 SyntaxHighlighter.registerLanguage('js', js);
 SyntaxHighlighter.registerLanguage('javascript', js);
@@ -49,14 +47,9 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
         const image = node.children[0];
 
         return (
-          <figure className={styles.BlogFigure}>
-            <a href={image.properties.src} target="_blank" rel="noreferrer noopener" className={styles.BlogImage}>
-              <Image
-                src={image.properties.src}
-                alt={image.alt}
-                layout="fill"
-                objectFit="contain"
-              />
+          <figure className={blogStyles.BlogFigure}>
+            <a href={image.properties.src} target="_blank" rel="noreferrer noopener" className={blogStyles.BlogImage}>
+              <Image src={image.properties.src} alt={image.alt} layout="fill" objectFit="contain" />
             </a>
             <figcaption>Click to open full screen</figcaption>
           </figure>
@@ -149,12 +142,12 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
       <PageMeta title={data.title} description={data.description} image={data.image || ""} />
       <PageHeader title={data.title} items={menuItems} smallTitle={true} />
       <Page.Body>
-        <Page.Article className={[styles.BlogArticle, 'w-full xl:w-9/12 2xl:w-8/12'].join(' ')}>
+        <Page.Article className={[blogStyles.BlogArticle, 'w-full xl:w-9/12 2xl:w-8/12'].join(' ')}>
           <Page.Section className="aspect-video" bgImage={data.image}>
           </Page.Section>
           <Page.Section>
             <p className="mb-4 text-gray-400" aria-label="Date published">{data.date} {data.updated && `(Updated: ${data.updated})`}</p>
-            <div className={styles.BlogContent}>
+            <div className={blogStyles.BlogContent}>
               <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
                 {content}
               </ReactMarkdown>
