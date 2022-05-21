@@ -7,12 +7,12 @@ async function fetchPosts() {
   const { ref, getDownloadURL, getMetadata, list } = firebase;
   const { doc, setDoc, getDoc } = firebase;
 
-  const storageRef = ref(storage, firebase.firebaseConfig.blogContent);
+  const storageRef = ref(firebase.firebaseConfig.blogContent);
   const contentList = await list(storageRef);
 
   console.log(`Found ${contentList.items.length} files`);
 
-  const docRef = doc(firestore, `${firebase.firebaseConfig.blogContent}`);
+  const docRef = doc(`${firebase.firebaseConfig.blogContent}`);
   const store = await getDoc(docRef);
   const files = store.data() || {};
 
@@ -37,13 +37,13 @@ async function fetchPosts() {
     
     const url = await getDownloadURL(file);
     const result = await axios.get(url);
-    const parsedMD = matter(result.data);
+    const parsedData = matter(result.data);
     files[slug] = {
       name: metadata.name,
       path: metadata.fullPath,
       url: url,
-      timeCreated: timeCreated.toISOString(),
-      data: parsedMD.data
+      timeCreated: timeCreated,
+      data: parsedData.data
     };
   }
   
