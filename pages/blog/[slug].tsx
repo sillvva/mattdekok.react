@@ -135,10 +135,18 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
     },
   }
 
+  const headerProps = { 
+    menu: true,
+    smallTitle: true,
+    meta: {
+      title: data.title, 
+      description: data.description,
+      image: data.image || ""
+    }
+  };
+
   return (
-    <Layout>
-      <PageMeta title={data.title} description={data.description} image={data.image || ""} />
-      <PageHeader title={data.title} items={menuItems} smallTitle={true} />
+    <Layout props={headerProps}>
       <Page.Body>
         <Page.Article className={[blogStyles.BlogArticle, 'w-full xl:w-9/12 2xl:w-8/12'].join(' ')}>
           {!data.full && <Page.Section className="aspect-video" bgImage={data.image} />}

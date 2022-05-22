@@ -1,19 +1,14 @@
 import type { NextPage } from 'next'
 import { PropsWithChildren } from 'react';
-import { menuItems } from '../../store/main-layout.context';
 import Layout from '../../layouts/layout';
-import PageHeader from '../../components/page-header'
 import Page from '../../components/page';
 import GalleryItem from '../../components/gallery';
-import PageMeta from '../../components/meta';
 import { doc, getDoc } from '../../functions/firebase'
 import projectStyles from './Projects.module.scss';
 
 const Projects: NextPage<ProjectProps> = (props: PropsWithChildren<ProjectProps>) => {
   return (
-    <Layout>
-      <PageMeta title="Projects" />
-      <PageHeader title="Projects" items={menuItems} />
+    <Layout props={{ menu: true, meta: { title: "Projects" } }}>
       <Page.Body>
         <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
           <div className="p-2 basis-full 2xl:basis-11/12">

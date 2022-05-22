@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
 import styles from '../layouts/main/MainLayout.module.scss'
-import { menuItems } from '../store/main-layout.context';
 import PageHeader from '../components/page-header'
 import { PageMenuItem } from '../components/page-menu';
 import Page from '../components/page';
@@ -16,9 +15,7 @@ const AboutMe: NextPage = () => {
   };
 
   return (
-    <Layout>
-      <PageMeta title="About Me" />
-      <PageHeader title="About Me" items={menuItems} />
+    <Layout props={{ menu: true, meta: { title: "About Me" } }}>
       <Page.Body>
         <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
           <Page.Section>

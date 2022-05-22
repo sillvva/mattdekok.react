@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
+import { motion } from 'framer-motion';
 import MainLayoutContext from '../store/main-layout.context';
 import styles from '../layouts/main/MainLayout.module.scss'
+import { layoutMotion } from '../layouts/layout';
 import PageMenu from './page-menu';
 
 interface PageHeaderProps {
@@ -27,7 +29,17 @@ const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
           <i className="mdi mdi-brightness-6"></i>
         </button >
       </nav>
-      {props.title && <h1 className={`${styles.PageTitle} hidden lg:block`}>{props.title}</h1>}
+      {props.title && (
+        <motion.h1 
+          variants={layoutMotion.variants} // Pass the variant object into Framer Motion 
+          initial="hidden" // Set the initial state to variants.hidden
+          animate="enter" // Animated state to variants.enter
+          exit="exit" // Exit state (used later) to variants.exit
+          transition={layoutMotion.transition} // Set the transition to linear
+          className={`${styles.PageTitle} hidden lg:block`}>
+          {props.title}
+        </motion.h1>
+      )}
     </header >
   )
 }

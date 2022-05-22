@@ -41,7 +41,7 @@
 }
 
 .PageNav {
-  @apply flex w-full px-3 items-center lg:pl-14;
+  @apply flex w-full px-3 items-center lg:pl-14 max-h-[80px];
 }
 
 .PageMenuContainer {

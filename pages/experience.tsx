@@ -1,17 +1,12 @@
 import type { NextPage } from 'next'
 import { PropsWithChildren } from 'react';
-import { menuItems } from '../store/main-layout.context';
-import PageHeader from '../components/page-header'
 import Page from '../components/page';
 import Layout from '../layouts/layout';
-import PageMeta from '../components/meta';
 import { doc, getDoc } from '../functions/firebase'
 
 const Experience: NextPage<ExperienceProps> = (props: PropsWithChildren<ExperienceProps>) => {
   return (
-    <Layout>
-      <PageMeta title="Experience" />
-      <PageHeader title="Experience" items={menuItems} />
+    <Layout props={{ menu: true, meta: { title: "Experience" } }}>
       <Page.Body>
         <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
           {props.experience.map((section) => (

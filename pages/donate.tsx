@@ -1,9 +1,6 @@
 import type { NextPage } from 'next'
-import { menuItems } from '../store/main-layout.context';
-import PageHeader from '../components/page-header'
 import Page from '../components/page';
 import Layout from '../layouts/layout';
-import PageMeta from '../components/meta';
 
 const Donate: NextPage = () => {
   function copyTokenAddress(address: string) {
@@ -17,9 +14,7 @@ const Donate: NextPage = () => {
   }
 
   return (
-    <Layout>
-      <PageMeta title="Donate" />
-      <PageHeader title="Donate" items={menuItems} />
+    <Layout props={{ menu: true, meta: { title: "Donate" } }}>
       <Page.Body>
         <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
           <Page.Section>
