@@ -135,11 +135,11 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
     },
   }
 
-  const headerProps = { 
+  const headerProps = {
     menu: true,
     smallTitle: true,
     meta: {
-      title: data.title, 
+      title: data.title,
       description: data.description,
       image: data.image || ""
     },
@@ -158,12 +158,16 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
                 {content}
               </ReactMarkdown>
             </div>
-            <p className="mb-2">Tags:</p>
-            <div className="flex flex-wrap gap-2">
-              {data.tags.map((tag, i) => (
-                <span className="rounded-full bg-gray-700 text-white py-1 px-3" key={i}>{tag}</span>
-              ))}
-            </div>
+            {data.tags.length && (
+              <>
+                <p className="mb-2">Tags:</p>
+                <div className="flex flex-wrap gap-2">
+                  {data.tags.map((tag, i) => (
+                    <span className="rounded-full bg-gray-700 text-white py-1 px-3" key={i}>{tag}</span>
+                  ))}
+                </div>
+              </>
+            )}
           </Page.Section>
         </Page.Article>
       </Page.Body>

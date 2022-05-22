@@ -17,12 +17,32 @@ interface PageHeaderProps {
 const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
 
+  const classes = {
+    pageHeader: [
+      styles.PageHeader, 
+      ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes : []))
+    ].join(' '),
+    pageNav: [
+      styles.PageNav, 
+      ...(props.backTo ? [] : ['lg:pl-3'])
+    ].join(' '),
+    pageMenuContainer: [
+      styles.PageMenuContainer, 
+      ...(props.backTo ? [] : ['lg:pl-14'])
+    ].join(' '),
+    pageTitle: [
+      styles.PageTitle, 
+      ...(props.smallTitle ? [styles.SmallTitle] : []),
+      'block lg:hidden flex-1'
+    ].join(' ')
+  }
+
   return (
-    <header className={[styles.PageHeader, ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes : ['']))].join(' ')}>
-      <nav className={styles.PageNav}>
+    <header className={classes.pageHeader}>
+      <nav className={classes.pageNav}>
         {props.backTo ? (
           <Link href={props.backTo}>
-            <button type="button" className={`${styles.Fab} lg:hidden`}>
+            <button type="button" className={styles.Fab}>
               <i className="mdi mdi-chevron-left"></i>
             </button>
           </Link>
@@ -31,21 +51,21 @@ const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
             <i className="mdi mdi-menu"></i>
           </button>
         )}
-        <div className={styles.PageMenuContainer}>
+        <div className={classes.pageMenuContainer}>
           <PageMenu items={props.items} />
         </div>
-        <h1 className={`${[styles.PageTitle, props.smallTitle ? styles.SmallTitle : ''].join(' ')} block lg:hidden flex-1`}>{props.title}</h1>
+        <h1 className={classes.pageTitle}>{props.title}</h1>
         <button type="button" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
           <i className="mdi mdi-brightness-6"></i>
         </button >
       </nav>
       {props.title && (
         <motion.h1
-          variants={layoutMotion.variants} // Pass the variant object into Framer Motion 
-          initial="hidden" // Set the initial state to variants.hidden
-          animate="enter" // Animated state to variants.enter
-          exit="exit" // Exit state (used later) to variants.exit
-          transition={layoutMotion.transition} // Set the transition to linear
+          variants={layoutMotion.variants}
+          initial="hidden"
+          animate="enter"
+          exit="exit"
+          transition={layoutMotion.transition}
           className={`${styles.PageTitle} hidden lg:block`}>
           {props.title}
         </motion.h1>

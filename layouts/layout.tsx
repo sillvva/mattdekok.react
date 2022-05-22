@@ -1,3 +1,4 @@
+import React from "react";
 import { motion, Transition, Variants } from "framer-motion";
 import PageMeta from '../components/meta';
 import PageHeader from '../components/page-header';
@@ -7,7 +8,7 @@ import { menuItems } from '../store/main-layout.context';
 
 interface LayoutProps {
   layout?: string;
-  props?: MainLayoutProps
+  props?: PageHeadProps
 }
 
 interface LayoutMeta {
@@ -15,7 +16,7 @@ interface LayoutMeta {
   description?: string;
   image?: string;
 }
-interface MainLayoutProps {
+interface PageHeadProps {
   menu?: boolean;
   smallTitle?: boolean;
   meta?: LayoutMeta;
@@ -35,24 +36,29 @@ export const layoutMotion: { variants: Variants, transition: Transition } = {
   }
 }
 
+const PageHead = (props: React.PropsWithChildren<PageHeadProps>) => (
+  <>
+    <PageMeta title={props?.meta?.title} description={props?.meta?.description} />
+    <PageHeader
+      title={props?.meta?.title}
+      items={props?.menu ? menuItems : []}
+      smallTitle={props?.smallTitle}
+      classes={props?.headerClasses || []}
+      backTo={props?.backTo} />
+  </>
+);
+
 const Layout = ({ layout, children, props }: React.PropsWithChildren<LayoutProps>) => {
   return (
     <MainLayoutContextProvider>
       <MainLayout>
-        <PageMeta title={props?.meta?.title} description={props?.meta?.description} />
-        <PageHeader 
-          title={props?.meta?.title} 
-          items={props?.menu ? menuItems : []} 
-          smallTitle={props?.smallTitle} 
-          classes={props?.headerClasses || []}
-          backTo={props?.backTo} />
+        {props && <PageHead {...props} />}
         <motion.main
-          variants={layoutMotion.variants} // Pass the variant object into Framer Motion 
-          initial="hidden" // Set the initial state to variants.hidden
-          animate="enter" // Animated state to variants.enter
-          exit="exit" // Exit state (used later) to variants.exit
-          transition={layoutMotion.transition} // Set the transition to linear
-          className="">
+          variants={layoutMotion.variants}
+          initial="hidden"
+          animate="enter"
+          exit="exit"
+          transition={layoutMotion.transition}>
           {children}
         </motion.main>
       </MainLayout>
