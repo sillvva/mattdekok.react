@@ -32,14 +32,17 @@ function ReactCodepen(props: PropsWithChildren<CodePenProps>) {
   const [loadState, setLoadState] = useState(LOAD_STATE.booting);
   const [error, setError] = useState('');
   const _isMounted = useRef(false);
+  const scriptId = 'codepen-script';
 
   const loadScript = () => {
-    // load the codepen embed script
+    const codepenScript = document.getElementById(scriptId);
+    if (codepenScript) return;
+    
     const script = document.createElement('script');
     script.src = SCRIPT_URL;
     script.async = true;
+    script.id = scriptId
     script.onload = () => {
-      // do not do anything if the component is already unmounted.
       if (!_isMounted.current) return;
       setLoadState(LOAD_STATE.loaded);
     };
@@ -58,7 +61,10 @@ function ReactCodepen(props: PropsWithChildren<CodePenProps>) {
 
     loadScript();
 
-    return () => { _isMounted.current = false };
+    return () => { 
+      _isMounted.current = false; 
+      document.getElementById(scriptId)?.remove();
+    }
   }, []);
 
   const showLoader =
