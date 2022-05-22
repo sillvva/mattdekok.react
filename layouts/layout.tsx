@@ -20,6 +20,7 @@ interface MainLayoutProps {
   smallTitle?: boolean;
   meta?: LayoutMeta;
   headerClasses?: string[];
+  backTo?: string;
 }
 
 export const layoutMotion: { variants: Variants, transition: Transition } = {
@@ -43,7 +44,8 @@ const Layout = ({ layout, children, props }: React.PropsWithChildren<LayoutProps
           title={props?.meta?.title} 
           items={props?.menu ? menuItems : []} 
           smallTitle={props?.smallTitle} 
-          classes={props?.headerClasses || []} />
+          classes={props?.headerClasses || []}
+          backTo={props?.backTo} />
         <motion.main
           variants={layoutMotion.variants} // Pass the variant object into Framer Motion 
           initial="hidden" // Set the initial state to variants.hidden
