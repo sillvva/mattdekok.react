@@ -50,6 +50,10 @@
   --Stripe: #007bff;
 }
 
+body {
+  overflow-y: scroll;
+}
+
 .app {
   &,
   .light,

@@ -1,7 +1,5 @@
 import type { NextPage } from 'next'
 import HexMenu, { Item } from '../components/hex-menu'
-import PageMeta from '../components/meta'
-import PageHeader from '../components/page-header'
 import Layout from '../layouts/layout'
 import styles from '../styles/Intro.module.scss'
 
@@ -17,9 +15,7 @@ const Home: NextPage = () => {
 
   return (
     <div className="Page">
-      <PageMeta />
-      <Layout>
-        <PageHeader classes={['bg-transparent']} />
+      <Layout props={{ headerClasses: ['bg-transparent w-full absolute'] }}>
         <div className={styles.Me}>
           <div className={styles.Intro}>
             <div className={styles.IntroSubject}>

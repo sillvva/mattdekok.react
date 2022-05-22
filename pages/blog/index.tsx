@@ -1,11 +1,8 @@
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react';
-import { menuItems } from '../../store/main-layout.context';
-import PageHeader from '../../components/page-header'
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import BlogDirectory, { DirectoryProps, PostProps } from '../../components/blog';
-import PageMeta from '../../components/meta';
 import PageMessage from '../../components/page-message';
 
 
@@ -32,9 +29,7 @@ const Blog: NextPage<DirectoryProps> = () => {
   }, []);
 
   return (
-    <Layout>
-      <PageMeta title="Blog" />
-      <PageHeader title="Blog" items={menuItems} />
+    <Layout props={{ menu: true, meta: { title: "Blog" } }}>
       <Page.Body>
         {loading ? (
           <BlogDirectory posts={loaders} />

@@ -1,11 +1,8 @@
 import type { NextPage } from 'next'
 import { PropsWithChildren } from 'react';
-import { menuItems } from '../store/main-layout.context';
-import PageHeader from '../components/page-header'
 import Page from '../components/page';
 import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
-import PageMeta from '../components/meta';
 import { doc, getDoc } from '../functions/firebase'
 
 const Skills: NextPage<SkillProps> = (props: PropsWithChildren<SkillProps>) => {
@@ -16,9 +13,7 @@ const Skills: NextPage<SkillProps> = (props: PropsWithChildren<SkillProps>) => {
   };
 
   return (
-    <Layout>
-      <PageMeta title="Skills" />
-      <PageHeader title="Skills" items={menuItems} />
+    <Layout props={{ menu: true, meta: { title: "Skills" } }}>
       <Page.Body>
         <Page.Article className="w-full sm:w-9/12 md:w-10/12 lg:w-9/12">
           {props.skills.map((section, i) => (
