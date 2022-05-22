@@ -42,11 +42,11 @@
 }
 
 .PageNav {
-  @apply flex w-full px-3 items-center lg:pl-14 max-h-[80px];
+  @apply flex w-full px-3 items-center max-h-[80px];
 }
 
 .PageMenuContainer {
-  @apply flex-1 lg:pl-3 hidden lg:block;
+  @apply flex-1 hidden lg:block;
 }
 
 .PageMenu {
