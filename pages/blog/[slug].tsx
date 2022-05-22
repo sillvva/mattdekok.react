@@ -105,23 +105,23 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
 
     pre(pre: any) {
       const { node, children } = pre;
-      if (node.children[0].tagName === 'code') {
-        const code = node.children[0];
-        const { properties, children } = code;
-        const { className } = properties;
-        const { value } = children[0];
-        const language = ((className || [""])[0] || "").split('-')[1];
-        if (language == "codepen") {
-          try {
+      try {
+        if (node.children[0].tagName === 'code') {
+          const code = node.children[0];
+          const { properties, children } = code;
+          const { className } = properties;
+          const { value } = children[0];
+          const language = ((className || [""])[0] || "").split('-')[1];
+          if (language == "codepen") {
             const codepen = JSON.parse(value.trim());
             return <ReactCodepen {...codepen} />
           }
-          catch (err) {
-            return <code>{children}</code>;
-          }
         }
       }
-      return <code>{children}</code>;
+      catch (err) {
+        console.log(err);
+      }
+      return <pre>{children}</pre>;
     },
 
     code(code: any) {
@@ -130,10 +130,7 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
       if (!language) return <code>{children}</code>;
       if (language == "codepen") return <code>{children}</code>;
       return (
-        <SyntaxHighlighter
-          style={atomDark}
-          language={language}
-        >{children}</SyntaxHighlighter>
+        <SyntaxHighlighter style={atomDark} language={language}>{children}</SyntaxHighlighter>
       );
     },
   }
@@ -193,11 +190,6 @@ export async function getServerSideProps(context: any) {
   if (existsSync(filePath)) {
     const stat = statSync(filePath);
     const tdiff = (new Date(meta.timeCreated).getTime() - stat.ctime.getTime()) / 1000;
-    // console.log({
-    //   file: slug,
-    //   storageDate: new Date(meta.timeCreated),
-    //   localDate: stat.ctime
-    // });
     if (tdiff > 0) {
       write = true;
       rmSync(filePath);

@@ -22,7 +22,7 @@ const Blog: NextPage<DirectoryProps> = () => {
     fetch('/api/get-posts')
       .then(response => response.json())
       .then(data => {
-        setPosts(data.posts);
+        setPosts(data.posts || []);
         setLoading(false);
       })
       .catch(error => {

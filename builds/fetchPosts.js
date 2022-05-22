@@ -1,5 +1,7 @@
 const { fetchPosts } = require('../functions/blog');
 
 (async function() {
-  await fetchPosts();
+  const result = await fetchPosts();
+  console.log(result);
+  process.exit();
 })();

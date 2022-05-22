@@ -12,13 +12,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { authorization } = req.headers;
 
       if (authorization === `Bearer ${process.env.API_SECRET_KEY}`) {
-        await fetchPosts();
-        res.status(200).json({ success: true });
+        const result = await fetchPosts();
+        res.status(200).json({ success: true, ...result });
       } else {
         res.status(401).json({ success: false });
       }
     } catch (err: any) {
-      res.status(500).json({ statusCode: 500, message: err.message });
+      res.status(500).json({ success: false, statusCode: 500, message: err.message });
     }
   } else {
     res.setHeader("Allow", "POST");
