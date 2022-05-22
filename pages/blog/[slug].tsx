@@ -142,7 +142,8 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
       title: data.title, 
       description: data.description,
       image: data.image || ""
-    }
+    },
+    backTo: '/blog'
   };
 
   return (

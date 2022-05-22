@@ -4,12 +4,14 @@ import MainLayoutContext from '../store/main-layout.context';
 import styles from '../layouts/main/MainLayout.module.scss'
 import { layoutMotion } from '../layouts/layout';
 import PageMenu from './page-menu';
+import Link from 'next/link';
 
 interface PageHeaderProps {
   classes?: string | string[];
   items: any[],
   title?: string;
   smallTitle?: boolean;
+  backTo?: string;
 }
 
 const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
@@ -18,9 +20,17 @@ const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
   return (
     <header className={[styles.PageHeader, ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes : ['']))].join(' ')}>
       <nav className={styles.PageNav}>
-        <button type="button" onClick={drawer.toggle} className={`${styles.Fab} lg:hidden`}>
-          <i className="mdi mdi-menu"></i>
-        </button>
+        {props.backTo ? (
+          <Link href={props.backTo}>
+            <button type="button" className={`${styles.Fab} lg:hidden`}>
+              <i className="mdi mdi-chevron-left"></i>
+            </button>
+          </Link>
+        ) : (
+          <button type="button" onClick={drawer.toggle} className={`${styles.Fab} lg:hidden`}>
+            <i className="mdi mdi-menu"></i>
+          </button>
+        )}
         <div className={styles.PageMenuContainer}>
           <PageMenu items={props.items} />
         </div>
@@ -30,7 +40,7 @@ const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
         </button >
       </nav>
       {props.title && (
-        <motion.h1 
+        <motion.h1
           variants={layoutMotion.variants} // Pass the variant object into Framer Motion 
           initial="hidden" // Set the initial state to variants.hidden
           animate="enter" // Animated state to variants.enter
