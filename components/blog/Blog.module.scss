@@ -14,24 +14,19 @@
         --tw-shadow: var(--tw-shadow-colored);
       }
       .BlogPost__Image {
-        @apply relative bg-clip-content bg-cover bg-center h-full text-white bg-gray-500/60;
-        min-width: 128px;
-        max-width: 30%;
+        @apply relative bg-clip-content bg-cover bg-center h-full min-w-[128px] max-w-[30%] text-white bg-gray-500/60;
       }
       @media (max-width: 430px) {
         @apply flex-col;
         .BlogPost__Image {
-          @apply min-w-full max-w-full;
-          height: 156px;
+          @apply min-w-full max-w-full h-[156px];
         }
       }
       &.Focus {
         @apply relative z-0;
         &::before {
           content: "";
-          @apply absolute -left-1/2 -top-1/2 -z-20;
-          width: 200%;
-          height: 200%;
+          @apply absolute -left-1/2 -top-1/2 -z-20 w-[200%] h-[200%];
           background-color: var(--background);
           background-repeat: no-repeat;
           background-size: 51% 51%, 50% 50%;
@@ -41,15 +36,10 @@
           animation: rotate 4s linear infinite;
         }
         &::after {
-          content: "test";
-          position: absolute;
-          z-index: -1;
-          left: 6px;
-          top: 6px;
-          width: calc(100% - 12px);
-          height: calc(100% - 12px);
+          content: "";
+          @apply absolute -z-10 left-[6px] top-[6px] rounded-[5px];
+          @apply w-[calc(100%-12px)] h-[calc(100%-12px)];
           background: var(--article);
-          border-radius: 5px;
         }
       }
     }
@@ -130,12 +120,9 @@
     .BlogFigure {
       @apply flex flex-col mb-6 mt-6;
       .BlogImage {
-        @apply relative flex justify-center w-full mb-2 mx-auto aspect-video;
-        max-width: 800px;
-        @media (max-width: 767px) {
-          img {
-            object-fit: cover !important;
-          }
+        @apply relative flex justify-center w-full max-w-[800px] mb-2 mx-auto aspect-video;
+        img {
+          @apply object-cover md:object-contain #{!important};
         }
       }
       figcaption {
