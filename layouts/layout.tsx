@@ -15,6 +15,7 @@ interface LayoutMeta {
   title?: string;
   description?: string;
   image?: string;
+  articleMeta?: object;
 }
 interface PageHeadProps {
   menu?: boolean;
@@ -38,7 +39,10 @@ export const layoutMotion: { variants: Variants, transition: Transition } = {
 
 const PageHead = (props: React.PropsWithChildren<PageHeadProps>) => (
   <>
-    <PageMeta title={props?.meta?.title} description={props?.meta?.description} />
+    <PageMeta 
+      title={props?.meta?.title} 
+      description={props?.meta?.description}
+      articleMeta={props?.meta?.articleMeta} />
     <PageHeader
       title={props?.meta?.title}
       items={props?.menu ? menuItems : []}
