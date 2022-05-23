@@ -9,7 +9,7 @@ interface MetaProps {
 
 const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
   const dtitle = props.title ? `${props.title} - Matt DeKok` : 'Matt DeKok';
-  const description = props.description || "Experienced web developer with a demonstrated history of working in the wireless industry.";
+  const description = props.description || "Experienced full stack web developer with a demonstrated history of working in the wireless industry.";
   const ogProperties: any = {
     title: dtitle,
     description: description,
