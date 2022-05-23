@@ -22,7 +22,7 @@ class MyDocument extends Document {
     const { theme } = this.props;
 
     return (
-      <Html lang="en">
+      <Html lang="en" prefix="og: http://ogp.me/ns#">
         <Head>
           <link rel="icon" href="/favicon.png" />
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.6.96/css/materialdesignicons.min.css" />
