@@ -5,6 +5,7 @@ interface MetaProps {
   title?: string;
   description?: string;
   image?: string;
+  articleMeta?: object;
 }
 
 const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
@@ -21,16 +22,22 @@ const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
     card: 'summary_large_image',
     ...ogProperties
   }
-  const properties: any = { og: ogProperties, tw: twProperties };
+  const articleProps: any = {
+    ...props.articleMeta
+  }
 
   return (
     <Head>
       <title>{dtitle}</title>
       <meta name="description" content={description} />
-      {Object.keys(properties).map((m) => {
-        return Object.keys(properties[m]).map((t) => {
-          return <meta key={`${m}:${t}`} name={`${m}:${t}`} property={`${m}:${t}`} content={properties[m][t]} />;
-        });
+      {Object.keys(articleProps).map((t) => {
+        return <meta key={`article:${t}`} property={`article:${t}`} content={articleProps[t]} />;
+      })}
+      {Object.keys(ogProperties).map((t) => {
+        return <meta key={`og:${t}`} name={t} property={`og:${t}`} content={ogProperties[t]} />;
+      })}
+      {Object.keys(twProperties).map((t) => {
+        return <meta key={`tw:${t}`} name={`tw:${t}`} content={twProperties[t]} />;
       })}
     </Head>
   )
