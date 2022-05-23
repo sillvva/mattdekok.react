@@ -224,6 +224,13 @@ export async function getServerSideProps(context: any) {
   const { content, data } = matter(result.data);
   data.dateISO = new Date(data.date).toISOString();
   data.updatedISO = new Date(data.updated).toISOString();
+  for (let key in data) {
+    if (data[key] instanceof Date) {
+      data[key] = data[key].toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+    }
+  }
+  if (!data.dateISO) data.dateISO = new Date(data.date).toISOString();
+  if (!data.updatedISO) data.updatedISO = new Date(data.updated).toISOString();
 
   return {
     props: {
