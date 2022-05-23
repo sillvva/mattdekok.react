@@ -29,7 +29,7 @@ const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
       <meta name="description" content={description} />
       {Object.keys(properties).map((m) => {
         return Object.keys(properties[m]).map((t) => {
-          return <meta key={`${m}:${t}`} name={`${m}:${t}`} content={properties[m][t]} />;
+          return <meta key={`${m}:${t}`} name={`${m}:${t}`} property={`${m}:${t}`} content={properties[m][t]} />;
         });
       })}
     </Head>
