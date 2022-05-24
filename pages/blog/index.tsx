@@ -4,8 +4,7 @@ import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import BlogDirectory, { PostProps } from '../../components/blog';
 import PageMessage from '../../components/page-message';
-
-let timeout: NodeJS.Timeout;
+import { wait } from '../../functions/misc';
 
 const Blog: NextPage = () => {
   const [posts, setPosts] = useState([]);
@@ -17,8 +16,7 @@ const Blog: NextPage = () => {
   });
 
   useEffect(() => {
-    if (timeout) clearTimeout(timeout);
-    timeout = setTimeout(() => {
+    wait(() => {
       fetch('/api/get-posts')
         .then(response => response.json())
         .then(data => {
@@ -29,7 +27,7 @@ const Blog: NextPage = () => {
           setError(error);
           setLoading(false);
         });
-    }, 50);
+    }, 'Blog:get-posts', 50);
   }, []);
 
   return (
