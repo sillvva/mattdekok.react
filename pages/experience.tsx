@@ -1,10 +1,9 @@
 import type { NextPage } from 'next'
-import { PropsWithChildren } from 'react';
 import Page from '../components/page';
 import Layout from '../layouts/layout';
 import { doc, getDoc } from '../functions/firebase'
 
-const Experience: NextPage<ExperienceProps> = (props: PropsWithChildren<ExperienceProps>) => {
+const Experience: NextPage<ExperienceProps> = (props: ExperienceProps) => {
   return (
     <Layout props={{ menu: true, meta: { title: "Experience" } }}>
       <Page.Body>
@@ -37,7 +36,7 @@ const Experience: NextPage<ExperienceProps> = (props: PropsWithChildren<Experien
 
 export default Experience
 
-interface ExperienceItem {
+type ExperienceItem = {
   name?: string;
   nameLink?: string;
   image: string;
@@ -47,20 +46,20 @@ interface ExperienceItem {
   h5Link?: string;
 }
 
-interface ExperienceProps {
+type ExperienceProps = {
   experience: ExperienceArrSection[]
 }
 
-interface ExperienceArrSection {
+type ExperienceArrSection = {
   name: string;
   experience: ExperienceItem[]
 }
 
-interface ExperienceSection {
+type ExperienceSection = {
   [name: string]: ExperienceItem;
 }
 
-interface ExperienceSections {
+type ExperienceSections = {
   [name: string]: ExperienceSection;
 }
 

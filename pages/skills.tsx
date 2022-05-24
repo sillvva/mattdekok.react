@@ -1,11 +1,10 @@
 import type { NextPage } from 'next'
-import { PropsWithChildren } from 'react';
 import Page from '../components/page';
 import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
 import { doc, getDoc } from '../functions/firebase'
 
-const Skills: NextPage<SkillProps> = (props: PropsWithChildren<SkillProps>) => {
+const Skills: NextPage<SkillProps> = (props: SkillProps) => {
   const cols = {
     sm: 12,
     md: 6,
@@ -29,25 +28,25 @@ const Skills: NextPage<SkillProps> = (props: PropsWithChildren<SkillProps>) => {
 
 export default Skills
 
-interface Skill {
+type Skill = {
   [name: string]: number
 }
 
-interface SkillSection {
+type SkillSection = {
   [section: string]: Skill
 }
 
-interface SkillPropsSkill {
+type SkillPropsSkill = {
   name: string;
   rating: number;
 }
 
-interface SkillPropsSection {
+type SkillPropsSection = {
   name: string;
   skills: SkillPropsSkill[];
 }
 
-interface SkillProps {
+type SkillProps = {
   skills: SkillPropsSection[];
 }
 

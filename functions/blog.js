@@ -2,6 +2,8 @@ const path = require('path');
 const axios = require('axios');
 const matter = require("gray-matter");
 const firebase = require('./firebase.js');
+const { writeFileSync } = require('fs');
+const { getContentDir } = require('../store/misc.js');
 
 async function fetchPosts() {
   const { ref, getDownloadURL, getMetadata, list } = firebase;
@@ -62,6 +64,8 @@ async function fetchPosts() {
       changes++;
     }
   }
+  
+  writeFileSync(`${getContentDir()}/posts.json`, JSON.stringify(files));
   
   if (changes) {
     console.log('Storing metadata to Firestore');

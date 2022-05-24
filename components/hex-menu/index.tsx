@@ -3,7 +3,7 @@ import Link from 'next/link'
 import styles from './HexMenu.module.scss'
 import { useRouter } from 'next/router';
 
-export interface Item {
+export type Item = {
   link: string;
   label: string;
   active?: boolean;
@@ -12,7 +12,7 @@ export interface Item {
   activeColor?: string,
   textColor?: string,
 }
-interface HexMenuProps {
+type HexMenuProps = {
   items: (Item | null)[];
   maxLength: number;
   classes: string[];
@@ -24,7 +24,7 @@ interface HexMenuProps {
   itemClasses: string[]
 }
 
-const HexMenu = (props: React.PropsWithRef<HexMenuProps>) => {
+const HexMenu = (props: HexMenuProps) => {
   const router = useRouter();
 
   const menuRows: (Item)[][] = [[]];
@@ -82,7 +82,7 @@ HexMenu.defaultProps = {
 
 export default HexMenu;
 
-interface HexMenuItemProps {
+type HexMenuItemProps = {
   link: string;
   label: string;
   active: boolean;
@@ -94,7 +94,7 @@ interface HexMenuItemProps {
   classes: string[]
 }
 
-const HexMenuItem = (props: React.PropsWithRef<HexMenuItemProps>) => {
+const HexMenuItem = (props: HexMenuItemProps) => {
   const menuItem = (
     <a className={[
         styles.HexMenuItem, 

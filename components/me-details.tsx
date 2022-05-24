@@ -1,12 +1,11 @@
-import React from 'react';
 import styles from '../layouts/main/MainLayout.module.scss'
 
-interface MeDetailsProps {
+type MeDetailsProps = {
   name: string;
   value: string | number;
 }
 
-const MeDetails = (props: React.PropsWithChildren<MeDetailsProps>) => {
+const MeDetails = (props: MeDetailsProps) => {
   return (
     <>
       <div className={styles.MeDetails__Name}>

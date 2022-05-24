@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React from 'react';
 import styles from '../layouts/main/MainLayout.module.scss'
 
-const PageBody = (props: React.PropsWithChildren<any>) => {
+const PageBody = (props: React.PropsWithChildren<unknown>) => {
   return (
     <main className={styles.PageBody}>
       {props.children}
@@ -35,7 +35,7 @@ const PageSection = (props: React.PropsWithChildren<PageSectionProps>) => {
   )
 }
 
-const PageSectionItems = (props: React.PropsWithChildren<any>) => {
+const PageSectionItems = (props: React.PropsWithChildren<unknown>) => {
   return (
     <div className={styles.SectionItems}>
       {props.children}
@@ -43,7 +43,7 @@ const PageSectionItems = (props: React.PropsWithChildren<any>) => {
   )
 }
 
-interface PageSectionItemProps {
+type PageSectionItemProps = {
   image: string;
 }
 
