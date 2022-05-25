@@ -227,9 +227,8 @@ export async function getServerSideProps(context: any) {
 
   if (write) {
     if (!file) file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
-    file.download({
-      destination: filePath
-    });
+    await file.download({ destination: filePath });
+    result.data = readFileSync(filePath, 'utf8');
   }
 
   const { content, data } = matter(result.data);
