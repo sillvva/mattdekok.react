@@ -7,6 +7,7 @@ const nextConfig = withPWA({
     domains: ['firebasestorage.googleapis.com', 'storage.googleapis.com'],
   },
   pwa: {
+    disable: process.env.NODE_ENV === 'development',
     dest: 'public'
   }
 });
