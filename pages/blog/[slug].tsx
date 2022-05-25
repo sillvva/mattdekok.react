@@ -1,8 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
-import axios from 'axios';
-import { readFileSync, writeFileSync, rmSync, existsSync, statSync } from "node:fs";
+import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
@@ -15,9 +14,8 @@ import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss';
 import sass from 'react-syntax-highlighter/dist/cjs/languages/prism/sass';
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
-import { StorageReference } from 'firebase/storage';
 
-import { ref, getDownloadURL, firebaseConfig, getMetadata } from '../../functions/firebase'
+import { firebaseConfig, storage } from "../../functions/func";
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
@@ -201,15 +199,15 @@ export async function getServerSideProps(context: any) {
   const filePath = `${dirPath}/${slug}.md`;
 
   let meta: any;
-  let storageRef: StorageReference | null = null;
+  let file: any;
   if (existsSync(postsPath)) {
     const posts = readFileSync(postsPath, 'utf8');
     const data = JSON.parse(posts);
     meta = data[`${slug}.md`];
   }
   else {
-    storageRef = ref(`${firebaseConfig.blogContent}/${slug}.md`);
-    meta = await getMetadata(storageRef);
+    const file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    [meta] = await file.getMetadata();
   }
 
   let result = { data: "" };
@@ -221,16 +219,17 @@ export async function getServerSideProps(context: any) {
       write = true;
       rmSync(filePath);
     }
-    else 
-    result.data = readFileSync(filePath, 'utf8');
+    else {
+      result.data = readFileSync(filePath, 'utf8');
+    }
   }
   else write = true;
 
   if (write) {
-    if (!storageRef) storageRef = ref(`${firebaseConfig.blogContent}/${slug}.md`);
-    const url = await getDownloadURL(storageRef);
-    result = await axios.get(url);
-    writeFileSync(filePath, result.data);
+    if (!file) file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    file.download({
+      destination: filePath
+    });
   }
 
   const { content, data } = matter(result.data);
@@ -244,8 +243,8 @@ export async function getServerSideProps(context: any) {
 
   return {
     props: {
-      content: content,
-      data: data
+      content,
+      data
     }
   }
 }

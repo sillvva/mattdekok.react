@@ -4,9 +4,9 @@ import styles from '../layouts/main/MainLayout.module.scss'
 
 const PageBody = (props: React.PropsWithChildren<unknown>) => {
   return (
-    <main className={styles.PageBody}>
+    <div className={styles.PageBody}>
       {props.children}
-    </main>
+    </div>
   )
 }
 

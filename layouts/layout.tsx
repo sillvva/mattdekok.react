@@ -3,8 +3,9 @@ import { motion, Transition, Variants } from "framer-motion";
 import PageMeta from '../components/meta';
 import PageHeader from '../components/page-header';
 import { MainLayoutContextProvider } from '../store/main-layout.context';
-import MainLayout from './main';
 import { menuItems } from '../store/main-layout.context';
+import styles from '../layouts/main/MainLayout.module.scss'
+import MainLayout from './main';
 
 type LayoutProps = {
   layout?: string;

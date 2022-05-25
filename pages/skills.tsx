@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Page from '../components/page';
 import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
-import { doc, getDoc } from '../functions/firebase'
+import { firestore } from '../functions/func'
 
 const Skills: NextPage<SkillProps> = (props: SkillProps) => {
   const cols = {
@@ -51,8 +51,8 @@ type SkillProps = {
 }
 
 export async function getServerSideProps() {
-  const docRef = doc('website/skills');
-  const document = await getDoc(docRef);
+  const doc = firestore.doc('website/skills');
+  const document = await doc.get();
   const sections: SkillSection = document.data() || {};
 
   return {

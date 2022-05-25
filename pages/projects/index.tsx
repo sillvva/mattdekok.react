@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import GalleryItem from '../../components/gallery';
-import { doc, getDoc } from '../../functions/firebase'
+import { firestore } from '../../functions/func'
 import projectStyles from './Projects.module.scss';
 
 const Projects: NextPage<ProjectProps> = (props: ProjectProps) => {
@@ -41,8 +41,8 @@ type ProjectProps = {
 }
 
 export async function getServerSideProps() {
-  const docRef = doc('website/projects');
-  const document = await getDoc(docRef);
+  const doc = firestore.doc('website/projects');
+  const document = await doc.get();
   const projects: Project[] = document.data()?.data || [];
 
   return {

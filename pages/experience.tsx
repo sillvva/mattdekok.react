@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Page from '../components/page';
 import Layout from '../layouts/layout';
-import { doc, getDoc } from '../functions/firebase'
+import { firestore } from '../functions/func'
 
 const Experience: NextPage<ExperienceProps> = (props: ExperienceProps) => {
   return (
@@ -64,8 +64,8 @@ type ExperienceSections = {
 }
 
 export async function getServerSideProps() {
-  const docRef = doc('website/experience');
-  const document = await getDoc(docRef);
+  const doc = firestore.doc('website/experience');
+  const document = await doc.get();
   const experience: ExperienceSections = document.data() || {};
 
   return {
