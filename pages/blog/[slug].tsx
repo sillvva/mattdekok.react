@@ -163,7 +163,7 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
                 {content}
               </ReactMarkdown>
             </div>
-            {!!data.tags.length && (
+            {!!(data.tags || []).length && (
               <>
                 <p className="mb-2">Tags:</p>
                 <div className="flex flex-wrap gap-2">
