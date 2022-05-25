@@ -1,23 +1,25 @@
-import React from "react";
+import { PropsWithChildren } from "react";
 import { motion, Transition, Variants } from "framer-motion";
 import PageMeta from '../components/meta';
 import PageHeader from '../components/page-header';
 import { MainLayoutContextProvider } from '../store/main-layout.context';
-import MainLayout from './main';
 import { menuItems } from '../store/main-layout.context';
+import styles from '../layouts/main/MainLayout.module.scss'
+import MainLayout from './main';
 
-interface LayoutProps {
+type LayoutProps = {
   layout?: string;
   props?: PageHeadProps
 }
 
-interface LayoutMeta {
+type LayoutMeta = {
   title?: string;
   description?: string;
   image?: string;
   articleMeta?: object;
 }
-interface PageHeadProps {
+
+type PageHeadProps = {
   menu?: boolean;
   smallTitle?: boolean;
   meta?: LayoutMeta;
@@ -37,7 +39,7 @@ export const layoutMotion: { variants: Variants, transition: Transition } = {
   }
 }
 
-const PageHead = (props: React.PropsWithChildren<PageHeadProps>) => (
+const PageHead = (props: PageHeadProps) => (
   <>
     <PageMeta 
       title={props?.meta?.title} 
@@ -52,7 +54,7 @@ const PageHead = (props: React.PropsWithChildren<PageHeadProps>) => (
   </>
 );
 
-const Layout = ({ layout, children, props }: React.PropsWithChildren<LayoutProps>) => {
+const Layout = ({ layout, children, props }: PropsWithChildren<LayoutProps>) => {
   return (
     <MainLayoutContextProvider>
       <MainLayout>

@@ -1,11 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { PropsWithChildren, useState } from "react";
+import { useState } from "react";
 import styles from './Blog.module.scss'
 
 export const blogStyles = styles;
 
-export interface PostProps {
+export type PostProps = {
   slug: string;
   title: string;
   date: string;
@@ -19,11 +19,11 @@ export interface PostProps {
   full?: boolean;
 }
 
-export interface DirectoryProps {
+export type DirectoryProps = {
   posts: PostProps[]
 }
 
-function BlogDirectory(props: PropsWithChildren<DirectoryProps>) {
+function BlogDirectory(props: DirectoryProps) {
   return (
     <div className={styles.BlogDirectory}>
       {props.posts.map((post, p) => <BlogPost key={p} post={post} />)}
@@ -33,7 +33,11 @@ function BlogDirectory(props: PropsWithChildren<DirectoryProps>) {
 
 export default BlogDirectory;
 
-function BlogPost({ post }: PropsWithChildren<{ post: PostProps }>) {
+type BlogPostProps = {  
+  post: PostProps 
+}
+
+function BlogPost({ post }: BlogPostProps) {
   const [active, setActive] = useState(false);
 
   return (

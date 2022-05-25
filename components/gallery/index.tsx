@@ -1,10 +1,10 @@
 import Image from "next/image";
-import React, { PropsWithChildren } from "react";
+import { PropsWithChildren } from "react";
 import styles from './Gallery.module.scss'
 
 export const galleryStyles = styles;
 
-interface GalleryItemProps {
+type GalleryItemProps = {
   link: string | null | undefined;
   image: string | null;
   title: string;
@@ -12,7 +12,7 @@ interface GalleryItemProps {
   description: string | null;
 }
 
-function GalleryItem(props: PropsWithChildren<GalleryItemProps>) {
+function GalleryItem(props: GalleryItemProps) {
   return (
     <GalleryItemWrapper link={props.link || ""}>
       {props.image && <Image src={props.image.startsWith('http') ? props.image : `/images/preview-${props.image}.jpg`} alt={props.title} width={400} height={400} />}
@@ -27,7 +27,7 @@ function GalleryItem(props: PropsWithChildren<GalleryItemProps>) {
 
 export default GalleryItem;
 
-export interface GalleryItemWrapperProps {
+export type GalleryItemWrapperProps = {
   link: string;
 }
 

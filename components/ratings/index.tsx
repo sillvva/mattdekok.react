@@ -1,8 +1,8 @@
-import React from 'react';
+import { PropsWithChildren, Fragment } from 'react';
 import ratingStyles from './Ratings.module.scss'
 import Page from '../page';
 
-interface RatingColumnBreakpoints {
+type RatingColumnBreakpoints = {
   sm?: number;
   md?: number;
   lg?: number;
@@ -10,12 +10,12 @@ interface RatingColumnBreakpoints {
   '2xl'?: number;
 }
 
-interface RatingSectionProps {
+type RatingSectionProps = {
   name: string;
   columns: RatingColumnBreakpoints;
 }
 
-const RatingSection = (props: React.PropsWithChildren<RatingSectionProps>) => {
+const RatingSection = (props: PropsWithChildren<RatingSectionProps>) => {
   const colClasses = [
     ...(props.columns.sm ? ['sm:block'] : []),
     ...(props.columns.md ? ['md:block'] : []),
@@ -31,14 +31,14 @@ const RatingSection = (props: React.PropsWithChildren<RatingSectionProps>) => {
       </h2>
       <div className={ratingStyles.Columns}>
         {colClasses.map((col, c) => (
-          <React.Fragment key={c}>
+          <Fragment key={c}>
             <div className={[ratingStyles.Column, c > 0 && `hidden ${col}`].join(' ')}>
               <strong>Skills</strong>
             </div>
             <div className={[ratingStyles.Column, c > 0 && `hidden ${col}`].join(' ')}>
               <strong>Rating</strong>
             </div>
-          </React.Fragment>
+          </Fragment>
         ))}
       </div>
       <div className={ratingStyles.Body}>
@@ -48,12 +48,12 @@ const RatingSection = (props: React.PropsWithChildren<RatingSectionProps>) => {
   )
 }
 
-interface RatingItemProps {
+type RatingItemProps = {
   name: string;
   rating: number;
 }
 
-const RatingItem = (props: React.PropsWithChildren<RatingItemProps>) => {
+const RatingItem = (props: RatingItemProps) => {
   return (
     <div className={ratingStyles.Entry}>
       <div className={ratingStyles.EntryRow}>
@@ -68,11 +68,11 @@ const RatingItem = (props: React.PropsWithChildren<RatingItemProps>) => {
   )
 }
 
-interface RatingStarsProps {
+type RatingStarsProps = {
   rating: number;
 }
 
-const RatingStars = (props: React.PropsWithChildren<RatingStarsProps>) => {
+const RatingStars = (props: RatingStarsProps) => {
   const getStars = () => {
     const max = 5;
     let full = Math.floor(props.rating);

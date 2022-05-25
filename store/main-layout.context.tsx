@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, PropsWithChildren, createContext } from "react";
 import cookie from 'js-cookie';
 import styles from '../layouts/main/MainLayout.module.scss'
 
@@ -11,7 +11,7 @@ export const menuItems = [
   { link: "/blog", label: "Blog" },
 ];
 
-interface DrawerProps {
+type DrawerProps = {
   state: boolean;
   drawerClasses: string;
   menuClasses: string;
@@ -19,13 +19,13 @@ interface DrawerProps {
   reset: () => void;
 }
 
-interface ThemeProps {
+type ThemeProps = {
   state: string;
   toggle: () => void;
   set: (theme: string) => void;
 }
 
-interface MainLayoutProps {
+type MainLayoutProps = {
   drawer: DrawerProps;
   theme: ThemeProps;
 }
@@ -40,16 +40,16 @@ const initState = {
   },
   theme: {
     state: 'dark',
-    toggle: function() { },
-    set: function(theme: string) { }
+    toggle: function () { },
+    set: function (theme: string) { }
   }
 };
 
-const MainLayoutContext = React.createContext<MainLayoutProps>(initState);
+const MainLayoutContext = createContext<MainLayoutProps>(initState);
 
 export default MainLayoutContext;
 
-export const MainLayoutContextProvider = (props: React.PropsWithChildren<any>) => {
+export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => {
   const [context, setContext] = useState<MainLayoutProps>(initState);
 
   function drawerToggleHandler() {

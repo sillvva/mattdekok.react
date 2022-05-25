@@ -1,9 +1,9 @@
-import React, { useContext, useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import MainLayoutContext, { menuItems } from '../../store/main-layout.context';
 import HexMenu from '../../components/hex-menu'
 import styles from './MainLayout.module.scss'
 
-const MainLayout = (props: React.PropsWithChildren<any>) => {
+const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
 
   useEffect(() => {

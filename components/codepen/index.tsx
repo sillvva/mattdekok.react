@@ -3,7 +3,7 @@
  * https://github.com/shettypuneeth/react-codepen-embed
  */
 
-import React, { useState, useRef, useEffect, PropsWithChildren, CSSProperties } from 'react';
+import { useState, useRef, useEffect, CSSProperties } from 'react';
 import PropTypes from 'prop-types';
 import PageMessage from '../page-message';
 
@@ -15,7 +15,7 @@ const LOAD_STATE = {
   loaded: '__loaded__',
 };
 
-interface CodePenProps {
+type CodePenProps = {
   hash: string;
   user: string;
   title?: string;
@@ -28,7 +28,7 @@ interface CodePenProps {
   version?: number;
 }
 
-function ReactCodepen(props: PropsWithChildren<CodePenProps>) {
+function ReactCodepen(props: CodePenProps) {
   const [loadState, setLoadState] = useState(LOAD_STATE.booting);
   const [error, setError] = useState('');
   const _isMounted = useRef(false);

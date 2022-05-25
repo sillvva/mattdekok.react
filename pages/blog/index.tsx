@@ -2,11 +2,11 @@ import type { NextPage } from 'next'
 import { useEffect, useState } from 'react';
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
-import BlogDirectory, { DirectoryProps, PostProps } from '../../components/blog';
+import BlogDirectory, { PostProps } from '../../components/blog';
 import PageMessage from '../../components/page-message';
+import { wait } from '../../functions/misc';
 
-
-const Blog: NextPage<DirectoryProps> = () => {
+const Blog: NextPage = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -16,16 +16,18 @@ const Blog: NextPage<DirectoryProps> = () => {
   });
 
   useEffect(() => {
-    fetch('/api/get-posts')
-      .then(response => response.json())
-      .then(data => {
-        setPosts(data.posts || []);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setLoading(false);
-      });
+    wait(() => {
+      fetch('/api/get-posts')
+        .then(response => response.json())
+        .then(data => {
+          setPosts(data.posts || []);
+          setLoading(false);
+        })
+        .catch(error => {
+          setError(error);
+          setLoading(false);
+        });
+    }, 'Blog:get-posts', 50);
   }, []);
 
   return (

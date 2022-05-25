@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link'
 import styles from '../layouts/main/MainLayout.module.scss'
 import { useRouter } from 'next/router';
 
-export interface Item {
+export type Item = {
   link: string;
   label: string;
   active?: boolean;
@@ -12,7 +12,7 @@ export interface Item {
   activeColor?: string,
   textColor?: string,
 }
-interface PageMenuProps {
+type PageMenuProps = {
   items: (Item | null)[];
   maxLength: number;
   color?: string;
@@ -22,7 +22,7 @@ interface PageMenuProps {
   itemClasses: string[]
 }
 
-const PageMenu = (props: React.PropsWithRef<PageMenuProps>) => {
+const PageMenu = (props: PageMenuProps) => {
   const router = useRouter();
 
   const menuRows: (Item)[][] = [[]];
@@ -73,7 +73,7 @@ PageMenu.defaultProps = {
 
 export default PageMenu;
 
-interface PageMenuItemProps {
+type PageMenuItemProps = {
   link: string;
   label: string;
   active: boolean;
@@ -84,7 +84,7 @@ interface PageMenuItemProps {
   classes: string[]
 }
 
-export const PageMenuItem = (props: React.PropsWithRef<PageMenuItemProps>) => {
+export const PageMenuItem = (props: PageMenuItemProps) => {
   const [classes, setClasses] = useState([styles.Button, props.active ? styles.Active : '', ...props.classes]);
   if (!classes.find(c => /Button\d+/.test(c))) {
     setClasses([...classes, styles.Button5]);

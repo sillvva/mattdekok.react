@@ -1,14 +1,14 @@
 import Head from 'next/head';
-import React from 'react';
+import { PropsWithChildren } from 'react';
 
-interface MetaProps {
+type MetaProps = {
   title?: string;
   description?: string;
   image?: string;
   articleMeta?: object;
 }
 
-const PageMeta = (props: React.PropsWithChildren<MetaProps>) => {
+const PageMeta = (props: PropsWithChildren<MetaProps>) => {
   const dtitle = props.title ? `${props.title} - Matt DeKok` : 'Matt DeKok';
   const description = props.description || "Experienced full stack web developer with a demonstrated history of working in the wireless industry.";
   const ogProperties: any = {

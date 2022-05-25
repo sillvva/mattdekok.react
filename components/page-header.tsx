@@ -1,20 +1,20 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { motion } from 'framer-motion';
 import MainLayoutContext from '../store/main-layout.context';
 import styles from '../layouts/main/MainLayout.module.scss'
 import { layoutMotion } from '../layouts/layout';
-import PageMenu from './page-menu';
+import PageMenu, { Item } from './page-menu';
 import Link from 'next/link';
 
-interface PageHeaderProps {
+type PageHeaderProps = {
   classes?: string | string[];
-  items: any[],
+  items: (Item | null)[],
   title?: string;
   smallTitle?: boolean;
   backTo?: string;
 }
 
-const PageHeader = (props: React.PropsWithChildren<PageHeaderProps>) => {
+const PageHeader = (props: PageHeaderProps) => {
   const { drawer, theme } = useContext(MainLayoutContext);
 
   const classes = {

@@ -1,10 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
-import { PropsWithChildren } from 'react';
-import axios from 'axios';
-import { readFileSync, writeFileSync, rmSync, existsSync, statSync, mkdirSync } from "node:fs";
-import path from 'path';
+import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
@@ -14,15 +11,16 @@ import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
 import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss';
+import sass from 'react-syntax-highlighter/dist/cjs/languages/prism/sass';
+import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 
-import { ref, getDownloadURL, firebaseConfig, getMetadata } from '../../functions/firebase'
-import { menuItems } from '../../store/main-layout.context';
+import { firebaseConfig, storage } from "../../functions/func";
 import Layout from '../../layouts/layout';
-import PageHeader from '../../components/page-header'
 import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
-import PageMeta from '../../components/meta';
 import ReactCodepen from '../../components/codepen';
+import { getContentDir } from '../../store/misc';
 
 SyntaxHighlighter.registerLanguage('js', js);
 SyntaxHighlighter.registerLanguage('javascript', js);
@@ -31,13 +29,16 @@ SyntaxHighlighter.registerLanguage('typescript', ts);
 SyntaxHighlighter.registerLanguage('yml', yaml);
 SyntaxHighlighter.registerLanguage('yaml', yaml);
 SyntaxHighlighter.registerLanguage('json', json);
+SyntaxHighlighter.registerLanguage('css', css);
+SyntaxHighlighter.registerLanguage('scss', scss);
+SyntaxHighlighter.registerLanguage('sass', sass);
 
-interface ServerProps {
+type ServerProps = {
   data: PostProps;
   content: string;
 }
 
-const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
+const Blog: NextPage<ServerProps> = (props: ServerProps) => {
   const { data, content } = props;
 
   const renderers = {
@@ -162,7 +163,7 @@ const Blog: NextPage<ServerProps> = (props: PropsWithChildren<ServerProps>) => {
                 {content}
               </ReactMarkdown>
             </div>
-            {data.tags.length && (
+            {!!(data.tags || []).length && (
               <>
                 <p className="mb-2">Tags:</p>
                 <div className="flex flex-wrap gap-2">
@@ -193,14 +194,21 @@ export async function getServerSideProps(context: any) {
   const { params } = context;
   const { slug } = params;
 
-  // Local directory
-  let dirPath = path.join(process.cwd(), 'content');
-  // Vercel directory, because the cwd() directory is read-only
-  if (!existsSync(dirPath) && existsSync('/tmp')) dirPath = '/tmp';
+  const dirPath = getContentDir();
+  const postsPath = `${dirPath}/posts.json`;
   const filePath = `${dirPath}/${slug}.md`;
 
-  const storageRef = ref(`${firebaseConfig.blogContent}/${slug}.md`);
-  const meta = await getMetadata(storageRef);
+  let meta: any;
+  let file: any;
+  if (existsSync(postsPath)) {
+    const posts = readFileSync(postsPath, 'utf8');
+    const data = JSON.parse(posts);
+    meta = data[`${slug}.md`];
+  }
+  else {
+    const file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    [meta] = await file.getMetadata();
+  }
 
   let result = { data: "" };
   let write = false;
@@ -211,31 +219,31 @@ export async function getServerSideProps(context: any) {
       write = true;
       rmSync(filePath);
     }
-    else result.data = readFileSync(filePath, 'utf8');
+    else {
+      result.data = readFileSync(filePath, 'utf8');
+    }
   }
   else write = true;
 
   if (write) {
-    const url = await getDownloadURL(storageRef);
-    result = await axios.get(url);
-    writeFileSync(filePath, result.data);
+    if (!file) file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    await file.download({ destination: filePath });
+    result.data = readFileSync(filePath, 'utf8');
   }
 
   const { content, data } = matter(result.data);
-  data.dateISO = new Date(data.date).toISOString();
-  data.updatedISO = new Date(data.updated).toISOString();
+  if (data.date) data.dateISO = new Date(data.date).toISOString();
+  if (data.updated) data.updatedISO = new Date(data.updated).toISOString();
   for (let key in data) {
     if (data[key] instanceof Date) {
       data[key] = data[key].toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
     }
   }
-  if (!data.dateISO) data.dateISO = new Date(data.date).toISOString();
-  if (!data.updatedISO) data.updatedISO = new Date(data.updated).toISOString();
 
   return {
     props: {
-      content: content,
-      data: data
+      content,
+      data
     }
   }
 }

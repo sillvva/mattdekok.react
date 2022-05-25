@@ -1,12 +1,11 @@
 import type { NextPage } from 'next'
-import { PropsWithChildren } from 'react';
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import GalleryItem from '../../components/gallery';
-import { doc, getDoc } from '../../functions/firebase'
+import { firestore } from '../../functions/func'
 import projectStyles from './Projects.module.scss';
 
-const Projects: NextPage<ProjectProps> = (props: PropsWithChildren<ProjectProps>) => {
+const Projects: NextPage<ProjectProps> = (props: ProjectProps) => {
   return (
     <Layout props={{ menu: true, meta: { title: "Projects" } }}>
       <Page.Body>
@@ -28,7 +27,7 @@ const Projects: NextPage<ProjectProps> = (props: PropsWithChildren<ProjectProps>
 
 export default Projects
 
-interface Project {
+type Project = {
   title: string;
   subtitle: string;
   description: string;
@@ -37,13 +36,13 @@ interface Project {
   sort?: number;
 }
 
-interface ProjectProps {
+type ProjectProps = {
   projects: Project[];
 }
 
 export async function getServerSideProps() {
-  const docRef = doc('website/projects');
-  const document = await getDoc(docRef);
+  const doc = firestore.doc('website/projects');
+  const document = await doc.get();
   const projects: Project[] = document.data()?.data || [];
 
   return {
