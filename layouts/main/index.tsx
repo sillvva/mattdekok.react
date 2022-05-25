@@ -16,16 +16,14 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   return (
     <>
       <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
-      <div className="Page">
-        {props.children}
-        <nav className={[styles.Drawer, drawer.drawerClasses].join(' ')} onClick={drawer.toggle}>
-          <HexMenu items={menuItems}
-            maxLength={3}
-            classes={[drawer.menuClasses, 'sm:scale-100', 'md:scale-125']}
-            itemClasses={['menu-bounce']}
-            rotated={menuItems.length % 2 == 0} />
-        </nav>
-      </div>
+      {props.children}
+      <nav className={[styles.Drawer, drawer.drawerClasses].join(' ')} onClick={drawer.toggle}>
+        <HexMenu items={menuItems}
+          maxLength={3}
+          classes={[drawer.menuClasses, 'sm:scale-100', 'md:scale-125']}
+          itemClasses={['menu-bounce']}
+          rotated={menuItems.length % 2 == 0} />
+      </nav>
     </>
   )
 }

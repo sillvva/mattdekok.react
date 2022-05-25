@@ -66,28 +66,14 @@ export default function NextNProgress({
     };
   }, []);
 
-  const routeChangeStart = (
-    _: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
-  ) => {
+  const routeChangeStart = (_: string, { shallow }: { shallow: boolean; }) => {
     if (!shallow || showOnShallow) {
       NProgress.set(startPosition);
       NProgress.start();
     }
   };
 
-  const routeChangeEnd = (
-    _: string,
-    {
-      shallow,
-    }: {
-      shallow: boolean;
-    }
-  ) => {
+  const routeChangeEnd = (_: string, { shallow }: { shallow: boolean; }) => {
     if (!shallow || showOnShallow) {
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
