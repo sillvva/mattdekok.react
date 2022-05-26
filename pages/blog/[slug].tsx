@@ -206,7 +206,7 @@ export async function getServerSideProps(context: any) {
     meta = data[`${slug}.md`];
   }
   else {
-    const file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
     [meta] = await file.getMetadata();
   }
 

@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react'
 import MainLayoutContext, { menuItems } from '../../store/main-layout.context';
 import HexMenu from '../../components/hex-menu'
 import styles from './MainLayout.module.scss'
+import NextNProgress from '../../components/progress';
 
 const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
@@ -13,7 +14,8 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   }, [])
 
   return (
-    <div className="Page">
+    <>
+      <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
       {props.children}
       <nav className={[styles.Drawer, drawer.drawerClasses].join(' ')} onClick={drawer.toggle}>
         <HexMenu items={menuItems}
@@ -22,7 +24,7 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
           itemClasses={['menu-bounce']}
           rotated={menuItems.length % 2 == 0} />
       </nav>
-    </div>
+    </>
   )
 }
 
