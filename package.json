@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "fetch-posts": "node builds.js",
-    "serve-functions": "cd firebase/functions && npm run serve",
-    "deploy-functions": "cd firebase/functions && npm run deploy",
+    "serve-functions": "cd firebase/functions && pnpm run serve",
+    "deploy-functions": "cd firebase/functions && pnpm run deploy",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
