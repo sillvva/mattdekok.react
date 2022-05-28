@@ -6,7 +6,7 @@ const { getContentDir } = require('../store/misc.js');
 
 async function fetchPosts(getPosts) {
   const { firestore, storage, firebaseConfig } = firebase;
-  let [contentList] = await storage.getFiles({ prefix: firebaseConfig.blogContent });
+  let [contentList] = await storage.getFiles({ prefix: firebaseConfig.blogStorage });
 
   contentList = contentList.filter(file => {
     return file.name.endsWith('.md');

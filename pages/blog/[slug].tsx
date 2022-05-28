@@ -207,7 +207,7 @@ export async function getServerSideProps(context: any) {
     meta = posts.find(p => p.slug == slug);
   }
   else {
-    file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
     [meta] = await file.getMetadata();
   }
 
@@ -227,7 +227,7 @@ export async function getServerSideProps(context: any) {
   else write = true;
 
   if (write) {
-    if (!file) file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    if (!file) file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
     await file.download({ destination: filePath });
     result.data = readFileSync(filePath, 'utf8');
   }

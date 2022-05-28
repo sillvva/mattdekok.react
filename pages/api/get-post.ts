@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         meta = data[`${slug}.md`];
       }
       else {
-        const file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+        const file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
         [meta] = await file.getMetadata();
       }
       
@@ -40,7 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       else write = true;
 
       if (write) {
-        if (!file) file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+        if (!file) file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
         file.download({
           destination: filePath
         });
