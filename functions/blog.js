@@ -4,7 +4,7 @@ const firebase = require('./firebase.js');
 const { writeFileSync } = require('fs');
 const { getContentDir } = require('../store/misc.js');
 
-async function fetchPosts() {
+async function fetchPosts(getPosts) {
   const { firestore, storage, firebaseConfig } = firebase;
   let [contentList] = await storage.getFiles({ prefix: firebaseConfig.blogContent });
 
@@ -12,9 +12,19 @@ async function fetchPosts() {
     return file.name.endsWith('.md');
   });
 
-  const doc = firestore.doc(`${firebaseConfig.blogContent}`);
-  const store = await doc.get();
-  const files = store.data() || {};
+  const collection = firestore.collection(firebaseConfig.blogCollection);
+  const docs = await collection.get();
+
+  let posts = [];
+  docs.forEach(doc => {
+    const post = doc.data();
+    posts.push({
+      ...post,
+      slug: doc.id,
+      ...(post.date?._seconds && { date: new Date(post.date._seconds * 1000).toISOString() }),
+      ...(post.updated?._seconds && { updated: new Date(post.updated._seconds * 1000).toISOString() }),
+    });
+  });
 
   let changes = 0;
   let added = [];
@@ -24,10 +34,12 @@ async function fetchPosts() {
   for (const file of contentList) {
     const timeCreated = new Date(file.metadata.timeCreated).toISOString();
     const ext = path.extname(file.metadata.name);
-    const slug = path.basename(file.metadata.name);
     if (ext != '.md') continue;
+    const fileName = path.basename(file.metadata.name);
+    const slug = fileName.slice(0, fileName.length - 3);
 
-    const fsItem = files[slug];
+    const fsIndex = posts.findIndex(p => p.slug == slug);
+    const fsItem = posts[fsIndex];
     if (fsItem && (!fsItem.timeCreated || timeCreated > fsItem.timeCreated)) {
       console.log(`Updating: ${slug}`);
       updated.push(slug);
@@ -52,36 +64,44 @@ async function fetchPosts() {
     });
 
     const parsedData = matter(result);
-    files[slug] = {
-      name: slug,
+    const postData = {
+      slug: slug,
       path: file.metadata.name,
       timeCreated: timeCreated,
-      data: parsedData.data
+      ...{
+        ...parsedData.data,
+        ...(parsedData.data.date && { date: parsedData.data.date.toISOString() }),
+        ...(parsedData.data.updated && { updated: parsedData.data.updated.toISOString() })
+      }
     };
+    if (fsItem) posts.splice(fsIndex, 1, postData);
+    else posts.push(postData);
   }
+  // console.log(posts);return;
 
-  for (let [fileName] of Object.entries(files)) {
-    const storageFile = contentList.find(item => item.name.endsWith(`/${fileName}`));
+  posts.forEach((post, pi) => {
+    const storageFile = contentList.find(item => item.name.endsWith(`/${post.slug}.md`));
     if (!storageFile) {
-      console.log(`Removing: ${fileName}`);
-      delete files[fileName];
-      removed.push(fileName);
+      console.log(`Removing: ${post.slug}`);
+      posts.splice(pi, 1);
+      removed.push(post.slug);
       changes++;
     }
-  }
+  });
 
-  Object.keys(files).forEach(fileName => {
-    const file = files[fileName];
-    if (file.data.date) file.data.date = new Date(file.data.date._seconds ? file.data.date._seconds * 1000 : file.data.date).toISOString();
-    if (file.data.updated) file.data.updated = new Date(file.data.updated._seconds ? file.data.updated._seconds * 1000 : file.data.updated).toISOString();
-    files[fileName] = file;
-  })
-
-  writeFileSync(`${getContentDir()}/posts.json`, JSON.stringify(files));
+  writeFileSync(`${getContentDir()}/${firebaseConfig.blogCollection}.json`, JSON.stringify(posts));
 
   if (changes) {
     console.log('Storing metadata to Firestore');
-    await doc.set(files);
+    for(const doc of added) {
+      await collection.doc(doc).set(posts.find(p => p.slug === doc));
+    }
+    for(const doc of updated) {
+      await collection.doc(doc).set(posts.find(p => p.slug === doc));
+    }
+    for(const doc of removed) {
+      await collection.doc(doc).delete();
+    }
   }
   else console.log('No changes found');
 
@@ -89,7 +109,8 @@ async function fetchPosts() {
     changes,
     added,
     updated,
-    removed
+    removed,
+    posts: getPosts && posts
   };
 }
 

@@ -23,6 +23,12 @@ export type DirectoryProps = {
   posts: PostProps[]
 }
 
+export const postLoader: PostProps = {
+  title: "", date: "", image: "",
+  description: "", slug: "", link: "",
+  updated: "", tags: []
+};
+
 function BlogDirectory(props: DirectoryProps) {
   return (
     <div className={styles.BlogDirectory}>

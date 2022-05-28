@@ -21,6 +21,7 @@ import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
 import ReactCodepen from '../../components/codepen';
 import { getContentDir } from '../../store/misc';
+import { PostData } from '../api/get-posts';
 
 SyntaxHighlighter.registerLanguage('js', js);
 SyntaxHighlighter.registerLanguage('javascript', js);
@@ -201,9 +202,9 @@ export async function getServerSideProps(context: any) {
   let meta: any;
   let file: any;
   if (existsSync(postsPath)) {
-    const posts = readFileSync(postsPath, 'utf8');
-    const data = JSON.parse(posts);
-    meta = data[`${slug}.md`];
+    const data = readFileSync(postsPath, 'utf8');
+    const posts: PostData[] = JSON.parse(data);
+    meta = posts.find(p => p.slug == slug);
   }
   else {
     file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);

@@ -2,28 +2,27 @@ import type { NextPage } from 'next'
 import useSWR, { Fetcher } from 'swr';
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
-import BlogDirectory, { PostProps } from '../../components/blog';
+import BlogDirectory, { PostProps, postLoader } from '../../components/blog';
 import PageMessage from '../../components/page-message';
 
-const fetcher: Fetcher<{ posts: PostProps[] }> = (url: string) => fetch(url).then((res) => res.json());
+const loaders: PostProps[] = Array(6).fill(postLoader);
+const fetcher: Fetcher<{ posts: PostProps[] }> = 
+  (url: string) => fetch(url)
+    .then(res => res.json());
 
 const Blog: NextPage = () => {
-  const { data, error } = useSWR('/api/get-posts', fetcher, {
+  let { data, error } = useSWR('/api/get-posts', fetcher, {
     revalidateOnFocus: false,
     revalidateIfStale: false
   });
-  const loaders: PostProps[] = Array(6).fill({
-    title: "", date: "", image: "",
-    description: "", slug: "", link: ""
-  });
+
+  if (!data) data = { posts: loaders };
 
   return (
     <Layout props={{ menu: true, meta: { title: "Blog" } }}>
       <Page.Body>
         { error ? (
           <PageMessage>{error}</PageMessage>
-        ) : !data ? (
-          <BlogDirectory posts={loaders} />
         ) : !(data.posts || []).length ? (
           <PageMessage>No posts found.</PageMessage>
         ) : (
