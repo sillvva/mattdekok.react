@@ -42,7 +42,7 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = (props: ServerProps) => {
   const { data, content } = props;
-  const query = Cookies.get('blog-query') || '';
+  const returnUrl = Cookies.get('blog-url') || '';
 
   const renderers = {
     p(paragraph: any) {
@@ -151,7 +151,7 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
         ...(data.updatedISO && { modified_date: data.updatedISO })
       }
     },
-    backTo: `/blog${query}`
+    backTo: returnUrl
   };
 
   return (

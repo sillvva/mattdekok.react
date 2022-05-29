@@ -30,7 +30,7 @@ const Blog: NextPage = () => {
 
   if (!data) data = { posts: loaders, pages: 0 };
 
-  Cookies.set('blog-query', router.asPath.replace(router.pathname, ''));
+  Cookies.set('blog-url', router.asPath);
 
   return (
     <Layout props={{ menu: true, meta: { title: "Blog" } }}>
