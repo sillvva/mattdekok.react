@@ -66,6 +66,9 @@
   @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl;
   @apply transition-[background] duration-500 ease-linear;
   background-color: var(--background);
+  &.MenuFab {
+    @apply lg:hidden;
+  }
   &:hover {
     background-color: var(--link);
     i {

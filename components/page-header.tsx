@@ -47,7 +47,7 @@ const PageHeader = (props: PageHeaderProps) => {
             </a>
           </Link>
         ) : (
-          <button type="button" onClick={drawer.toggle} className={`${styles.Fab} lg:hidden`}>
+          <button type="button" onClick={drawer.toggle} className={`${styles.Fab} ${styles.MenuFab}`}>
             <i className="mdi mdi-menu"></i>
           </button>
         )}
