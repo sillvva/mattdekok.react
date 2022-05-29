@@ -1,6 +1,5 @@
 import Router from 'next/router';
 import * as NProgress from 'nprogress';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 type NProgress = {
@@ -50,37 +49,43 @@ export default function NextNProgress({
   options,
   nonce,
 }: NProgress) {
-  let timer: NodeJS.Timeout | null = null;
+  const opts = React.useMemo(() => options, [options]);
 
   React.useEffect(() => {
-    if (options) {
-      NProgress.configure(options);
+    let timer: NodeJS.Timeout | null = null;
+
+    if (opts) {
+      NProgress.configure(opts);
     }
+
+    const routeChangeStart = (_: string, { shallow }: { shallow: boolean; }) => {
+      if (!shallow || showOnShallow) {
+        NProgress.set(startPosition);
+        NProgress.start();
+      }
+    };
+  
+    const routeChangeEnd = (_: string, { shallow }: { shallow: boolean; }) => {
+      if (!shallow || showOnShallow) {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          NProgress.done(true);
+        }, stopDelayMs);
+      }
+    };
+
     Router.events.on('routeChangeStart', routeChangeStart);
     Router.events.on('routeChangeComplete', routeChangeEnd);
     Router.events.on('routeChangeError', routeChangeEnd);
+
     return () => {
+      if (timer) clearTimeout(timer);
+      NProgress.done(true);
       Router.events.off('routeChangeStart', routeChangeStart);
       Router.events.off('routeChangeComplete', routeChangeEnd);
       Router.events.off('routeChangeError', routeChangeEnd);
     };
-  }, []);
-
-  const routeChangeStart = (_: string, { shallow }: { shallow: boolean; }) => {
-    if (!shallow || showOnShallow) {
-      NProgress.set(startPosition);
-      NProgress.start();
-    }
-  };
-
-  const routeChangeEnd = (_: string, { shallow }: { shallow: boolean; }) => {
-    if (!shallow || showOnShallow) {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        NProgress.done(true);
-      }, stopDelayMs);
-    }
-  };
+  }, [opts, showOnShallow, startPosition, stopDelayMs]);
 
   return (
     <style nonce={nonce}>{`
@@ -153,13 +158,3 @@ export default function NextNProgress({
     `}</style>
   );
 }
-
-NextNProgress.propTypes = {
-  color: PropTypes.string,
-  startPosition: PropTypes.number,
-  stopDelayMs: PropTypes.number,
-  height: PropTypes.number,
-  showOnShallow: PropTypes.bool,
-  options: PropTypes.object,
-  nonce: PropTypes.string,
-};

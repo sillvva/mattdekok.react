@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
@@ -42,7 +43,7 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = (props: ServerProps) => {
   const { data, content } = props;
-  const returnUrl = Cookies.get('blog-url') || '';
+  const [returnUrl, setReturnUrl] = useState('/blog');
 
   const renderers = {
     p(paragraph: any) {
@@ -153,6 +154,10 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
     },
     backTo: returnUrl
   };
+
+  useEffect(() => {
+    setReturnUrl(Cookies.get('blog-url') || "");
+  }, [])
 
   return (
     <Layout props={headerProps}>

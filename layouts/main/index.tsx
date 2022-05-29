@@ -11,7 +11,7 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
     drawer.reset();
     if (document.body.classList.contains('dark')) theme.set('dark');
     if (document.body.classList.contains('light')) theme.set('light');
-  }, [])
+  }, []);
 
   return (
     <>

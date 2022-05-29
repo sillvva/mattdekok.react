@@ -1,15 +1,14 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useContext } from "react";
 import { motion, Transition, Variants } from "framer-motion";
 import PageMeta from '../components/meta';
 import PageHeader from '../components/page-header';
-import { MainLayoutContextProvider } from '../store/main-layout.context';
+import MainLayoutContext, { MainLayoutContextProvider } from '../store/main-layout.context';
 import { menuItems } from '../store/main-layout.context';
-import styles from '../layouts/main/MainLayout.module.scss'
 import MainLayout from './main';
 
 type LayoutProps = {
   layout?: string;
-  props?: PageHeadProps
+  props?: PageHeadProps;
 }
 
 type LayoutMeta = {
@@ -41,8 +40,8 @@ export const layoutMotion: { variants: Variants, transition: Transition } = {
 
 const PageHead = (props: PageHeadProps) => (
   <>
-    <PageMeta 
-      title={props?.meta?.title} 
+    <PageMeta
+      title={props?.meta?.title}
       description={props?.meta?.description}
       articleMeta={props?.meta?.articleMeta} />
     <PageHeader
@@ -55,6 +54,16 @@ const PageHead = (props: PageHeadProps) => (
 );
 
 const Layout = ({ layout, children, props }: PropsWithChildren<LayoutProps>) => {
+  const { drawer, theme } = useContext(MainLayoutContext);
+
+  if ((!layout || layout == 'main')) {
+    drawer.reset();
+    if (typeof document != 'undefined') {
+      if (document.body.classList.contains('dark')) theme.set('dark');
+      if (document.body.classList.contains('light')) theme.set('light');
+    }
+  }
+
   return (
     <MainLayoutContextProvider>
       <MainLayout>

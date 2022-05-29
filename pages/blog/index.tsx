@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import useSWR, { Fetcher } from 'swr';
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
@@ -30,7 +31,9 @@ const Blog: NextPage = () => {
 
   if (!data) data = { posts: loaders, pages: 0 };
 
-  Cookies.set('blog-url', router.asPath);
+  useEffect(() => {
+    Cookies.set('blog-url', router.asPath);
+  }, [router.asPath])
 
   return (
     <Layout props={{ menu: true, meta: { title: "Blog" } }}>
