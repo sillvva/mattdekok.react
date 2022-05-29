@@ -8,9 +8,16 @@ import PageMessage from '../../components/page-message';
 import Pagination from '../../components/pagination';
 
 const loaders: PostProps[] = Array(6).fill(postLoader);
-const fetcher: Fetcher<{ posts: PostProps[], pages: number }> =
-  (url: string) => fetch(url)
-    .then(res => res.json());
+const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: string) => {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message);
+  }
+
+  return res.json();
+}
 
 const Blog: NextPage = () => {
   const router = useRouter();
@@ -26,7 +33,7 @@ const Blog: NextPage = () => {
     <Layout props={{ menu: true, meta: { title: "Blog" } }}>
       <Page.Body>
         {error ? (
-          <PageMessage>{error}</PageMessage>
+          <PageMessage>{error.message}</PageMessage>
         ) : !(data.posts || []).length ? (
           <PageMessage>No posts found.</PageMessage>
         ) : (

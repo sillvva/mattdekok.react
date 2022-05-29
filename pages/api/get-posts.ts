@@ -78,15 +78,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     try {
       res.setHeader("Cache-Control", "public, max-age=21600");
+      const p = parseInt(Array.isArray(page) ? page[0] : page) || 1;
       const result = await getPosts({
-        page: parseInt(Array.isArray(page) ? page[0] : page) || 1,
+        page: p,
         query: Array.isArray(q) ? q[0] : q,
         limit: parseInt(Array.isArray(limit) ? limit[0] : limit) || perPage,
       });
+      if (result.pages < p) throw new Error('Invalid page count')
       return res.status(200).json(result);
-    } catch (err) {
-      return res.status(500).json({
-        error: err,
+    } catch (err: any) {
+      return res.status(401).json({
+        message: err.message
       });
     }
   }
