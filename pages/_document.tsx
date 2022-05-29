@@ -26,8 +26,7 @@ class MyDocument extends Document {
         <Head>
           <link rel="icon" href="/favicon.png" />
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.6.96/css/materialdesignicons.min.css" />
-          <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" />
-          <link rel='manifest' href='/manifest.json' />
+          <link rel='manifest' href='/manifest.webmanifest' />
 
           <meta name='mobile-web-app-capable' content='yes' />
           <meta name='msapplication-TileColor' content='#00bbaa' />
