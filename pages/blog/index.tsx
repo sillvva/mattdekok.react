@@ -1,46 +1,52 @@
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import useSWR, { Fetcher } from 'swr';
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
-import BlogDirectory, { PostProps } from '../../components/blog';
+import BlogDirectory, { PostProps, postLoader } from '../../components/blog';
 import PageMessage from '../../components/page-message';
-import { wait } from '../../functions/misc';
+import Pagination from '../../components/pagination';
+import Cookies from 'js-cookie';
+
+const loaders: PostProps[] = Array(6).fill(postLoader);
+const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: string) => {
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message);
+  }
+
+  return res.json();
+}
 
 const Blog: NextPage = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const loaders: PostProps[] = Array(6).fill({
-    title: "", date: "", image: "",
-    description: "", slug: "", link: ""
+  const router = useRouter();
+  const page = (Array.isArray(router.query.page) ? router.query.page[0] : router.query.page) || 1;
+  let { data, error } = useSWR(`/api/get-posts?page=${page}`, fetcher, {
+    revalidateOnFocus: false,
+    revalidateIfStale: false
   });
 
+  if (!data) data = { posts: loaders, pages: 0 };
+
   useEffect(() => {
-    wait(() => {
-      fetch('/api/get-posts')
-        .then(response => response.json())
-        .then(data => {
-          setPosts(data.posts || []);
-          setLoading(false);
-        })
-        .catch(error => {
-          setError(error);
-          setLoading(false);
-        });
-    }, 'Blog:get-posts', 50);
-  }, []);
+    Cookies.set('blog-url', router.asPath);
+  }, [router.asPath])
 
   return (
     <Layout props={{ menu: true, meta: { title: "Blog" } }}>
       <Page.Body>
-        {loading ? (
-          <BlogDirectory posts={loaders} />
-        ) : error ? (
-          <PageMessage>{error}</PageMessage>
-        ) : !posts.length ? (
+        {error ? (
+          <PageMessage>{error.message}</PageMessage>
+        ) : !(data.posts || []).length ? (
           <PageMessage>No posts found.</PageMessage>
         ) : (
-          <BlogDirectory posts={posts} />
+          <div className="flex flex-col">
+            <BlogDirectory data={data} page={page} />
+            {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
+          </div>
         )}
       </Page.Body>
     </Layout>

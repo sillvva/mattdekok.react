@@ -4,13 +4,11 @@
 
 .Drawer {
   @apply bg-black/75 fixed z-30 inset-0 flex-row items-center justify-center duration-500 ease-linear;
-  @media (max-width: 1024px) {
-    .Open {
-      animation: drawer-open 500ms ease-in-out forwards;
-    }
-    .Close {
-      animation: drawer-close 500ms ease-in-out forwards;
-    }
+  .Open {
+    animation: drawer-open 500ms ease-in-out forwards;
+  }
+  .Close {
+    animation: drawer-close 500ms ease-in-out forwards;
   }
 }
 
@@ -65,9 +63,12 @@
 }
 
 .Fab {
-  @apply w-14 h-14 rounded-full text-2xl;
+  @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl;
   @apply transition-[background] duration-500 ease-linear;
   background-color: var(--background);
+  &.MenuFab {
+    @apply lg:hidden;
+  }
   &:hover {
     background-color: var(--link);
     i {
@@ -96,7 +97,7 @@
 }
 
 .PageBody {
-  @apply flex justify-center relative px-4 mt-24 lg:mt-0 pb-4;
+  @apply flex flex-col justify-center items-center relative px-4 mt-24 lg:mt-0 pb-4;
 }
 
 .PageArticle {

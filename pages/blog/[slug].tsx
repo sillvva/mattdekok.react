@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
@@ -21,6 +22,8 @@ import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
 import ReactCodepen from '../../components/codepen';
 import { getContentDir } from '../../store/misc';
+import { PostData } from '../api/get-posts';
+import Cookies from 'js-cookie';
 
 SyntaxHighlighter.registerLanguage('js', js);
 SyntaxHighlighter.registerLanguage('javascript', js);
@@ -40,6 +43,7 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = (props: ServerProps) => {
   const { data, content } = props;
+  const [returnUrl, setReturnUrl] = useState('/blog');
 
   const renderers = {
     p(paragraph: any) {
@@ -148,8 +152,12 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
         ...(data.updatedISO && { modified_date: data.updatedISO })
       }
     },
-    backTo: '/blog'
+    backTo: returnUrl
   };
+
+  useEffect(() => {
+    setReturnUrl(Cookies.get('blog-url') || "");
+  }, [])
 
   return (
     <Layout props={headerProps}>
@@ -201,12 +209,12 @@ export async function getServerSideProps(context: any) {
   let meta: any;
   let file: any;
   if (existsSync(postsPath)) {
-    const posts = readFileSync(postsPath, 'utf8');
-    const data = JSON.parse(posts);
-    meta = data[`${slug}.md`];
+    const data = readFileSync(postsPath, 'utf8');
+    const posts: PostData[] = JSON.parse(data);
+    meta = posts.find(p => p.slug == slug);
   }
   else {
-    file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
     [meta] = await file.getMetadata();
   }
 
@@ -226,7 +234,7 @@ export async function getServerSideProps(context: any) {
   else write = true;
 
   if (write) {
-    if (!file) file = storage.file(`${firebaseConfig.blogContent}/${slug}.md`);
+    if (!file) file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
     await file.download({ destination: filePath });
     result.data = readFileSync(filePath, 'utf8');
   }

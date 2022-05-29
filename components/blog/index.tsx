@@ -20,21 +20,33 @@ export type PostProps = {
 }
 
 export type DirectoryProps = {
-  posts: PostProps[]
+  data: DirectoryData;
+  page: string | number;
 }
+
+export type DirectoryData = {
+  posts: PostProps[];
+  pages: number;
+}
+
+export const postLoader: PostProps = {
+  title: "", date: "", image: "",
+  description: "", slug: "", link: "",
+  updated: "", tags: []
+};
 
 function BlogDirectory(props: DirectoryProps) {
   return (
     <div className={styles.BlogDirectory}>
-      {props.posts.map((post, p) => <BlogPost key={p} post={post} />)}
+      {props.data.posts.map((post, p) => <BlogPost key={p} post={post} />)}
     </div>
   )
 }
 
 export default BlogDirectory;
 
-type BlogPostProps = {  
-  post: PostProps 
+type BlogPostProps = {
+  post: PostProps
 }
 
 function BlogPost({ post }: BlogPostProps) {

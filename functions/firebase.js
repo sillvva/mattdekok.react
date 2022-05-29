@@ -3,7 +3,8 @@ const admin = require("firebase-admin");
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  blogContent: "blog/articles"
+  blogCollection: "posts",
+  blogStorage: "blog/articles"
 };
 
 let fbApp; 
