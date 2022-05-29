@@ -77,7 +77,6 @@ async function fetchPosts(getPosts) {
     if (fsItem) posts.splice(fsIndex, 1, postData);
     else posts.push(postData);
   }
-  // console.log(posts);return;
 
   posts.forEach((post, pi) => {
     const storageFile = contentList.find(item => item.name.endsWith(`/${post.slug}.md`));

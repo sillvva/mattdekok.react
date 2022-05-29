@@ -96,7 +96,7 @@
 }
 
 .PageBody {
-  @apply flex justify-center relative px-4 mt-24 lg:mt-0 pb-4;
+  @apply flex flex-col justify-center items-center relative px-4 mt-24 lg:mt-0 pb-4;
 }
 
 .PageArticle {

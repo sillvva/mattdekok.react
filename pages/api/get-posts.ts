@@ -8,6 +8,7 @@ import { getContentDir } from "../../store/misc";
 type PostFetchOptions = {
   page?: number;
   query?: string;
+  limit?: number;
 };
 
 export type PostData = {
@@ -19,7 +20,7 @@ export type PostData = {
 const perPage = 12;
 
 export const getPosts = async (options?: PostFetchOptions) => {
-  const { page = 1, query = "" } = options || {};
+  const { page = 1, query = "", limit = perPage } = options || {};
   const jsonFile = `${getContentDir()}/${firebaseConfig.blogCollection}.json`;
 
   let posts: PostData[] = [];
@@ -63,21 +64,26 @@ export const getPosts = async (options?: PostFetchOptions) => {
   }
   else posts = posts.sort((a, b) => a.date > b.date ? -1 : 1);
 
-  return posts.slice((page - 1) * perPage, page * perPage - 1);
+  console.log(posts.length, limit)
+
+  return {
+    pages: Math.ceil(posts.length / limit),
+    posts: posts.slice((page - 1) * limit, page * limit)
+  };
 };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
-    const { page, q } = req.query;
+    const { page, q, limit } = req.query;
 
     try {
       res.setHeader("Cache-Control", "public, max-age=21600");
-      return res.status(200).json({
-        posts: await getPosts({
-          page: parseInt(Array.isArray(page) ? page[0] : page) || 1,
-          query: Array.isArray(q) ? q[0] : q
-        }),
+      const result = await getPosts({
+        page: parseInt(Array.isArray(page) ? page[0] : page) || 1,
+        query: Array.isArray(q) ? q[0] : q,
+        limit: parseInt(Array.isArray(limit) ? limit[0] : limit) || perPage,
       });
+      return res.status(200).json(result);
     } catch (err) {
       return res.status(500).json({
         error: err,
