@@ -43,7 +43,7 @@ const Blog: NextPage = () => {
         ) : !(data.posts || []).length ? (
           <PageMessage>No posts found.</PageMessage>
         ) : (
-          <div className="flex flex-col">
+          <div className="flex flex-col w-full">
             <BlogDirectory data={data} page={page} />
             {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
           </div>
