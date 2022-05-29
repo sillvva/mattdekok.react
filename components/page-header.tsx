@@ -42,9 +42,9 @@ const PageHeader = (props: PageHeaderProps) => {
       <nav className={classes.pageNav}>
         {props.backTo ? (
           <Link href={props.backTo}>
-            <button type="button" className={styles.Fab}>
+            <a type="button" className={styles.Fab}>
               <i className="mdi mdi-chevron-left"></i>
-            </button>
+            </a>
           </Link>
         ) : (
           <button type="button" onClick={drawer.toggle} className={`${styles.Fab} lg:hidden`}>

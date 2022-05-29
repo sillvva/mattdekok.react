@@ -6,6 +6,7 @@ import Page from '../../components/page';
 import BlogDirectory, { PostProps, postLoader } from '../../components/blog';
 import PageMessage from '../../components/page-message';
 import Pagination from '../../components/pagination';
+import Cookies from 'js-cookie';
 
 const loaders: PostProps[] = Array(6).fill(postLoader);
 const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: string) => {
@@ -28,6 +29,8 @@ const Blog: NextPage = () => {
   });
 
   if (!data) data = { posts: loaders, pages: 0 };
+
+  Cookies.set('blog-query', router.asPath.replace(router.pathname, ''));
 
   return (
     <Layout props={{ menu: true, meta: { title: "Blog" } }}>

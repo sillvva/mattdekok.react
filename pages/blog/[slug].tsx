@@ -22,6 +22,7 @@ import { blogStyles, PostProps } from '../../components/blog';
 import ReactCodepen from '../../components/codepen';
 import { getContentDir } from '../../store/misc';
 import { PostData } from '../api/get-posts';
+import Cookies from 'js-cookie';
 
 SyntaxHighlighter.registerLanguage('js', js);
 SyntaxHighlighter.registerLanguage('javascript', js);
@@ -41,6 +42,7 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = (props: ServerProps) => {
   const { data, content } = props;
+  const query = Cookies.get('blog-query') || '';
 
   const renderers = {
     p(paragraph: any) {
@@ -149,7 +151,7 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
         ...(data.updatedISO && { modified_date: data.updatedISO })
       }
     },
-    backTo: '/blog'
+    backTo: `/blog${query}`
   };
 
   return (

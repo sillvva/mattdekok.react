@@ -64,8 +64,6 @@ export const getPosts = async (options?: PostFetchOptions) => {
   }
   else posts = posts.sort((a, b) => a.date > b.date ? -1 : 1);
 
-  console.log(posts.length, limit)
-
   return {
     pages: Math.ceil(posts.length / limit),
     posts: posts.slice((page - 1) * limit, page * limit)
