@@ -18,6 +18,7 @@ type DrawerProps = {
 
 type ThemeProps = {
   state: string;
+  themes: string[];
   toggle: () => void;
   set: (theme: string) => void;
 }
@@ -35,6 +36,7 @@ const initState = {
   },
   theme: {
     state: 'dark',
+    themes: ['dark', 'light'],
     toggle: function () { },
     set: function (theme: string) { }
   }
@@ -71,13 +73,11 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
   }
 
   function themeToggleHandler() {
-    if (context.theme.state == 'dark') {
-      document.body.classList.replace('dark', 'light');
-      context.theme.state = 'light';
-    } else {
-      document.body.classList.replace('light', 'dark');
-      context.theme.state = 'dark';
-    }
+    const themes = context.theme.themes;
+    const currentIndex = themes.findIndex(t => t == context.theme.state);
+    const nextIndex = currentIndex === themes.length - 1 ? 0 : currentIndex + 1;
+    document.body.classList.replace(themes[currentIndex], themes[nextIndex]);
+    context.theme.state = themes[nextIndex];
     cookie.set('theme', context.theme.state);
     setContext({ ...context, theme: context.theme });
   }

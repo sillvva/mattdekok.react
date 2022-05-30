@@ -8,9 +8,9 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
 
   useEffect(() => {
-    if (document.body.classList.contains('dark')) theme.set('dark');
-    if (document.body.classList.contains('light')) theme.set('light');
-  }, []);
+    const cL = document.body.classList;
+    theme.themes.forEach(t => cL.contains(t) && theme.state !== t && theme.set(t));
+  }, [theme]);
 
   return (
     <>
