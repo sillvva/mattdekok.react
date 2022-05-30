@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link'
 import styles from '../layouts/main/MainLayout.module.scss'
+import buttons from '../styles/Buttons.module.scss';
 import { useRouter } from 'next/router';
 
 export type Item = {
@@ -14,25 +15,35 @@ export type Item = {
 }
 type PageMenuProps = {
   items: (Item | null)[];
-  maxLength: number;
+  maxLength?: number;
   color?: string;
   hoverColor?: string;
   activeColor?: string;
   textColor?: string;
-  itemClasses: string[]
+  itemClasses?: string[]
 }
 
 const PageMenu = (props: PageMenuProps) => {
+  const {
+    maxLength = 0,
+    itemClasses = [],
+    color = "var(--menuColor1)",
+    hoverColor = "var(--menuColor2)",
+    activeColor = "var(--menuColor2)",
+    textColor = "var(--menuText)",
+    items
+  } = props;
+  
   const router = useRouter();
 
   const menuRows: (Item)[][] = [[]];
-  props.items.forEach((item, i) => {
+  items.forEach((item, i) => {
     const rowIndex = menuRows.length - 1;
     if (item) menuRows[rowIndex].push({
       ...item,
       ...(item.link === router.pathname && { active: true }),
     });
-    if (props.maxLength >= 0 && menuRows[rowIndex].length === props.maxLength && props.items.length - 1 > i) {
+    if (maxLength >= 0 && menuRows[rowIndex].length === maxLength && items.length - 1 > i) {
       menuRows.push([]);
     }
   });
@@ -47,12 +58,12 @@ const PageMenu = (props: PageMenuProps) => {
                 <PageMenuItem key={`pmi${i}`}
                   link={item.link}
                   label={item.label}
-                  color={item.color || props.color}
-                  classes={props.itemClasses}
-                  active={item.active}
-                  activeColor={item.activeColor || props.activeColor}
-                  hoverColor={item.hoverColor || props.hoverColor}
-                  textColor={item.textColor || props.textColor} />
+                  color={item.color || color}
+                  itemClasses={itemClasses}
+                  active={!!item.active}
+                  activeColor={item.activeColor || activeColor}
+                  hoverColor={item.hoverColor || hoverColor}
+                  textColor={item.textColor || textColor} />
               );
             })}
           </div>
@@ -62,61 +73,54 @@ const PageMenu = (props: PageMenuProps) => {
   )
 }
 
-PageMenu.defaultProps = {
-  maxLength: 0,
-  itemClasses: [],
-  color: "var(--menuColor1)",
-  hoverColor: "var(--menuColor2)",
-  activeColor: "var(--menuColor2)",
-  textColor: "var(--menuText)",
-};
-
 export default PageMenu;
 
 type PageMenuItemProps = {
   link: string;
   label: string;
-  active: boolean;
+  active?: boolean;
   color?: string;
   hoverColor?: string;
   activeColor?: string;
   textColor?: string;
-  classes: string[]
+  itemClasses: string[]
 }
 
 export const PageMenuItem = (props: PageMenuItemProps) => {
-  const [classes, setClasses] = useState([styles.Button, props.active ? styles.Active : '', ...props.classes]);
+  const {
+    active = false,
+    itemClasses = [buttons.Button5],
+    color = "var(--menuColor1)",
+    hoverColor = "var(--menuColor2)",
+    activeColor = "var(--menuColor2)",
+    textColor = "var(--menuText)",
+    link,
+    label
+  } = props;
+
+  const [classes, setClasses] = useState([buttons.Button, active ? buttons.Active : '', ...itemClasses]);
   if (!classes.find(c => /Button\d+/.test(c))) {
-    setClasses([...classes, styles.Button5]);
+    setClasses([...classes, buttons.Button5]);
   }
 
   const style = {
-    ...(props.color && { '--item-color': props.color }),
-    ...(props.hoverColor && { '--hover-color': props.hoverColor }),
-    ...(props.activeColor && { '--active-color': props.activeColor }),
-    ...(props.textColor && { '--text-color': props.textColor }),
+    ...(color && { '--item-color': color }),
+    ...(hoverColor && { '--hover-color': hoverColor }),
+    ...(activeColor && { '--active-color': activeColor }),
+    ...(textColor && { '--text-color': textColor }),
   } as React.CSSProperties;
 
-  if (!props.link || props.active) return (
+  if (!link || active) return (
     <a className={classes.join(' ')} style={style}>
-      <span className={styles.ItemLabel}>{props.label}</span>
+      <span>{label}</span>
     </a>
   );
 
   return (
-    <Link href={props.link}>
+    <Link href={link}>
       <a className={classes.join(' ')} style={style}>
-        <span className={styles.ItemLabel}>{props.label}</span>
+        <span>{label}</span>
       </a>
     </Link>
   )
 }
-
-PageMenuItem.defaultProps = {
-  active: false,
-  classes: [styles.Button5],
-  color: "var(--menuColor1)",
-  hoverColor: "var(--menuColor2)",
-  activeColor: "var(--menuColor2)",
-  textColor: "var(--menuText)",
-};

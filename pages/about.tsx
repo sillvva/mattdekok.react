@@ -1,18 +1,17 @@
 import type { NextPage } from 'next'
-import styles from '../layouts/main/MainLayout.module.scss'
-import PageHeader from '../components/page-header'
+import buttons from '../styles/Buttons.module.scss'
 import { PageMenuItem } from '../components/page-menu';
 import Page from '../components/page';
 import MeDetails from '../components/me-details';
 import Layout from '../layouts/layout';
-import PageMeta from '../components/meta';
+
+const age = (birthday: Date) => {
+  const ageDifMs = Date.now() - birthday.getTime();
+  const ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+};
 
 const AboutMe: NextPage = () => {
-  const age = (birthday: Date) => {
-    const ageDifMs = Date.now() - birthday.getTime();
-    const ageDate = new Date(ageDifMs); // miliseconds from epoch
-    return Math.abs(ageDate.getUTCFullYear() - 1970);
-  };
 
   return (
     <Layout props={{ menu: true, meta: { title: "About Me" } }}>
@@ -23,7 +22,7 @@ const AboutMe: NextPage = () => {
               <div className="basis-full md:basis-6/12 mb-5 md:mb-0">
                 <p>
                   Experienced web developer with a demonstrated history of working in the wireless industry. Skilled in PHP, Node.JS, Vue, Angular, HTML, JavaScript, TypeScript, CSS,
-                  and SCSS. Strong engineering professional with a Bachelor’s Degree focused in Computer and Information Systems Security/Information Assurance from Dakota State
+                  and SCSS. Strong engineering professional with a Bachelor&apos;s Degree focused in Computer and Information Systems Security/Information Assurance from Dakota State
                   University.
                 </p>
               </div>
@@ -145,7 +144,7 @@ const AboutMe: NextPage = () => {
             <div className="text-center">
               <p className="pb-4">Like and want to support my work? No problem!</p>
               <div className="flex justify-center">
-                <PageMenuItem link="/donate" label="Buy me a coffee" classes={[styles.Button4]} />
+                <PageMenuItem link="/donate" label="Buy me a coffee" itemClasses={[buttons.Button4]} />
               </div>
             </div>
           </Page.Section>

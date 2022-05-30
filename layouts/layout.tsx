@@ -1,8 +1,8 @@
-import { PropsWithChildren, useContext } from "react";
+import { PropsWithChildren } from "react";
 import { motion, Transition, Variants } from "framer-motion";
 import PageMeta from '../components/meta';
 import PageHeader from '../components/page-header';
-import MainLayoutContext, { MainLayoutContextProvider } from '../store/main-layout.context';
+import { MainLayoutContextProvider } from '../store/main-layout.context';
 import { menuItems } from '../store/main-layout.context';
 import MainLayout from './main';
 
@@ -17,6 +17,26 @@ type LayoutMeta = {
   image?: string;
   articleMeta?: object;
 }
+
+const Layout = ({ layout, children, props }: PropsWithChildren<LayoutProps>) => {
+  return (
+    <MainLayoutContextProvider>
+      <MainLayout>
+        {props && <PageHead {...props} />}
+        <motion.main
+          variants={layoutMotion.variants}
+          initial="hidden"
+          animate="enter"
+          exit="exit"
+          transition={layoutMotion.transition}>
+          {children}
+        </motion.main>
+      </MainLayout>
+    </MainLayoutContextProvider>
+  )
+}
+
+export default Layout
 
 type PageHeadProps = {
   menu?: boolean;
@@ -52,33 +72,3 @@ const PageHead = (props: PageHeadProps) => (
       backTo={props?.backTo} />
   </>
 );
-
-const Layout = ({ layout, children, props }: PropsWithChildren<LayoutProps>) => {
-  const { drawer, theme } = useContext(MainLayoutContext);
-
-  if ((!layout || layout == 'main')) {
-    drawer.reset();
-    if (typeof document != 'undefined') {
-      if (document.body.classList.contains('dark')) theme.set('dark');
-      if (document.body.classList.contains('light')) theme.set('light');
-    }
-  }
-
-  return (
-    <MainLayoutContextProvider>
-      <MainLayout>
-        {props && <PageHead {...props} />}
-        <motion.main
-          variants={layoutMotion.variants}
-          initial="hidden"
-          animate="enter"
-          exit="exit"
-          transition={layoutMotion.transition}>
-          {children}
-        </motion.main>
-      </MainLayout>
-    </MainLayoutContextProvider>
-  )
-}
-
-export default Layout

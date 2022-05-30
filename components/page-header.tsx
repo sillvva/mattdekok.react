@@ -1,10 +1,13 @@
 import { useContext } from 'react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import MainLayoutContext from '../store/main-layout.context';
 import styles from '../layouts/main/MainLayout.module.scss'
 import { layoutMotion } from '../layouts/layout';
-import PageMenu, { Item } from './page-menu';
-import Link from 'next/link';
+import { Item } from './page-menu';
+
+const PageMenu = dynamic(() => import('./page-menu'));
 
 type PageHeaderProps = {
   classes?: string | string[];
@@ -52,7 +55,7 @@ const PageHeader = (props: PageHeaderProps) => {
           </button>
         )}
         <div className={classes.pageMenuContainer}>
-          <PageMenu items={props.items} />
+          {props.items.length ? <PageMenu items={props.items} /> : ''}
         </div>
         <h1 className={classes.pageTitle}>{props.title}</h1>
         <button type="button" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
