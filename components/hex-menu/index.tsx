@@ -100,7 +100,7 @@ const HexMenuItem = (props: HexMenuItemProps) => {
       styles.HexMenuItem,
       props.active ? styles.Active : '',
       props.rotated ? styles.Rotated : '',
-      ...props.classes
+      ...props.classes.map(c => styles[c] ?? c)
     ].join(' ')}
       style={{
         ...(props.color && { '--item-color': props.color }),

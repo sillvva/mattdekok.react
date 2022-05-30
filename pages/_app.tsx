@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app'
 import App from 'next/app'
 import '../styles/globals.scss'
-import '../styles/animations.scss'
 import '../styles/mdi.scss'
 import '../styles/montserrat.font.css'
 

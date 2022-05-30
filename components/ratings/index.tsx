@@ -96,7 +96,7 @@ const RatingStars = (props: RatingStarsProps) => {
   };
 
   return (
-    <div className={['rating rating-zoom text-right'].join(' ')}>
+    <div className={`rating text-right ${ratingStyles.Zoom}`}>
       {getStars().map((star, s) => <i className={['mdi', star].join(' ')} key={s}></i>)}
     </div>
   )
