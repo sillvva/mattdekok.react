@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import * as NProgress from 'nprogress';
-import * as React from 'react';
+import { useEffect, useMemo } from 'react';
 
 type NProgress = {
   /**
@@ -49,9 +49,9 @@ export default function NextNProgress({
   options,
   nonce,
 }: NProgress) {
-  const opts = React.useMemo(() => options, [options]);
+  const opts = useMemo(() => options, [options]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
 
     if (opts) {

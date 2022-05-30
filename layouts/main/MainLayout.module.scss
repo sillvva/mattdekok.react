@@ -2,34 +2,6 @@
   @apply min-h-screen;
 }
 
-.Drawer {
-  @apply bg-black/75 fixed z-30 inset-0 flex-row items-center justify-center duration-500 ease-linear;
-  .Open {
-    animation: drawer-open 500ms ease-in-out forwards;
-  }
-  .Close {
-    animation: drawer-close 500ms ease-in-out forwards;
-  }
-}
-
-@keyframes drawer-open {
-  0% {
-    transform: scale(0) rotate(-270deg);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-@keyframes drawer-close {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0) rotate(270deg);
-  }
-}
-
 .PageHeader {
   @apply flex flex-col items-center;
   @media (max-width: 1023px) {

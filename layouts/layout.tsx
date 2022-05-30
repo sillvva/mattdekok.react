@@ -1,9 +1,9 @@
 import { PropsWithChildren } from "react";
 import { motion, Transition, Variants } from "framer-motion";
+import { MainLayoutContextProvider, menuItems } from '../store/main-layout.context';
 import PageMeta from '../components/meta';
 import PageHeader from '../components/page-header';
-import { MainLayoutContextProvider } from '../store/main-layout.context';
-import { menuItems } from '../store/main-layout.context';
+import NextNProgress from "../components/progress";
 import MainLayout from './main';
 
 type LayoutProps = {
@@ -22,6 +22,7 @@ const Layout = ({ layout, children, props }: PropsWithChildren<LayoutProps>) => 
   return (
     <MainLayoutContextProvider>
       <MainLayout>
+        <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
         {props && <PageHead {...props} />}
         <motion.main
           variants={layoutMotion.variants}
