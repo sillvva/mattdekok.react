@@ -1,6 +1,5 @@
 import { useState, PropsWithChildren, createContext } from "react";
 import cookie from 'js-cookie';
-import styles from '../layouts/main/MainLayout.module.scss'
 
 export const menuItems = [
   { link: "/", label: "Intro" },
@@ -13,14 +12,13 @@ export const menuItems = [
 
 type DrawerProps = {
   state: boolean;
-  drawerClasses: string;
-  menuClasses: string;
+  action: string;
   toggle: () => void;
-  reset: () => void;
 }
 
 type ThemeProps = {
   state: string;
+  themes: string[];
   toggle: () => void;
   set: (theme: string) => void;
 }
@@ -33,13 +31,12 @@ type MainLayoutProps = {
 const initState = {
   drawer: {
     state: false,
-    drawerClasses: "hidden opacity-0",
-    menuClasses: "",
-    toggle: function () { },
-    reset: function () { }
+    action: "",
+    toggle: function () { }
   },
   theme: {
     state: 'dark',
+    themes: ['dark', 'light'],
     toggle: function () { },
     set: function (theme: string) { }
   }
@@ -54,49 +51,33 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
 
   function drawerToggleHandler() {
     const drawer = context.drawer;
-    if (drawer.menuClasses.length) return;
+    if (drawer.action) return;
 
     if (drawer.state) {
-      drawer.drawerClasses = "flex opacity-0";
-      drawer.menuClasses = styles.Close;
+      drawer.action = 'closing';
       setTimeout(() => {
-        drawer.menuClasses = "";
-        drawer.drawerClasses = "hidden opacity-0";
+        drawer.state = false;
+        drawer.action = "";
         setContext({ ...context, drawer: drawer });
       }, 500);
     } else {
-      drawer.drawerClasses = "flex opacity-0";
-      drawer.menuClasses = styles.Open;
+      drawer.state = true;
+      drawer.action = "opening";
       setTimeout(() => {
-        drawer.drawerClasses = "flex opacity-100";
-        setContext({ ...context, drawer: drawer });
-      }, 50);
-      setTimeout(() => {
-        drawer.menuClasses = "";
+        drawer.action = "";
         setContext({ ...context, drawer: drawer });
       }, 500);
     }
 
-    drawer.state = !drawer.state;
-    setContext({ ...context, drawer: drawer });
-  }
-
-  function drawerResetHandler() {
-    const drawer = context.drawer;
-    drawer.state = false;
-    drawer.menuClasses = "";
-    drawer.drawerClasses = "hidden opacity-0";
     setContext({ ...context, drawer: drawer });
   }
 
   function themeToggleHandler() {
-    if (context.theme.state == 'dark') {
-      document.body.classList.replace('dark', 'light');
-      context.theme.state = 'light';
-    } else {
-      document.body.classList.replace('light', 'dark');
-      context.theme.state = 'dark';
-    }
+    const themes = context.theme.themes;
+    const currentIndex = themes.findIndex(t => t == context.theme.state);
+    const nextIndex = currentIndex === themes.length - 1 ? 0 : currentIndex + 1;
+    document.body.classList.replace(themes[currentIndex], themes[nextIndex]);
+    context.theme.state = themes[nextIndex];
     cookie.set('theme', context.theme.state);
     setContext({ ...context, theme: context.theme });
   }
@@ -117,8 +98,7 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     ...context,
     drawer: {
       ...context.drawer,
-      toggle: drawerToggleHandler,
-      reset: drawerResetHandler
+      toggle: drawerToggleHandler
     },
     theme: {
       ...context.theme,
@@ -133,3 +113,5 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     </MainLayoutContext.Provider>
   );
 }
+
+export const DefaultLayoutContext = createContext({});

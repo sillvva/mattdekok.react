@@ -4,7 +4,6 @@
  */
 
 import { useState, useRef, useEffect, CSSProperties } from 'react';
-import PropTypes from 'prop-types';
 import PageMessage from '../page-message';
 
 const SCRIPT_URL = 'https://static.codepen.io/assets/embed/ei.js'; // new embed
@@ -21,7 +20,7 @@ type CodePenProps = {
   title?: string;
   defaultTab?: string;
   height?: number;
-  loader?: PropTypes.ReactElementLike | ((...args: any[]) => any);
+  loader?: JSX.Element | ((...args: any[]) => JSX.Element);
   preview?: boolean;
   editable?: boolean;
   themeId?: string | number;

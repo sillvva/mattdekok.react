@@ -30,6 +30,7 @@ const PageMeta = (props: PropsWithChildren<MetaProps>) => {
     <Head>
       <title>{dtitle}</title>
       <meta name="description" content={description} />
+      <link rel="apple-touch-icon" href={`${ogProperties.url}/icon_x128.png`}></link>
       {Object.keys(articleProps).map((t) => {
         return <meta key={`article:${t}`} property={`article:${t}`} content={articleProps[t]} />;
       })}

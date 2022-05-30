@@ -19,14 +19,14 @@
   --LinkedIn: #000000;
   --menuColor1: var(--link);
   --menuColor2: #90bbff;
-  --menuText: #f5f5f5;
+  --menuText: #ffffff;
   --loading: rgba(255,255,255,0.7);
 }
 
 @mixin dark-theme {
   --background: #202125;
   --background-transparent: rgba(0, 0, 0, 0.8);
-  --link: #0ba;
+  --link: #0a9;
   --dropShadow: #181818;
   --text: #f5f5f5;
   --altText: #2a2a2a;
@@ -35,7 +35,7 @@
   --LinkedIn: #ffffff;
   --menuColor1: var(--link);
   --menuColor2: #055;
-  --menuText: #f5f5f5;
+  --menuText: #ffffff;
   --loading: rgba(255,255,255,0.2);
 }
 

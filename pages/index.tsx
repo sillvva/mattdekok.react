@@ -26,7 +26,7 @@ const Home: NextPage = () => {
               <HexMenu items={items}
                 maxLength={3}
                 classes={['lg:scale-100']}
-                itemClasses={['menu-bounce']}
+                itemClasses={['Bounce']}
                 rotated={items.length % 2 == 0} />
             </div>
           </div>

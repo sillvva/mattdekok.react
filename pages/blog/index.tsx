@@ -1,13 +1,16 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import useSWR, { Fetcher } from 'swr';
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
-import BlogDirectory, { PostProps, postLoader } from '../../components/blog';
-import PageMessage from '../../components/page-message';
-import Pagination from '../../components/pagination';
+import { PostProps, postLoader } from '../../components/blog';
 import Cookies from 'js-cookie';
+
+const Pagination = dynamic(() => import('../../components/pagination'));
+const PageMessage = dynamic(() => import('../../components/page-message'));
+const BlogDirectory = dynamic(() => import('../../components/blog'));
 
 const loaders: PostProps[] = Array(6).fill(postLoader);
 const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: string) => {
@@ -43,10 +46,10 @@ const Blog: NextPage = () => {
         ) : !(data.posts || []).length ? (
           <PageMessage>No posts found.</PageMessage>
         ) : (
-          <div className="flex flex-col">
+          <>
             <BlogDirectory data={data} page={page} />
             {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
-          </div>
+          </>
         )}
       </Page.Body>
     </Layout>

@@ -13,7 +13,6 @@ import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
 import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
 import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
 import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss';
-import sass from 'react-syntax-highlighter/dist/cjs/languages/prism/sass';
 import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 
 import { firebaseConfig, storage } from "../../functions/func";
@@ -34,7 +33,6 @@ SyntaxHighlighter.registerLanguage('yaml', yaml);
 SyntaxHighlighter.registerLanguage('json', json);
 SyntaxHighlighter.registerLanguage('css', css);
 SyntaxHighlighter.registerLanguage('scss', scss);
-SyntaxHighlighter.registerLanguage('sass', sass);
 
 type ServerProps = {
   data: PostProps;
