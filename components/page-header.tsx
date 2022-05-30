@@ -50,7 +50,7 @@ const PageHeader = (props: PageHeaderProps) => {
             </a>
           </Link>
         ) : (
-          <button type="button" onClick={drawer.toggle} className={`${styles.Fab} ${styles.MenuFab}`}>
+          <button type="button" aria-label="Open Drawer" onClick={drawer.toggle} className={`${styles.Fab} ${styles.MenuFab}`}>
             <i className="mdi mdi-menu"></i>
           </button>
         )}
@@ -58,7 +58,7 @@ const PageHeader = (props: PageHeaderProps) => {
           {props.items.length ? <PageMenu items={props.items} /> : ''}
         </div>
         <h1 className={classes.pageTitle}>{props.title}</h1>
-        <button type="button" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
+        <button type="button" aria-label="Toggle Theme" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
           <i className="mdi mdi-brightness-6"></i>
         </button >
       </nav>

@@ -95,25 +95,31 @@ type HexMenuItemProps = {
 }
 
 const HexMenuItem = (props: HexMenuItemProps) => {
-  const menuItem = (
+  const menuItem = props.label ? (
     <a className={[
-        styles.HexMenuItem, 
-        !props.label ? styles.Empty : '', 
-        props.active ? styles.Active : '', 
-        props.rotated ? styles.Rotated : '', 
-        ...props.classes
-      ].join(' ')}
-      style={{ 
-        ...(props.color && { '--item-color': props.color }), 
+      styles.HexMenuItem,
+      props.active ? styles.Active : '',
+      props.rotated ? styles.Rotated : '',
+      ...props.classes
+    ].join(' ')}
+      style={{
+        ...(props.color && { '--item-color': props.color }),
         ...(props.hoverColor && { '--hover-color': props.hoverColor }),
         ...(props.activeColor && { '--active-color': props.activeColor }),
         ...(props.textColor && { '--text-color': props.textColor }),
       } as React.CSSProperties}>
-        <span className={styles.ItemLabel}>{props.label}</span>
-        <div className={`${styles.Face} ${styles.Face1}`}></div>
-        <div className={`${styles.Face} ${styles.Face2}`}></div>
-        <div className={`${styles.Face} ${styles.Face3}`}></div>
-      </a>
+      <span className={styles.ItemLabel}>{props.label}</span>
+      <div className={`${styles.Face} ${styles.Face1}`}></div>
+      <div className={`${styles.Face} ${styles.Face2}`}></div>
+      <div className={`${styles.Face} ${styles.Face3}`}></div>
+    </a>
+  ) : (
+    <span className={[
+      styles.HexMenuItem,
+      props.rotated ? styles.Rotated : '',
+      styles.Empty
+    ].join(' ')}>
+    </span>
   );
 
   if (!props.link) return menuItem;
