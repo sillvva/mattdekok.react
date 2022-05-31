@@ -73,9 +73,9 @@ HexMenu.defaultProps = {
   maxLength: 0,
   classes: [],
   rotated: false,
-  color: "var(--menuColor1)",
-  hoverColor: "var(--menuColor2)",
-  activeColor: "var(--menuColor2)",
+  color: "var(--menu)",
+  hoverColor: "var(--menuHover)",
+  activeColor: "var(--menuHover)",
   textColor: "var(--menuText)",
   itemClasses: []
 };

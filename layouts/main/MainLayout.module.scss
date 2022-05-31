@@ -26,6 +26,7 @@
 .PageTitle {
   font-family: "Montserrat", sans-serif;
   @apply text-3xl text-center lg:mt-4 lg:mb-4;
+  color: var(--headers);
   &.SmallTitle {
     @apply text-lg my-2;
     @media (max-width: 400px) {

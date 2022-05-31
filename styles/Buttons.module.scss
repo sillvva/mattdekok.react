@@ -1,4 +1,4 @@
-.Button {
+a.Button {
   padding: 1rem 1.5rem;
   display: block;
   color: var(--text-color);
@@ -171,7 +171,7 @@
   }
   &:hover:not(.Active) {
     background: var(--hover-color);
-    box-shadow: 0 0 10px var(--item-color);
+    // box-shadow: 0 0 10px var(--item-color);
   }
   &:hover,
   &:focus,

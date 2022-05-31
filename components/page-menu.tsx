@@ -27,10 +27,10 @@ const PageMenu = (props: PageMenuProps) => {
   const {
     maxLength = 0,
     itemClasses = [],
-    color = "var(--menuColor1)",
-    hoverColor = "var(--menuColor2)",
-    activeColor = "var(--menuColor2)",
-    textColor = "var(--menuText)",
+    color = "var(--link)",
+    hoverColor = "var(--linkHover)",
+    activeColor = "var(--linkHover)",
+    textColor = "var(--linkText)",
     items
   } = props;
   
@@ -90,10 +90,10 @@ export const PageMenuItem = (props: PageMenuItemProps) => {
   const {
     active = false,
     itemClasses = [buttons.Button5],
-    color = "var(--menuColor1)",
-    hoverColor = "var(--menuColor2)",
-    activeColor = "var(--menuColor2)",
-    textColor = "var(--menuText)",
+    color = "var(--link)",
+    hoverColor = "var(--linkHover)",
+    activeColor = "var(--linkHover)",
+    textColor = "var(--linkText)",
     link,
     label
   } = props;
@@ -112,14 +112,14 @@ export const PageMenuItem = (props: PageMenuItemProps) => {
 
   if (!link || active) return (
     <a className={classes.join(' ')} style={style}>
-      <span>{label}</span>
+      {label}
     </a>
   );
 
   return (
     <Link href={link}>
       <a className={classes.join(' ')} style={style}>
-        <span>{label}</span>
+        {label}
       </a>
     </Link>
   )

@@ -11,14 +11,17 @@
   --background: #e5e5e5;
   --background-transparent: rgba(246, 246, 246, 0.8);
   --link: #0070e7;
+  --linkHover: var(--background);
+  --linkText: var(--link);
   --dropShadow: #888888;
+  --headers: #2a2a2a;
   --text: #2a2a2a;
   --altText: #f5f5f5;
   --article: #ffffff;
   --GitHub: #0d0d0d;
   --LinkedIn: #000000;
-  --menuColor1: var(--link);
-  --menuColor2: #90bbff;
+  --menu: var(--link);
+  --menuHover: #0F4C75;
   --menuText: #ffffff;
   --loading: rgba(255,255,255,0.7);
 }
@@ -27,14 +30,36 @@
   --background: #202125;
   --background-transparent: rgba(0, 0, 0, 0.8);
   --link: #0a9;
+  --linkHover: var(--background);
+  --linkText: var(--link);
   --dropShadow: #181818;
+  --headers: #BBFAE1;
   --text: #f5f5f5;
   --altText: #2a2a2a;
   --article: #2f2f2f;
   --GitHub: #ffffff;
   --LinkedIn: #ffffff;
-  --menuColor1: var(--link);
-  --menuColor2: #055;
+  --menu: var(--link);
+  --menuHover: #055;
+  --menuText: #ffffff;
+  --loading: rgba(255,255,255,0.2);
+}
+
+@mixin blue-theme {
+  --background: #1B262C;
+  --background-transparent: rgba(0, 0, 0, 0.8);
+  --link: #3282B8;
+  --linkHover: var(--background);
+  --linkText: var(--link);
+  --dropShadow: #181818;
+  --headers: #BBE1FA;
+  --text: #f5f5f5;
+  --altText: #2a2a2a;
+  --article: #2f2f2f;
+  --GitHub: #ffffff;
+  --LinkedIn: #ffffff;
+  --menu: var(--link);
+  --menuHover: #0F4C75;
   --menuText: #ffffff;
   --loading: rgba(255,255,255,0.2);
 }
@@ -68,10 +93,18 @@ body {
   .dark {
     @include dark-theme();
   }
+  &.blue,
+  .blue {
+    @include blue-theme();
+  }
   @media (prefers-color-scheme: dark) {
     &.light,
     .light {
       @include light-theme();
+    }
+    &.blue,
+    .blue {
+      @include blue-theme();
     }
     &,
     .dark {

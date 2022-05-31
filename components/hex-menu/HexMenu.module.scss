@@ -25,9 +25,9 @@
 .HexMenuItem {
   --baseYMargin: 30px;
   --baseXMargin: 4px;
-  --item-color: var(--menuColor1);
-  --active-color: var(--menuColor2);
-  --hover-color: var(--menuColor2);
+  --item-color: var(--menu);
+  --active-color: var(--menuHover);
+  --hover-color: var(--menuHover);
   --text-color: var(--menuText);
   position: relative;
   margin: calc(var(--baseYMargin) * var(--scale)) calc(var(--baseXMargin) * var(--scale));
