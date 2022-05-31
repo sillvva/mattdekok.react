@@ -55,7 +55,7 @@ export const layoutMotion: { variants: Variants, transition: Transition } = {
   },
   transition: {
     type: 'linear',
-    duration: 1
+    duration: 0.5
   }
 }
 
