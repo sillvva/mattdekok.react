@@ -60,12 +60,3 @@
     transform: scale(1);
   }
 }
-
-@keyframes loading {
-  from {
-      left: -200px;
-  }
-  to   {
-      left: 100%;
-  }
-}

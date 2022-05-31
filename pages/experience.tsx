@@ -10,7 +10,7 @@ const Experience: NextPage<ExperienceProps> = (props: ExperienceProps) => {
         <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
           {props.experience.map((section) => (
             <Page.Section key={section.name}>
-              <h2 className="text-xl font-bold">{section.name}</h2>
+              <h2>{section.name}</h2>
               <Page.SectionItems>
                 {section.experience.map((exp, i) => (
                   <Page.SectionItem key={`${exp.name}${i}`} image={exp.image}>

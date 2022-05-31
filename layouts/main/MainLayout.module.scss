@@ -89,10 +89,11 @@
       @apply border-b-0;
     }
     h2 {
-      @apply text-xl font-normal mb-4;
+      @apply text-xl font-semibold mb-4;
+      font-family: "Montserrat", sans-serif;
       color: var(--text);
       @media (max-width: 576px) {
-        @apply text-center font-medium mb-2;
+        @apply text-center font-semibold mb-2;
       }
     }
     figure {
@@ -130,40 +131,22 @@
           }
         }
         .SectionItem__Image {
-          float: left;
-          width: 56px;
-          height: 56px;
-          display: grid;
-          justify-content: center;
-          align-items: center;
-          background: white;
-          border-radius: 2px;
-          position: relative;
+          @apply float-left w-14 h-14 grid justify-center items-center bg-white rounded-sm relative;
           img {
-            max-width: 56px;
-            max-height: 56px;
-            border-radius: 2px;
+            @apply max-w-[56px] max-h-[56px] rounded-sm;
           }
         }
         .SectionItem__Content {
-          margin-left: 80px;
+          @apply ml-20;
           h3 {
-            font-size: 1.15rem;
-            line-height: 1.5;
-            font-weight: 500;
-            margin: 0;
+            @apply text-base font-medium m-0;
+            font-family: "Montserrat", sans-serif;
           }
           h4 {
-            font-size: 1rem;
-            line-height: 1.5;
-            font-weight: 300;
-            margin-bottom: 5px;
+            @apply text-sm font-light mb-1;
           }
           h5 {
-            font-size: 0.85rem;
-            line-height: 1;
-            font-weight: 300;
-            margin: 0;
+            @apply text-sm font-light m-0;
           }
         }
       }

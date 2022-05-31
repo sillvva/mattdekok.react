@@ -174,7 +174,7 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
                 <p className="mb-2">Tags:</p>
                 <div className="flex flex-wrap gap-2">
                   {data.tags.map((tag, i) => (
-                    <span className="rounded-full bg-gray-700 text-white py-1 px-3" key={i}>{tag}</span>
+                    <span className="rounded-full text-white py-1 px-3" style={{ backgroundColor: 'var(--menuHover)' }} key={i}>{tag}</span>
                   ))}
                 </div>
               </>
