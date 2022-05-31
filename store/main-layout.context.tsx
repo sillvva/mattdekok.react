@@ -10,6 +10,8 @@ export const menuItems = [
   { link: "/blog", label: "Blog" },
 ];
 
+const themes = ['dark', 'light']
+
 type DrawerProps = {
   state: boolean;
   action: string;
@@ -35,8 +37,8 @@ const initState = {
     toggle: function () { }
   },
   theme: {
-    state: 'dark',
-    themes: ['dark', 'light'],
+    state: themes[0],
+    themes: themes,
     toggle: function () { },
     set: function (theme: string) { }
   }
@@ -72,26 +74,22 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     setContext({ ...context, drawer: drawer });
   }
 
-  function themeToggleHandler() {
-    const themes = context.theme.themes;
-    const currentIndex = themes.findIndex(t => t == context.theme.state);
-    const nextIndex = currentIndex === themes.length - 1 ? 0 : currentIndex + 1;
+  function setTheme(theme?: string) {
+    const currentIndex = themes.findIndex(t => t === context.theme.state);
+    let nextIndex = themes.findIndex(t => t === theme);
+    if (nextIndex == -1) nextIndex = themes[currentIndex + 1] ? currentIndex + 1 : 0;
     document.body.classList.replace(themes[currentIndex], themes[nextIndex]);
     context.theme.state = themes[nextIndex];
     cookie.set('theme', context.theme.state);
     setContext({ ...context, theme: context.theme });
   }
 
+  function themeToggleHandler() {
+    setTheme();
+  }
+
   function themeSetHandler(theme: string) {
-    if (theme == 'light') {
-      document.body.classList.replace('dark', 'light');
-      context.theme.state = 'light';
-    } else {
-      document.body.classList.replace('light', 'dark');
-      context.theme.state = 'dark';
-    }
-    cookie.set('theme', context.theme.state);
-    setContext({ ...context, theme: context.theme });
+    setTheme(theme);
   }
 
   const ctx = {
