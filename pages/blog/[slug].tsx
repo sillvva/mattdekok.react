@@ -150,7 +150,8 @@ const Blog: NextPage<ServerProps> = (props: ServerProps) => {
         ...(data.updatedISO && { modified_date: data.updatedISO })
       }
     },
-    backTo: returnUrl
+    backTo: returnUrl, 
+    headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0']
   };
 
   useEffect(() => {

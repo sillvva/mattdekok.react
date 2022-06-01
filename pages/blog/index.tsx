@@ -39,7 +39,7 @@ const Blog: NextPage = () => {
   }, [router.asPath])
 
   return (
-    <Layout props={{ menu: true, meta: { title: "Blog" } }}>
+    <Layout props={{ menu: true, meta: { title: "Blog" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>
         {error ? (
           <PageMessage>{error.message}</PageMessage>

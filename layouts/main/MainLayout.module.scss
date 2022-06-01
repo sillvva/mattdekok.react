@@ -7,7 +7,6 @@
   @media (max-width: 1023px) {
     @apply fixed top-0 left-0 right-0 z-10 text-center;
     @apply transition-[background] duration-500 ease-linear;
-    background: var(--background);
   }
 }
 

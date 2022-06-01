@@ -19,22 +19,22 @@ type PageHeaderProps = {
 
 const PageHeader = (props: PageHeaderProps) => {
   const { drawer, theme } = useContext(MainLayoutContext);
-  
+
   const classes = {
     pageHeader: [
-      styles.PageHeader, 
-      ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes : []))
+      styles.PageHeader,
+      ...(typeof props.classes == 'string' ? [props.classes] : (props.classes ? props.classes.map(c => c.split(' ').map(c2 => styles[c2] + ' ' + c2 ?? c2).join(' ')) : []))
     ].join(' '),
     pageNav: [
-      styles.PageNav, 
+      styles.PageNav,
       ...(props.backTo ? [] : ['lg:pl-3'])
     ].join(' '),
     pageMenuContainer: [
-      styles.PageMenuContainer, 
+      styles.PageMenuContainer,
       ...(props.backTo ? [] : ['lg:pl-14'])
     ].join(' '),
     pageTitle: [
-      styles.PageTitle, 
+      styles.PageTitle,
       ...(props.smallTitle ? [styles.SmallTitle] : []),
       'block lg:hidden flex-1'
     ].join(' ')

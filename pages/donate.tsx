@@ -14,7 +14,7 @@ const Donate: NextPage = () => {
   }
 
   return (
-    <Layout props={{ menu: true, meta: { title: "Donate" } }}>
+    <Layout props={{ menu: true, meta: { title: "Donate" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>
         <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
           <Page.Section>

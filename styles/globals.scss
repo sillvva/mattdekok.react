@@ -114,7 +114,6 @@ body {
   & {
     background: var(--background) !important;
     color: var(--text) !important;
-    transition: background 0.5s linear;
   }
   .mdi {
     color: var(--text);
@@ -123,6 +122,10 @@ body {
     color: var(--link);
     text-decoration: none;
   }
+}
+
+* {
+  transition: background 0.5s linear;
 }
 
 .bg-transparent {

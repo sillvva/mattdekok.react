@@ -7,7 +7,7 @@ import projectStyles from './Projects.module.scss';
 
 const Projects: NextPage<ProjectProps> = (props: ProjectProps) => {
   return (
-    <Layout props={{ menu: true, meta: { title: "Projects" } }}>
+    <Layout props={{ menu: true, meta: { title: "Projects" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>
         <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
           <div className="p-2 basis-full 2xl:basis-11/12">

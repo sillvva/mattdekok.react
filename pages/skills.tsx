@@ -12,7 +12,7 @@ const Skills: NextPage<SkillProps> = (props: SkillProps) => {
   };
 
   return (
-    <Layout props={{ menu: true, meta: { title: "Skills" } }}>
+    <Layout props={{ menu: true, meta: { title: "Skills" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>
         <Page.Article className="w-full sm:w-9/12 md:w-10/12 lg:w-9/12">
           {props.skills.map((section, i) => (

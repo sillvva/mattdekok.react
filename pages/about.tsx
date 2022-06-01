@@ -14,7 +14,7 @@ const age = (birthday: Date) => {
 const AboutMe: NextPage = () => {
 
   return (
-    <Layout props={{ menu: true, meta: { title: "About Me" } }}>
+    <Layout props={{ menu: true, meta: { title: "About Me" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>
         <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
           <Page.Section>
