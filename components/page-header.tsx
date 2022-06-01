@@ -65,7 +65,7 @@ const PageHeader = (props: PageHeaderProps) => {
       {props.title && (
         <motion.h1
           variants={layoutMotion.variants}
-          key={props.title}
+          key={`title: ${props.title}`}
           initial="hidden"
           animate="enter"
           exit="exit"

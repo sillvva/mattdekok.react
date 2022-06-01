@@ -38,7 +38,7 @@ export const postLoader: PostProps = {
 function BlogDirectory(props: DirectoryProps) {
   return (
     <div className={styles.BlogDirectory}>
-      {props.data.posts.map((post, p) => <BlogPost key={p} post={post} />)}
+      {props.data.posts.map((post, p) => <BlogPost key={`post${p}`} post={post} />)}
     </div>
   )
 }

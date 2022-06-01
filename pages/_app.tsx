@@ -13,33 +13,35 @@ import NextNProgress from '../components/progress'
 function MyApp({ Component, pageProps }: AppProps) {
   const layout = routeLayouts(pageProps);
   if (layout) return (
-    <AnimatePresence exitBeforeEnter initial={false}>
-      <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
+    <>
+      <NextNProgress key={"test"} color="var(--link)" height={1} options={{ showSpinner: false }} />
       {layout?.props && <PageHead {...layout?.props} />}
-      <MainLayoutContextProvider>
-        <MainLayout>
-          <motion.main
-            key={layout?.props?.meta?.title || layout?.layout || 'page'}
-            variants={layoutMotion.variants}
-            initial="hidden"
-            animate="enter"
-            exit="exit"
-            transition={layoutMotion.transition}>
-            <Component {...pageProps} />
-          </motion.main>
-        </MainLayout>
-      </MainLayoutContextProvider>
-    </AnimatePresence>
+      <AnimatePresence initial={false}>
+        <MainLayoutContextProvider>
+          <MainLayout>
+            <motion.main
+              key={pageProps.path}
+              variants={layoutMotion.variants}
+              initial="hidden"
+              animate="enter"
+              exit="exit"
+              transition={layoutMotion.transition}>
+              <Component {...pageProps} />
+            </motion.main>
+          </MainLayout>
+        </MainLayoutContextProvider>
+      </AnimatePresence>
+    </>
   );
 
   return (
-    <div>Layout Not Defined</div>
+    <Component {...pageProps} />
   );
 }
 
 MyApp.getInitialProps = async (appContext: any) => {
   const appProps = await App.getInitialProps(appContext);
-  appProps.pageProps = { ...appProps.pageProps, cookies: appContext.ctx?.req?.cookies, url: appContext.ctx?.pathname };
+  appProps.pageProps = { ...appProps.pageProps, cookies: appContext.ctx?.req?.cookies, path: appContext.ctx?.pathname };
   return { ...appProps };
 }
 
@@ -52,7 +54,7 @@ export type LayoutProps = {
 
 const headerClasses = ['backdrop-blur-lg bg-transparent sticky z-10 top-0'];
 const routeLayouts = (pageProps: any): LayoutProps | undefined => {
-  const url = pageProps.url;
+  const url = pageProps.path;
   if (url == '/') return {
     props: { headerClasses: ['bg-transparent w-full absolute'] }
   }

@@ -31,7 +31,7 @@ const RatingSection = (props: PropsWithChildren<RatingSectionProps>) => {
       </h2>
       <div className={ratingStyles.Columns}>
         {colClasses.map((col, c) => (
-          <Fragment key={c}>
+          <Fragment key={`col${c}`}>
             <div className={[ratingStyles.Column, c > 0 && `hidden ${col}`].join(' ')}>
               <strong>Skills</strong>
             </div>
@@ -97,7 +97,7 @@ const RatingStars = (props: RatingStarsProps) => {
 
   return (
     <div className={`rating text-right ${ratingStyles.Zoom}`}>
-      {getStars().map((star, s) => <i className={['mdi', star].join(' ')} key={s}></i>)}
+      {getStars().map((star, s) => <i className={['mdi', star].join(' ')} key={`star${s}`}></i>)}
     </div>
   )
 }

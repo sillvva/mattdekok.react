@@ -34,11 +34,11 @@ function Pagination(props: PaginationProps) {
   return (
     <div className={styles.Pagination}>
       {pagination.map((p, i) => p == page ? (
-        <span key={i} className={[styles.Page, styles.Active].join(' ')}>{p}</span>
+        <span key={`pg${i}`} className={[styles.Page, styles.Active].join(' ')}>{p}</span>
       ) : p ? (
-        <button key={i} className={styles.Page} onClick={() => { pageHandler(p) }}>{p}</button>
+        <button key={`pg${i}`} className={styles.Page} onClick={() => { pageHandler(p) }}>{p}</button>
       ) : (
-        <span key={i} className={styles.PageSeparator}>|</span>
+        <span key={`pg${i}`} className={styles.PageSeparator}>|</span>
       ))}
     </div>
   )
