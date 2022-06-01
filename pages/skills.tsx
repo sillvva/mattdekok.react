@@ -4,7 +4,7 @@ import Rating from '../components/ratings';
 import Layout from '../layouts/layout';
 import { firestore } from '../functions/func'
 
-const Skills: NextPage<SkillProps> = (props: SkillProps) => {
+const Skills: NextPage<SkillProps> = (props) => {
   const cols = {
     sm: 12,
     md: 6,

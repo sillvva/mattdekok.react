@@ -5,7 +5,7 @@ import GalleryItem from '../../components/gallery';
 import { firestore } from '../../functions/func'
 import projectStyles from './Projects.module.scss';
 
-const Projects: NextPage<ProjectProps> = (props: ProjectProps) => {
+const Projects: NextPage<ProjectProps> = (props) => {
   return (
     <Layout props={{ menu: true, meta: { title: "Projects" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>

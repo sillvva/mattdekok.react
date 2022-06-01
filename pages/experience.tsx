@@ -3,7 +3,7 @@ import Page from '../components/page';
 import Layout from '../layouts/layout';
 import { firestore } from '../functions/func'
 
-const Experience: NextPage<ExperienceProps> = (props: ExperienceProps) => {
+const Experience: NextPage<ExperienceProps> = (props) => {
   return (
     <Layout props={{ menu: true, meta: { title: "Experience" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
       <Page.Body>

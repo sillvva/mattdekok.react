@@ -2,18 +2,13 @@ import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
 import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
-import ts from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
-import js from 'react-syntax-highlighter/dist/cjs/languages/prism/javascript';
-import yaml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
-import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
-import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss';
-import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
 
 import { firebaseConfig, storage } from "../../functions/func";
 import Layout from '../../layouts/layout';
@@ -22,24 +17,13 @@ import { blogStyles, PostProps } from '../../components/blog';
 import ReactCodepen from '../../components/codepen';
 import { getContentDir } from '../../store/misc';
 import { PostData } from '../api/get-posts';
-import Cookies from 'js-cookie';
-
-SyntaxHighlighter.registerLanguage('js', js);
-SyntaxHighlighter.registerLanguage('javascript', js);
-SyntaxHighlighter.registerLanguage('ts', ts);
-SyntaxHighlighter.registerLanguage('typescript', ts);
-SyntaxHighlighter.registerLanguage('yml', yaml);
-SyntaxHighlighter.registerLanguage('yaml', yaml);
-SyntaxHighlighter.registerLanguage('json', json);
-SyntaxHighlighter.registerLanguage('css', css);
-SyntaxHighlighter.registerLanguage('scss', scss);
 
 type ServerProps = {
   data: PostProps;
   content: string;
 }
 
-const Blog: NextPage<ServerProps> = (props: ServerProps) => {
+const Blog: NextPage<ServerProps> = (props) => {
   const { data, content } = props;
   const [returnUrl, setReturnUrl] = useState('/blog');
 
