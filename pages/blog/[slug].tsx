@@ -1,22 +1,24 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { ComponentType, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
 import remarkGfm from 'remark-gfm';
-import { PrismLight as SyntaxHighlighter } from 'react-syntax-highlighter';
 import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
 
 import { firebaseConfig, storage } from "../../functions/func";
 import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
-import ReactCodepen from '../../components/codepen';
 import { getContentDir } from '../../store/misc';
 import { PostData } from '../api/get-posts';
+
+const ReactCodepen = dynamic(() => import('../../components/codepen'));
+const SyntaxHighlighter: ComponentType<any> = dynamic(() => import('react-syntax-highlighter').then((mod: any) => mod.PrismLight));
 
 type ServerProps = {
   data: PostProps;
