@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 import useSWR, { Fetcher } from 'swr';
-import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import { PostProps, postLoader } from '../../components/blog';
 import Cookies from 'js-cookie';
@@ -39,20 +38,18 @@ const Blog: NextPage = () => {
   }, [router.asPath])
 
   return (
-    <Layout props={{ menu: true, meta: { title: "Blog" }, headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0'] }}>
-      <Page.Body>
-        {error ? (
-          <PageMessage>{error.message}</PageMessage>
-        ) : !(data.posts || []).length ? (
-          <PageMessage>No posts found.</PageMessage>
-        ) : (
-          <>
-            <BlogDirectory data={data} page={page} />
-            {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
-          </>
-        )}
-      </Page.Body>
-    </Layout>
+    <Page.Body>
+      {error ? (
+        <PageMessage>{error.message}</PageMessage>
+      ) : !(data.posts || []).length ? (
+        <PageMessage>No posts found.</PageMessage>
+      ) : (
+        <>
+          <BlogDirectory data={data} page={page} />
+          {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
+        </>
+      )}
+    </Page.Body>
   )
 }
 

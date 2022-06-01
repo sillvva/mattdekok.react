@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { ComponentType, useEffect, useState } from 'react';
+import { ComponentType, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
@@ -11,7 +11,6 @@ import remarkGfm from 'remark-gfm';
 import atomDark from 'react-syntax-highlighter/dist/cjs/styles/prism/atom-dark';
 
 import { firebaseConfig, storage } from "../../functions/func";
-import Layout from '../../layouts/layout';
 import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
 import { getContentDir } from '../../store/misc';
@@ -27,7 +26,6 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = (props) => {
   const { data, content } = props;
-  const [returnUrl, setReturnUrl] = useState('/blog');
 
   const renderers = {
     p(paragraph: any) {
@@ -124,52 +122,30 @@ const Blog: NextPage<ServerProps> = (props) => {
     },
   }
 
-  const headerProps = {
-    menu: true,
-    smallTitle: true,
-    meta: {
-      title: data.title,
-      description: data.description,
-      image: data.image || "",
-      articleMeta: {
-        published_date: data.dateISO,
-        ...(data.updatedISO && { modified_date: data.updatedISO })
-      }
-    },
-    backTo: returnUrl, 
-    headerClasses: ['backdrop-blur-lg bg-transparent sticky z-10 top-0']
-  };
-
-  useEffect(() => {
-    setReturnUrl(Cookies.get('blog-url') || "");
-  }, [])
-
   return (
-    <Layout props={headerProps}>
-      <Page.Body>
-        <Page.Article className={[blogStyles.BlogArticle, 'w-full xl:w-9/12 2xl:w-8/12'].join(' ')}>
-          {!data.full && <Page.Section className="aspect-video" bgImage={data.image} />}
-          <Page.Section>
-            <p className="mb-4 text-gray-400" aria-label="Date published">{data.date} {data.updated && `(Updated: ${data.updated})`}</p>
-            <div className={blogStyles.BlogContent}>
-              <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
-                {content}
-              </ReactMarkdown>
-            </div>
-            {!!(data.tags || []).length && (
-              <>
-                <p className="mb-2">Tags:</p>
-                <div className="flex flex-wrap gap-2">
-                  {data.tags.map((tag, i) => (
-                    <span className="rounded-full text-white py-1 px-3" style={{ backgroundColor: 'var(--menuHover)' }} key={i}>{tag}</span>
-                  ))}
-                </div>
-              </>
-            )}
-          </Page.Section>
-        </Page.Article>
-      </Page.Body>
-    </Layout>
+    <Page.Body>
+      <Page.Article className={[blogStyles.BlogArticle, 'w-full xl:w-9/12 2xl:w-8/12'].join(' ')}>
+        {!data.full && <Page.Section className="aspect-video" bgImage={data.image} />}
+        <Page.Section>
+          <p className="mb-4 text-gray-400" aria-label="Date published">{data.date} {data.updated && `(Updated: ${data.updated})`}</p>
+          <div className={blogStyles.BlogContent}>
+            <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+              {content}
+            </ReactMarkdown>
+          </div>
+          {!!(data.tags || []).length && (
+            <>
+              <p className="mb-2">Tags:</p>
+              <div className="flex flex-wrap gap-2">
+                {data.tags.map((tag, i) => (
+                  <span className="rounded-full text-white py-1 px-3" style={{ backgroundColor: 'var(--menuHover)' }} key={i}>{tag}</span>
+                ))}
+              </div>
+            </>
+          )}
+        </Page.Section>
+      </Page.Article>
+    </Page.Body>
   )
 }
 

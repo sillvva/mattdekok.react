@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import MainLayoutContext from '../store/main-layout.context';
 import styles from '../layouts/main/MainLayout.module.scss'
-import { layoutMotion } from '../layouts/layout';
+import { layoutMotion } from '../pages/_app';
 import { Item } from './page-menu';
 
 const PageMenu = dynamic(() => import('./page-menu'));
@@ -65,6 +65,7 @@ const PageHeader = (props: PageHeaderProps) => {
       {props.title && (
         <motion.h1
           variants={layoutMotion.variants}
+          key={props.title}
           initial="hidden"
           animate="enter"
           exit="exit"
