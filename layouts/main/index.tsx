@@ -21,3 +21,5 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
 };
 
 export default MainLayout;
+
+export const headerClasses = ["backdrop-blur-lg bg-transparent sticky z-10 top-0"];

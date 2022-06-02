@@ -9,6 +9,8 @@ import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 
+import { useLayout } from "../../layouts/layout";
+import { headerClasses } from "../../layouts/main";
 import { firebaseConfig, storage } from "../../functions/func";
 import Page from "../../components/page";
 import { blogStyles, PostProps } from "../../components/blog";
@@ -21,10 +23,28 @@ const SyntaxHighlighter: ComponentType<any> = dynamic(() => import("react-syntax
 type ServerProps = {
   data: PostProps;
   content: string;
+  cookies: any;
 };
 
 const Blog: NextPage<ServerProps> = props => {
-  const { data, content } = props;
+  const { data, content, cookies } = props;
+  
+  const returnUrl = cookies["return-url"] || "/blog";
+  useLayout("main", {
+    menu: true,
+    smallTitle: true,
+    meta: {
+      title: data.title,
+      description: data.description,
+      image: data.image || "",
+      articleMeta: {
+        published_date: data.dateISO,
+        ...(data.updatedISO && { modified_date: data.updatedISO })
+      }
+    },
+    backTo: returnUrl,
+    headerClasses
+  });
 
   const renderers = {
     p(paragraph: any) {

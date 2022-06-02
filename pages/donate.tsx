@@ -1,7 +1,11 @@
 import type { NextPage } from "next";
 import Page from "../components/page";
+import { useLayout } from "../layouts/layout";
+import { headerClasses } from "../layouts/main";
 
 const Donate: NextPage = () => {
+  useLayout("main", { menu: true, meta: { title: "Donate" }, headerClasses });
+
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">

@@ -4,8 +4,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import MainLayoutContext from "../store/main-layout.context";
 import styles from "../layouts/main/MainLayout.module.scss";
-import { layoutMotion } from "../pages/_app";
+import { layoutMotion } from "../layouts/layout";
 import { Item } from "./page-menu";
+import { useSelector } from "react-redux";
+import { getLayout } from "../store/slices/layout.slice";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
@@ -19,6 +21,7 @@ type PageHeaderProps = {
 
 const PageHeader = (props: PageHeaderProps) => {
   const { drawer, theme } = useContext(MainLayoutContext);
+  const layout = useSelector(getLayout);
 
   const classes = {
     pageHeader: [
@@ -53,7 +56,7 @@ const PageHeader = (props: PageHeaderProps) => {
             <i className="mdi mdi-menu"></i>
           </button>
         )}
-        <div className={classes.pageMenuContainer}>{props.items.length ? <PageMenu items={props.items} /> : ""}</div>
+        <div className={classes.pageMenuContainer}>{props.items.length ? <PageMenu key={layout.path} items={props.items} /> : ""}</div>
         <h1 className={classes.pageTitle}>{props.title}</h1>
         <button type="button" aria-label="Toggle Theme" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
           <i className="mdi mdi-brightness-6"></i>

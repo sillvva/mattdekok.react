@@ -1,8 +1,11 @@
 import type { NextPage } from "next";
 import HexMenu, { Item } from "../components/hex-menu";
 import styles from "../styles/Intro.module.scss";
+import { useLayout } from "../layouts/layout";
 
 const Home: NextPage = () => {
+  useLayout("main", { headerClasses: ["bg-transparent w-full absolute"] });
+
   const items: (Item | null)[] = [
     { link: "/about", label: "About Me" },
     { link: "/experience", label: "Experience" },

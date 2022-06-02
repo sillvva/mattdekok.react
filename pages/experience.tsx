@@ -1,8 +1,12 @@
 import type { NextPage } from "next";
 import Page from "../components/page";
 import { firestore } from "../functions/func";
+import { useLayout } from "../layouts/layout";
+import { headerClasses } from "../layouts/main";
 
 const Experience: NextPage<ExperienceProps> = props => {
+  useLayout("main", { menu: true, meta: { title: "Experience" }, headerClasses });
+
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">

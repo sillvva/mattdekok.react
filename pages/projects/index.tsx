@@ -3,8 +3,12 @@ import Page from "../../components/page";
 import GalleryItem from "../../components/gallery";
 import { firestore } from "../../functions/func";
 import projectStyles from "./Projects.module.scss";
+import { useLayout } from "../../layouts/layout";
+import { headerClasses } from "../../layouts/main";
 
 const Projects: NextPage<ProjectProps> = props => {
+  useLayout("main", { menu: true, meta: { title: "Projects" }, headerClasses });
+
   return (
     <Page.Body>
       <div className="flex flex-wrap justify-center lg:mt-0 pb-4">

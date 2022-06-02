@@ -2,8 +2,12 @@ import type { NextPage } from "next";
 import Page from "../components/page";
 import Rating from "../components/ratings";
 import { firestore } from "../functions/func";
+import { useLayout } from "../layouts/layout";
+import { headerClasses } from "../layouts/main";
 
 const Skills: NextPage<SkillProps> = props => {
+  useLayout("main", { menu: true, meta: { title: "Skills" }, headerClasses });
+
   const cols = {
     sm: 12,
     md: 6,

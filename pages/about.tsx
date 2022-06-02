@@ -3,6 +3,8 @@ import buttons from "../styles/Buttons.module.scss";
 import { PageMenuItem } from "../components/page-menu";
 import Page from "../components/page";
 import MeDetails from "../components/me-details";
+import { useLayout } from "../layouts/layout";
+import { headerClasses } from "../layouts/main";
 
 const age = (birthday: Date) => {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -11,6 +13,8 @@ const age = (birthday: Date) => {
 };
 
 const AboutMe: NextPage = () => {
+  useLayout("main", { menu: true, meta: { title: "About Me" }, headerClasses });
+
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
