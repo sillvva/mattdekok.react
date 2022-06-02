@@ -92,13 +92,13 @@ async function fetchPosts(getPosts) {
 
   if (changes) {
     console.log('Storing metadata to Firestore');
-    for(const doc of added) {
+    for (const doc of added) {
       await collection.doc(doc).set(posts.find(p => p.slug === doc));
     }
-    for(const doc of updated) {
+    for (const doc of updated) {
       await collection.doc(doc).set(posts.find(p => p.slug === doc));
     }
-    for(const doc of removed) {
+    for (const doc of removed) {
       await collection.doc(doc).delete();
     }
   }

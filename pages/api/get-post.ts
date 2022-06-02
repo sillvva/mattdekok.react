@@ -16,15 +16,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       let meta: any;
       let file: any;
       if (existsSync(postsPath)) {
-        const posts = readFileSync(postsPath, 'utf8');
+        const posts = readFileSync(postsPath, "utf8");
         const data = JSON.parse(posts);
         meta = data[`${slug}.md`];
-      }
-      else {
+      } else {
         const file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
         [meta] = await file.getMetadata();
       }
-      
+
       let result = { data: "" };
       let write = false;
       if (existsSync(filePath)) {
@@ -33,11 +32,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (tdiff > 0) {
           write = true;
           rmSync(filePath);
-        }
-        else 
-        result.data = readFileSync(filePath, 'utf8');
-      }
-      else write = true;
+        } else result.data = readFileSync(filePath, "utf8");
+      } else write = true;
 
       if (write) {
         if (!file) file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
@@ -51,22 +47,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (data.updated) data.updatedISO = new Date(data.updated).toISOString();
       for (let key in data) {
         if (data[key] instanceof Date) {
-          data[key] = data[key].toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+          data[key] = data[key].toLocaleDateString("en-us", { weekday: "long", year: "numeric", month: "short", day: "numeric" });
         }
       }
 
       res.setHeader("Cache-Control", "public, max-age=21600");
       return res.status(200).json({
-        content, data
+        content,
+        data
       });
     } catch (err) {
       return res.status(500).json({
-        error: err,
+        error: err
       });
     }
   }
 
   return res.status(422).json("Invalid method");
 }
-
-

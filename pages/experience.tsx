@@ -1,25 +1,43 @@
-import type { NextPage } from 'next'
-import Page from '../components/page';
-import { firestore } from '../functions/func'
+import type { NextPage } from "next";
+import Page from "../components/page";
+import { firestore } from "../functions/func";
 
-const Experience: NextPage<ExperienceProps> = (props) => {
+const Experience: NextPage<ExperienceProps> = props => {
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
-        {props.experience.map((section) => (
+        {props.experience.map(section => (
           <Page.Section key={section.name}>
             <h2>{section.name}</h2>
             <Page.SectionItems>
               {section.experience.map((exp, i) => (
                 <Page.SectionItem key={`${exp.name}${i}`} image={exp.image}>
                   <h3>
-                    {!exp.nameLink ? exp.name : <a href={exp.nameLink} target="_blank" rel="noreferrer noopener">{exp.name}</a>}
+                    {!exp.nameLink ? (
+                      exp.name
+                    ) : (
+                      <a href={exp.nameLink} target="_blank" rel="noreferrer noopener">
+                        {exp.name}
+                      </a>
+                    )}
                   </h3>
                   <h4>
-                    {!exp.h4Link ? exp.h4 : <a href={exp.h4Link} target="_blank" rel="noreferrer noopener">{exp.h4}</a>}
+                    {!exp.h4Link ? (
+                      exp.h4
+                    ) : (
+                      <a href={exp.h4Link} target="_blank" rel="noreferrer noopener">
+                        {exp.h4}
+                      </a>
+                    )}
                   </h4>
                   <h5>
-                    {!exp.h5Link ? exp.h5 : <a href={exp.h5Link} target="_blank" rel="noreferrer noopener">{exp.h5}</a>}
+                    {!exp.h5Link ? (
+                      exp.h5
+                    ) : (
+                      <a href={exp.h5Link} target="_blank" rel="noreferrer noopener">
+                        {exp.h5}
+                      </a>
+                    )}
                   </h5>
                 </Page.SectionItem>
               ))}
@@ -28,10 +46,10 @@ const Experience: NextPage<ExperienceProps> = (props) => {
         ))}
       </Page.Article>
     </Page.Body>
-  )
-}
+  );
+};
 
-export default Experience
+export default Experience;
 
 type ExperienceItem = {
   name?: string;
@@ -41,43 +59,43 @@ type ExperienceItem = {
   h4Link?: string;
   h5: string;
   h5Link?: string;
-}
+};
 
 type ExperienceProps = {
-  experience: ExperienceArrSection[]
-}
+  experience: ExperienceArrSection[];
+};
 
 type ExperienceArrSection = {
   name: string;
-  experience: ExperienceItem[]
-}
+  experience: ExperienceItem[];
+};
 
 type ExperienceSection = {
   [name: string]: ExperienceItem;
-}
+};
 
 type ExperienceSections = {
   [name: string]: ExperienceSection;
-}
+};
 
 export async function getServerSideProps() {
-  const doc = firestore.doc('website/experience');
+  const doc = firestore.doc("website/experience");
   const document = await doc.get();
   const experience: ExperienceSections = document.data() || {};
 
   return {
     props: {
       experience: Object.entries(experience)
-        .sort(([nameA], [nameB]) => nameA > nameB ? 1 : -1)
+        .sort(([nameA], [nameB]) => (nameA > nameB ? 1 : -1))
         .map(([sectionName, section]) => ({
-          name: sectionName.replace(/^\d+\. /, ''),
+          name: sectionName.replace(/^\d+\. /, ""),
           experience: Object.entries(section)
-            .sort(([nameA], [nameB]) => nameA > nameB ? 1 : -1)
+            .sort(([nameA], [nameB]) => (nameA > nameB ? 1 : -1))
             .map(([expName, exp]) => ({
-              name: expName.replace(/^\d+\. /, ''),
+              name: expName.replace(/^\d+\. /, ""),
               ...exp
             }))
         }))
     }
-  }
+  };
 }

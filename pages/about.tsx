@@ -1,8 +1,8 @@
-import type { NextPage } from 'next'
-import buttons from '../styles/Buttons.module.scss'
-import { PageMenuItem } from '../components/page-menu';
-import Page from '../components/page';
-import MeDetails from '../components/me-details';
+import type { NextPage } from "next";
+import buttons from "../styles/Buttons.module.scss";
+import { PageMenuItem } from "../components/page-menu";
+import Page from "../components/page";
+import MeDetails from "../components/me-details";
 
 const age = (birthday: Date) => {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -11,7 +11,6 @@ const age = (birthday: Date) => {
 };
 
 const AboutMe: NextPage = () => {
-
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
@@ -19,17 +18,17 @@ const AboutMe: NextPage = () => {
           <div className="flex flex-col md:flex-row">
             <div className="basis-full md:basis-6/12 mb-5 md:mb-0">
               <p>
-                Experienced web developer with a demonstrated history of working in the wireless industry. Skilled in PHP, Node.JS, Vue, Angular, HTML, JavaScript, TypeScript, CSS,
-                and SCSS. Strong engineering professional with a Bachelor&apos;s Degree focused in Computer and Information Systems Security/Information Assurance from Dakota State
-                University.
+                Experienced web developer with a demonstrated history of working in the wireless industry. Skilled in PHP, Node.JS, Vue, Angular, HTML,
+                JavaScript, TypeScript, CSS, and SCSS. Strong engineering professional with a Bachelor&apos;s Degree focused in Computer and Information Systems
+                Security/Information Assurance from Dakota State University.
               </p>
             </div>
             <div className="basis-full md:basis-6/12">
               <div className="me-details flex flex-wrap">
                 <MeDetails name="Name" value="Matt DeKok" />
-                <MeDetails name="Age" value={age(new Date('1988-05-09T00:00:00-05:00'))} />
+                <MeDetails name="Age" value={age(new Date("1988-05-09T00:00:00-05:00"))} />
                 <MeDetails name="Location" value="SD" />
-                <MeDetails name="Experience" value={`${age(new Date('2006-06-01T00:00:00-05:00'))} years`} />
+                <MeDetails name="Experience" value={`${age(new Date("2006-06-01T00:00:00-05:00"))} years`} />
               </div>
               <div>&nbsp;</div>
               <div className="flex flex-wrap gap-4 justify-center">
@@ -148,7 +147,7 @@ const AboutMe: NextPage = () => {
         </Page.Section>
       </Page.Article>
     </Page.Body>
-  )
-}
+  );
+};
 
-export default AboutMe
+export default AboutMe;

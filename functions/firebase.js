@@ -7,11 +7,11 @@ const firebaseConfig = {
   blogStorage: "blog/articles"
 };
 
-let fbApp; 
+let fbApp;
 try {
   fbApp = admin.app();
 }
-catch(err) {
+catch (err) {
   fbApp = admin.initializeApp({
     credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIAL || "")),
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET

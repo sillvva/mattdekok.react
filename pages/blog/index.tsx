@@ -1,18 +1,18 @@
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
-import useSWR, { Fetcher } from 'swr';
-import Page from '../../components/page';
-import { PostProps, postLoader } from '../../components/blog';
-import Cookies from 'js-cookie';
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
+import useSWR, { Fetcher } from "swr";
+import Page from "../../components/page";
+import { PostProps, postLoader } from "../../components/blog";
+import Cookies from "js-cookie";
 
-const Pagination = dynamic(() => import('../../components/pagination'));
-const PageMessage = dynamic(() => import('../../components/page-message'));
-const BlogDirectory = dynamic(() => import('../../components/blog'));
+const Pagination = dynamic(() => import("../../components/pagination"));
+const PageMessage = dynamic(() => import("../../components/page-message"));
+const BlogDirectory = dynamic(() => import("../../components/blog"));
 
 const loaders: PostProps[] = Array(6).fill(postLoader);
-const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: string) => {
+const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: string) => {
   const res = await fetch(url);
 
   if (!res.ok) {
@@ -21,7 +21,7 @@ const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: stri
   }
 
   return res.json();
-}
+};
 
 const Blog: NextPage = () => {
   const router = useRouter();
@@ -34,8 +34,8 @@ const Blog: NextPage = () => {
   if (!data) data = { posts: loaders, pages: 0 };
 
   useEffect(() => {
-    Cookies.set('blog-url', router.asPath);
-  }, [router.asPath])
+    Cookies.set("blog-url", router.asPath);
+  }, [router.asPath]);
 
   return (
     <Page.Body>
@@ -50,7 +50,7 @@ const Blog: NextPage = () => {
         </>
       )}
     </Page.Body>
-  )
-}
+  );
+};
 
-export default Blog
+export default Blog;

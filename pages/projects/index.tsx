@@ -1,10 +1,10 @@
-import type { NextPage } from 'next'
-import Page from '../../components/page';
-import GalleryItem from '../../components/gallery';
-import { firestore } from '../../functions/func'
-import projectStyles from './Projects.module.scss';
+import type { NextPage } from "next";
+import Page from "../../components/page";
+import GalleryItem from "../../components/gallery";
+import { firestore } from "../../functions/func";
+import projectStyles from "./Projects.module.scss";
 
-const Projects: NextPage<ProjectProps> = (props) => {
+const Projects: NextPage<ProjectProps> = props => {
   return (
     <Page.Body>
       <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
@@ -19,10 +19,10 @@ const Projects: NextPage<ProjectProps> = (props) => {
         </div>
       </div>
     </Page.Body>
-  )
-}
+  );
+};
 
-export default Projects
+export default Projects;
 
 type Project = {
   title: string;
@@ -31,23 +31,25 @@ type Project = {
   image: string;
   link?: string;
   sort?: number;
-}
+};
 
 type ProjectProps = {
   projects: Project[];
-}
+};
 
 export async function getServerSideProps() {
-  const doc = firestore.doc('website/projects');
+  const doc = firestore.doc("website/projects");
   const document = await doc.get();
   const projects: Project[] = document.data()?.data || [];
 
   return {
     props: {
-      projects: projects.map((p, i) => ({
-        ...p,
-        sort: i
-      })).sort((a, b) => a.sort < b.sort ? 1 : -1)
+      projects: projects
+        .map((p, i) => ({
+          ...p,
+          sort: i
+        }))
+        .sort((a, b) => (a.sort < b.sort ? 1 : -1))
     }
-  }
+  };
 }

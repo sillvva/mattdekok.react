@@ -1,5 +1,6 @@
-import { useState, PropsWithChildren, createContext } from "react";
-import cookie from 'js-cookie';
+import { useState, createContext } from "react";
+import type { PropsWithChildren } from "react";
+import cookie from "js-cookie";
 
 export const menuItems = [
   { link: "/", label: "Intro" },
@@ -7,40 +8,40 @@ export const menuItems = [
   { link: "/experience", label: "Experience" },
   { link: "/skills", label: "Skills" },
   { link: "/projects", label: "Projects" },
-  { link: "/blog", label: "Blog" },
+  { link: "/blog", label: "Blog" }
 ];
 
-const themes = ['dark', 'light', 'blue']
+const themes = ["dark", "light", "blue"];
 
 type DrawerProps = {
   state: boolean;
   action: string;
   toggle: () => void;
-}
+};
 
 type ThemeProps = {
   state: string;
   themes: string[];
   toggle: () => void;
   set: (theme: string) => void;
-}
+};
 
 type MainLayoutProps = {
   drawer: DrawerProps;
   theme: ThemeProps;
-}
+};
 
 const initState = {
   drawer: {
     state: false,
     action: "",
-    toggle: function () { }
+    toggle: function () {}
   },
   theme: {
     state: themes[0],
     themes: themes,
-    toggle: function () { },
-    set: function (theme: string) { }
+    toggle: function () {},
+    set: function (theme: string) {}
   }
 };
 
@@ -56,7 +57,7 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     if (drawer.action) return;
 
     if (drawer.state) {
-      drawer.action = 'closing';
+      drawer.action = "closing";
       setTimeout(() => {
         drawer.state = false;
         drawer.action = "";
@@ -80,7 +81,7 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     if (nextIndex == -1) nextIndex = themes[currentIndex + 1] ? currentIndex + 1 : 0;
     document.body.classList.replace(themes[currentIndex], themes[nextIndex]);
     context.theme.state = themes[nextIndex];
-    cookie.set('theme', context.theme.state);
+    cookie.set("theme", context.theme.state);
     setContext({ ...context, theme: context.theme });
   }
 
@@ -105,9 +106,5 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     }
   };
 
-  return (
-    <MainLayoutContext.Provider value={ctx}>
-      {props.children}
-    </MainLayoutContext.Provider>
-  );
-}
+  return <MainLayoutContext.Provider value={ctx}>{props.children}</MainLayoutContext.Provider>;
+};

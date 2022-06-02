@@ -1,6 +1,6 @@
-import Router from 'next/router';
-import * as NProgress from 'nprogress';
-import { useEffect, useMemo } from 'react';
+import Router from "next/router";
+import * as NProgress from "nprogress";
+import { useEffect, useMemo } from "react";
 
 type NProgress = {
   /**
@@ -40,15 +40,7 @@ type NProgress = {
   nonce?: string;
 };
 
-export default function NextNProgress({
-  color = '#29D',
-  startPosition = 0.3,
-  stopDelayMs = 200,
-  height = 3,
-  showOnShallow = true,
-  options,
-  nonce,
-}: NProgress) {
+export default function NextNProgress({ color = "#29D", startPosition = 0.3, stopDelayMs = 200, height = 3, showOnShallow = true, options, nonce }: NProgress) {
   const opts = useMemo(() => options, [options]);
 
   useEffect(() => {
@@ -58,14 +50,14 @@ export default function NextNProgress({
       NProgress.configure(opts);
     }
 
-    const routeChangeStart = (_: string, { shallow }: { shallow: boolean; }) => {
+    const routeChangeStart = (_: string, { shallow }: { shallow: boolean }) => {
       if (!shallow || showOnShallow) {
         NProgress.set(startPosition);
         NProgress.start();
       }
     };
-  
-    const routeChangeEnd = (_: string, { shallow }: { shallow: boolean; }) => {
+
+    const routeChangeEnd = (_: string, { shallow }: { shallow: boolean }) => {
       if (!shallow || showOnShallow) {
         if (timer) clearTimeout(timer);
         timer = setTimeout(() => {
@@ -74,16 +66,16 @@ export default function NextNProgress({
       }
     };
 
-    Router.events.on('routeChangeStart', routeChangeStart);
-    Router.events.on('routeChangeComplete', routeChangeEnd);
-    Router.events.on('routeChangeError', routeChangeEnd);
+    Router.events.on("routeChangeStart", routeChangeStart);
+    Router.events.on("routeChangeComplete", routeChangeEnd);
+    Router.events.on("routeChangeError", routeChangeEnd);
 
     return () => {
       if (timer) clearTimeout(timer);
       NProgress.done(true);
-      Router.events.off('routeChangeStart', routeChangeStart);
-      Router.events.off('routeChangeComplete', routeChangeEnd);
-      Router.events.off('routeChangeError', routeChangeEnd);
+      Router.events.off("routeChangeStart", routeChangeStart);
+      Router.events.off("routeChangeComplete", routeChangeEnd);
+      Router.events.off("routeChangeError", routeChangeEnd);
     };
   }, [opts, showOnShallow, startPosition, stopDelayMs]);
 

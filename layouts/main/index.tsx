@@ -1,8 +1,8 @@
-import dynamic from 'next/dynamic';
-import { useContext, useEffect } from 'react'
-import MainLayoutContext from '../../store/main-layout.context';
+import dynamic from "next/dynamic";
+import { useContext, useEffect } from "react";
+import MainLayoutContext from "../../store/main-layout.context";
 
-const Drawer = dynamic(() => import('../../components/drawer'));
+const Drawer = dynamic(() => import("../../components/drawer"));
 
 const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
@@ -15,9 +15,9 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   return (
     <>
       {props.children}
-      {drawer.state ? <Drawer /> : ''}
+      {drawer.state ? <Drawer /> : ""}
     </>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;
