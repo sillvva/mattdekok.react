@@ -2,8 +2,7 @@ import type { NextPage } from 'next'
 import Link from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
-import { ComponentType, useEffect } from 'react';
-import Cookies from 'js-cookie';
+import type { ComponentType } from 'react';
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from 'react-markdown';
 import matter from 'gray-matter';
@@ -14,7 +13,7 @@ import { firebaseConfig, storage } from "../../functions/func";
 import Page from '../../components/page';
 import { blogStyles, PostProps } from '../../components/blog';
 import { getContentDir } from '../../store/misc';
-import { PostData } from '../api/get-posts';
+import type { PostData } from '../api/get-posts';
 
 const ReactCodepen = dynamic(() => import('../../components/codepen'));
 const SyntaxHighlighter: ComponentType<any> = dynamic(() => import('react-syntax-highlighter').then((mod: any) => mod.PrismLight));

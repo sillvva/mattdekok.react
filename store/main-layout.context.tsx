@@ -111,5 +111,3 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     </MainLayoutContext.Provider>
   );
 }
-
-export const DefaultLayoutContext = createContext({});

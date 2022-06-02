@@ -13,25 +13,23 @@ import NextNProgress from '../components/progress'
 function MyApp({ Component, pageProps }: AppProps) {
   const layout = routeLayouts(pageProps);
   if (layout) return (
-    <>
+    <MainLayoutContextProvider>
       <NextNProgress key={"test"} color="var(--link)" height={1} options={{ showSpinner: false }} />
       {layout?.props && <PageHead {...layout?.props} />}
       <AnimatePresence initial={false}>
-        <MainLayoutContextProvider>
-          <MainLayout>
-            <motion.main
-              key={pageProps.path}
-              variants={layoutMotion.variants}
-              initial="hidden"
-              animate="enter"
-              exit="exit"
-              transition={layoutMotion.transition}>
-              <Component {...pageProps} />
-            </motion.main>
-          </MainLayout>
-        </MainLayoutContextProvider>
+        <MainLayout>
+          <motion.main
+            key={pageProps.path}
+            variants={layoutMotion.variants}
+            initial="hidden"
+            animate="enter"
+            exit="exit"
+            transition={layoutMotion.transition}>
+            <Component {...pageProps} />
+          </motion.main>
+        </MainLayout>
       </AnimatePresence>
-    </>
+    </MainLayoutContextProvider>
   );
 
   return (

@@ -1,4 +1,4 @@
-import { PropsWithChildren } from 'react';
+import type { PropsWithChildren } from 'react';
 
 function PageMessage(props: PropsWithChildren<unknown>) {
   return (<div className="flex flex-col justify-center py-20 text-2xl">
