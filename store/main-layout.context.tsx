@@ -11,7 +11,7 @@ export const menuItems = [
   { link: "/blog", label: "Blog" }
 ];
 
-const themes = ["dark", "light", "blue"];
+const themes = ["dark", "blue", "light"];
 
 type DrawerProps = {
   state: boolean;
