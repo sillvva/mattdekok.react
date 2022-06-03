@@ -23,13 +23,13 @@ export const { setLayout } = appSlice.actions;
 
 export default appSlice.reducer;
 
-type AppLayout = {
+export type AppLayout = {
   name: string;
   path?: string;
   head?: PageHeadProps;
 };
 
-type PageHeadProps = {
+export type PageHeadProps = {
   menu?: boolean;
   smallTitle?: boolean;
   meta?: LayoutMeta;
