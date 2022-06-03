@@ -70,7 +70,7 @@ function BlogPost({ post }: BlogPostProps) {
         }}>
         <div className={[styles.BlogPost__Container, ...(active && !post.link ? [styles.Focus] : [])].join(" ")}>
           <div className={[styles.BlogPost__Image, ...(!post.slug && !post.link ? ["loading"] : [])].join(" ")}>
-            {post.image ? <Image src={post.image} alt={post.title} layout="fill" objectFit="cover" objectPosition="center" /> : ""}
+            {post.image ? <Image src={post.image} alt={post.title} priority layout="fill" objectFit="cover" objectPosition="center" /> : ""}
           </div>
           {post.slug || post.link ? (
             <div className="p-3">
