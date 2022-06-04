@@ -2,7 +2,8 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
-import useSWR, { Fetcher } from "swr";
+import { Fetcher } from "swr";
+import useSWRImmutable from "swr/immutable";
 import Cookies from "js-cookie";
 import Page from "../../components/page";
 import { PostProps, postLoader } from "../../components/blog";
@@ -30,10 +31,7 @@ const Blog: NextPage = () => {
 
   const router = useRouter();
   const page = (Array.isArray(router.query.page) ? router.query.page[0] : router.query.page) || 1;
-  let { data, error } = useSWR(`/api/get-posts?page=${page}`, fetcher, {
-    revalidateOnFocus: false,
-    revalidateIfStale: false
-  });
+  let { data, error } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
 
   if (!data) data = { posts: loaders, pages: 0 };
 
