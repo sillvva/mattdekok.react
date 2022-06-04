@@ -1,75 +1,50 @@
-import { PropsWithChildren } from "react";
-import { motion, Transition, Variants } from "framer-motion";
-import { MainLayoutContextProvider, menuItems } from '../store/main-layout.context';
-import PageMeta from '../components/meta';
-import PageHeader from '../components/page-header';
+import { useRouter } from "next/router";
+import { PropsWithChildren, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+import MainLayout, { mainMotion } from "../layouts/main";
+import { getLayout, PageHeadProps, setLayout } from "../store/slices/layout.slice";
+import { MainLayoutContextProvider } from "../store/main-layout.context";
+import PageMeta from "../components/meta";
+import PageHeader from "../components/page-header";
 import NextNProgress from "../components/progress";
-import MainLayout from './main';
 
-type LayoutProps = {
-  layout?: string;
-  props?: PageHeadProps;
-}
+function Layout({ children }: PropsWithChildren<unknown>) {
+  const layout = useSelector(getLayout);
+  const router = useRouter();
 
-type LayoutMeta = {
-  title?: string;
-  description?: string;
-  image?: string;
-  articleMeta?: object;
-}
-
-const Layout = ({ layout, children, props }: PropsWithChildren<LayoutProps>) => {
-  return (
-    <MainLayoutContextProvider>
-      <MainLayout>
+  if (layout.name == "main")
+    return (
+      <MainLayoutContextProvider>
         <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
-        {props && <PageHead {...props} />}
-        <motion.main
-          variants={layoutMotion.variants}
-          initial="hidden"
-          animate="enter"
-          exit="exit"
-          transition={layoutMotion.transition}>
-          {children}
-        </motion.main>
-      </MainLayout>
-    </MainLayoutContextProvider>
-  )
+        <PageMeta title={layout.head?.meta?.title} description={layout.head?.meta?.description} articleMeta={layout.head?.meta?.articleMeta} />
+        <AnimatePresence initial={false}>
+          <MainLayout>
+            <PageHeader layout={layout} layoutMotion={mainMotion} />
+            <motion.main key={router.pathname} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
+              {children}
+            </motion.main>
+          </MainLayout>
+        </AnimatePresence>
+      </MainLayoutContextProvider>
+    );
+
+  return <>{children}</>;
 }
 
-export default Layout
+export default Layout;
 
-type PageHeadProps = {
-  menu?: boolean;
-  smallTitle?: boolean;
-  meta?: LayoutMeta;
-  headerClasses?: string[];
-  backTo?: string;
-}
+export const useLayout = (layout: string, head: PageHeadProps) => {
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-export const layoutMotion: { variants: Variants, transition: Transition } = {
-  variants: {
-    hidden: { opacity: 0 },
-    enter: { opacity: 1 },
-    exit: { opacity: 0 },
-  },
-  transition: {
-    type: 'linear',
-    duration: 1
-  }
-}
-
-const PageHead = (props: PageHeadProps) => (
-  <>
-    <PageMeta
-      title={props?.meta?.title}
-      description={props?.meta?.description}
-      articleMeta={props?.meta?.articleMeta} />
-    <PageHeader
-      title={props?.meta?.title}
-      items={props?.menu ? menuItems : []}
-      smallTitle={props?.smallTitle}
-      classes={props?.headerClasses || []}
-      backTo={props?.backTo} />
-  </>
-);
+  useEffect(() => {
+    dispatch(
+      setLayout({
+        name: layout,
+        path: router.pathname,
+        head
+      })
+    );
+  }, [dispatch, layout, head, router.pathname]);
+};

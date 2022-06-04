@@ -1,19 +1,21 @@
-import type { NextPage } from 'next'
-import { useRouter } from 'next/router';
-import dynamic from 'next/dynamic';
-import { useEffect } from 'react';
-import useSWR, { Fetcher } from 'swr';
-import Layout from '../../layouts/layout';
-import Page from '../../components/page';
-import { PostProps, postLoader } from '../../components/blog';
-import Cookies from 'js-cookie';
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+import { useEffect } from "react";
+import { Fetcher } from "swr";
+import useSWRImmutable from "swr/immutable";
+import Cookies from "js-cookie";
+import Page from "../../components/page";
+import { PostProps, postLoader } from "../../components/blog";
+import { useLayout } from "../../layouts/layout";
+import { headerClasses } from "../../layouts/main";
 
-const Pagination = dynamic(() => import('../../components/pagination'));
-const PageMessage = dynamic(() => import('../../components/page-message'));
-const BlogDirectory = dynamic(() => import('../../components/blog'));
+const Pagination = dynamic(() => import("../../components/pagination"));
+const PageMessage = dynamic(() => import("../../components/page-message"));
+const BlogDirectory = dynamic(() => import("../../components/blog"));
 
 const loaders: PostProps[] = Array(6).fill(postLoader);
-const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: string) => {
+const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: string) => {
   const res = await fetch(url);
 
   if (!res.ok) {
@@ -22,38 +24,35 @@ const fetcher: Fetcher<{ posts: PostProps[], pages: number }> = async (url: stri
   }
 
   return res.json();
-}
+};
 
 const Blog: NextPage = () => {
-  const router = useRouter();
-  const page = (Array.isArray(router.query.page) ? router.query.page[0] : router.query.page) || 1;
-  let { data, error } = useSWR(`/api/get-posts?page=${page}`, fetcher, {
-    revalidateOnFocus: false,
-    revalidateIfStale: false
-  });
+  useLayout("main", { menu: true, meta: { title: "Blog" }, headerClasses });
+
+  const { query, asPath } = useRouter();
+  const page = (Array.isArray(query.page) ? query.page[0] : query.page) || 1;
+  let { data, error } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
 
   if (!data) data = { posts: loaders, pages: 0 };
 
   useEffect(() => {
-    Cookies.set('blog-url', router.asPath);
-  }, [router.asPath])
+    Cookies.set("blog-url", asPath);
+  }, [asPath]);
 
   return (
-    <Layout props={{ menu: true, meta: { title: "Blog" } }}>
-      <Page.Body>
-        {error ? (
-          <PageMessage>{error.message}</PageMessage>
-        ) : !(data.posts || []).length ? (
-          <PageMessage>No posts found.</PageMessage>
-        ) : (
-          <>
-            <BlogDirectory data={data} page={page} />
-            {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
-          </>
-        )}
-      </Page.Body>
-    </Layout>
-  )
-}
+    <Page.Body>
+      {error ? (
+        <PageMessage>{error.message}</PageMessage>
+      ) : !(data.posts || []).length ? (
+        <PageMessage>No posts found.</PageMessage>
+      ) : (
+        <>
+          <BlogDirectory data={data} page={page} />
+          {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
+        </>
+      )}
+    </Page.Body>
+  );
+};
 
-export default Blog
+export default Blog;

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { PropsWithChildren } from "react";
-import styles from './Gallery.module.scss'
+import styles from "./Gallery.module.scss";
 
 export const galleryStyles = styles;
 
@@ -10,12 +10,14 @@ type GalleryItemProps = {
   title: string;
   subtitle: string;
   description: string | null;
-}
+};
 
 function GalleryItem(props: GalleryItemProps) {
   return (
     <GalleryItemWrapper link={props.link || ""}>
-      {props.image && <Image src={props.image.startsWith('http') ? props.image : `/images/preview-${props.image}.jpg`} alt={props.title} width={400} height={400} />}
+      {props.image && (
+        <Image src={props.image.startsWith("http") ? props.image : `/images/preview-${props.image}.jpg`} alt={props.title} width={400} height={400} />
+      )}
       <div className={styles.Cover}>
         <h3>{props.title}</h3>
         {props.subtitle && <h4>{props.subtitle}</h4>}
@@ -29,7 +31,7 @@ export default GalleryItem;
 
 export type GalleryItemWrapperProps = {
   link: string;
-}
+};
 
 function GalleryItemWrapper(props: PropsWithChildren<GalleryItemWrapperProps>) {
   if (props.link) {
@@ -40,9 +42,5 @@ function GalleryItemWrapper(props: PropsWithChildren<GalleryItemWrapperProps>) {
     );
   }
 
-  return (
-    <div className={styles.GalleryItem}>
-      {props.children}
-    </div>
-  );
+  return <div className={styles.GalleryItem}>{props.children}</div>;
 }

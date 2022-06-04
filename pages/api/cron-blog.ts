@@ -1,8 +1,3 @@
-/**
- * Fetch Blog Posts
- * Every 4 hours, fetch files from Firebase Storage Bucket, Private Github Repo, etc.
- */
-
 import { NextApiRequest, NextApiResponse } from "next";
 import { fetchPosts } from "../../functions/blog.js";
 

@@ -1,4 +1,4 @@
-import admin from "firebase-admin"
+import admin from "firebase-admin";
 
 export const firebaseConfig = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -6,11 +6,10 @@ export const firebaseConfig = {
   blogStorage: "blog/articles"
 };
 
-let fbApp: any; 
+let fbApp: any;
 try {
   fbApp = admin.app();
-}
-catch(err) {
+} catch (err) {
   fbApp = admin.initializeApp({
     credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_ADMIN_CREDENTIAL || "")),
     databaseURL: process.env.FIREBASE_DATABASE_URL,
