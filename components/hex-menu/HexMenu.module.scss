@@ -93,7 +93,7 @@
     &::after {
       content: "";
       position: absolute;
-      background-color: rgba(0,0,0,0.4);
+      background-color: rgba(0, 0, 0, 0.4);
       opacity: 0;
       transition: opacity 500ms ease;
       top: 0;
@@ -136,14 +136,14 @@
 }
 @keyframes bounce {
   40% {
-    transform: scale(1.2);
+    transform: scale(1.1);
     stroke-width: 2;
   }
   60% {
     transform: scale(1);
   }
   80% {
-    transform: scale(1.1);
+    transform: scale(1.05);
     stroke-width: 2;
   }
   100% {

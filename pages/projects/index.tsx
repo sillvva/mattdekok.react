@@ -12,7 +12,7 @@ const Projects: NextPage<ProjectProps> = props => {
   return (
     <Page.Body>
       <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
-        <div className="p-2 basis-full 2xl:basis-11/12">
+        <div className="p-0 md:p-2 basis-full 2xl:basis-11/12">
           <div className={projectStyles.Projects}>
             {props.projects.map((project, i) => (
               <div className={projectStyles.Project} key={`project-${i}`}>
