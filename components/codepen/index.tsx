@@ -73,9 +73,9 @@ function ReactCodepen(props: CodePenProps) {
   const styles = { visibility };
 
   return (
-    <>
-      {showLoader && props.loader}
-      {loadState == LOAD_STATE.ERROR && error}
+    <div className="codepen-container">
+      {showLoader ?? props.loader}
+      {loadState == LOAD_STATE.ERROR ?? error}
       <p
         data-height={props.height}
         data-theme-id={props.themeId}
@@ -91,7 +91,7 @@ function ReactCodepen(props: CodePenProps) {
         See the Pen <a href={penLink}>{props.title}</a>
         by {props.user} (<a href={userProfileLink}>@{props.user}</a>) on <a href="https://codepen.io">CodePen</a>.
       </p>
-    </>
+    </div>
   );
 }
 

@@ -18,10 +18,10 @@ function Layout({ children }: PropsWithChildren<unknown>) {
       <MainLayoutContextProvider>
         <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
         <PageMeta title={layout.head?.meta?.title} description={layout.head?.meta?.description} articleMeta={layout.head?.meta?.articleMeta} />
-        <AnimatePresence initial={false}>
-          <MainLayout>
+        <AnimatePresence initial={false} exitBeforeEnter>
+          <MainLayout key={router.pathname}>
             <PageHeader layout={layout} layoutMotion={mainMotion} />
-            <motion.main key={router.pathname} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
+            <motion.main key={`main${router.pathname}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
               {children}
             </motion.main>
           </MainLayout>

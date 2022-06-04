@@ -10,7 +10,7 @@ const PageMenu = dynamic(() => import("./page-menu"));
 
 type PageHeaderProps = {
   layout: AppLayout;
-  layoutMotion?: { variants: Variants; transition: Transition }
+  layoutMotion?: { variants: Variants; transition: Transition };
 };
 
 const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {

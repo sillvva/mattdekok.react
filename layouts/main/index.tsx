@@ -33,6 +33,6 @@ export const mainMotion: { variants: Variants; transition: Transition } = {
   },
   transition: {
     type: "linear",
-    duration: 0.5
+    duration: 0.3
   }
 };
