@@ -29,15 +29,15 @@ const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: stri
 const Blog: NextPage = () => {
   useLayout("main", { menu: true, meta: { title: "Blog" }, headerClasses });
 
-  const router = useRouter();
-  const page = (Array.isArray(router.query.page) ? router.query.page[0] : router.query.page) || 1;
+  const { query, asPath } = useRouter();
+  const page = (Array.isArray(query.page) ? query.page[0] : query.page) || 1;
   let { data, error } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
 
   if (!data) data = { posts: loaders, pages: 0 };
 
   useEffect(() => {
-    Cookies.set("blog-url", router.asPath);
-  }, [router.asPath]);
+    Cookies.set("blog-url", asPath);
+  }, [asPath]);
 
   return (
     <Page.Body>

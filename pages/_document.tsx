@@ -1,6 +1,12 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import Cookies from "js-cookie";
 
+const themeColors: {[key:string]:string} = {
+  dark: "#00aa99",
+  blue: "#32b2e8",
+  light: "#0070e7"
+};
+
 class MyDocument extends Document {
   props: any;
 
@@ -20,6 +26,7 @@ class MyDocument extends Document {
 
   render() {
     const { theme } = this.props;
+    const color = themeColors[theme] ?? '#111';
 
     return (
       <Html lang="en" prefix="og: http://ogp.me/ns#">
@@ -29,9 +36,9 @@ class MyDocument extends Document {
           <link rel="manifest" href="/manifest.webmanifest" />
 
           <meta name="mobile-web-app-capable" content="yes" />
-          <meta name="msapplication-TileColor" content="#00bbaa" />
+          <meta name="msapplication-TileColor" content={color} />
           <meta name="msapplication-tap-highlight" content="no" />
-          <meta name="theme-color" content="#00bbaa" />
+          <meta name="theme-color" content={color} />
         </Head>
         <body className={`app ${theme}`}>
           <Main />
