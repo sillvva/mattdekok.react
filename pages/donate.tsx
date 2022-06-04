@@ -1,9 +1,10 @@
 import type { NextPage } from "next";
 import Page from "../components/page";
 import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import { useHeaderClasses } from "../layouts/main";
 
 const Donate: NextPage = () => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Donate" }, headerClasses });
 
   return (

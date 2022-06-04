@@ -4,7 +4,7 @@ import { PageMenuItem } from "../components/page-menu";
 import Page from "../components/page";
 import MeDetails from "../components/me-details";
 import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import { useHeaderClasses } from "../layouts/main";
 
 const age = (birthday: Date) => {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -13,6 +13,7 @@ const age = (birthday: Date) => {
 };
 
 const AboutMe: NextPage = () => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "About Me" }, headerClasses });
 
   return (

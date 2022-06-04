@@ -110,6 +110,9 @@ const HexMenuItem = (props: HexMenuItemProps) => {
         } as React.CSSProperties
       }>
       <span className={styles.ItemLabel}>{props.label}</span>
+      <div className={`${styles.Face} ${styles.BackFace} ${styles.Face1}`}></div>
+      <div className={`${styles.Face} ${styles.BackFace} ${styles.Face2}`}></div>
+      <div className={`${styles.Face} ${styles.BackFace} ${styles.Face3}`}></div>
       <div className={`${styles.Face} ${styles.Face1}`}></div>
       <div className={`${styles.Face} ${styles.Face2}`}></div>
       <div className={`${styles.Face} ${styles.Face3}`}></div>

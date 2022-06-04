@@ -26,6 +26,7 @@
   font-family: "Montserrat", sans-serif;
   @apply text-3xl text-center lg:mt-4 lg:mb-4;
   color: var(--headers);
+  text-shadow: 1px 1px 1px var(--background);
   &.SmallTitle {
     @apply text-lg my-2;
     @media (max-width: 400px) {
@@ -37,7 +38,7 @@
 .Fab {
   @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl;
   @apply transition-[background] duration-500 ease-linear;
-  background-color: var(--background);
+  background-color: transparent;
   &.MenuFab {
     @apply lg:hidden;
   }

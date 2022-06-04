@@ -102,6 +102,10 @@
       height: 100%;
     }
   }
+  .BackFace {
+    transition: all;
+    box-shadow: 0 0 3px var(--background);
+  }
   .Face1 {
     transform: rotate(60deg);
   }
@@ -133,6 +137,9 @@
   animation: bounce 500ms ease-in-out forwards;
   stroke: var(--background);
   stroke-width: 0;
+  .BackFace {
+    box-shadow: 0 0 6px var(--background);
+  }
 }
 @keyframes bounce {
   40% {

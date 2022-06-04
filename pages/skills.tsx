@@ -3,9 +3,10 @@ import Page from "../components/page";
 import Rating from "../components/ratings";
 import { firestore } from "../functions/func";
 import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import { useHeaderClasses } from "../layouts/main";
 
 const Skills: NextPage<SkillProps> = props => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Skills" }, headerClasses });
 
   const cols = {
