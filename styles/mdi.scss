@@ -1,22 +1,12 @@
 .rating {
   .mdi {
     font-size: medium;
-    color: var(--altText);
+    color: var(--ratingOff);
     &.mdi-star {
-      color: rgb(200, 125, 0) !important;
+      color: var(--ratingOn) !important;
     }
     &.mdi-star-half-full {
-      color: rgb(200, 125, 0) !important;
-    }
-  }
-  .dark & {
-    .mdi {
-      &.mdi-star {
-        color: gold !important;
-      }
-      &.mdi-star-half-full {
-        color: rgb(255, 240, 158) !important;
-      }
+      color: var(--ratingOn) !important;
     }
   }
 }

@@ -1,4 +1,4 @@
-import styles from "../layouts/main/MainLayout.module.scss";
+import styles from "../../../layouts/main/MainLayout.module.scss";
 
 type MeDetailsProps = {
   name: string;

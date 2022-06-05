@@ -98,9 +98,9 @@ type HexMenuItemProps = {
 const HexMenuItem = (props: HexMenuItemProps) => {
   const menuItem = props.label ? (
     <a
-      className={[styles.HexMenuItem, props.active ? styles.Active : "", props.rotated ? styles.Rotated : "", ...props.classes.map(c => styles[c] ?? c)].join(
-        " "
-      )}
+      className={[styles.HexMenuItem, props.active ? styles.Active : "", props.rotated ? styles.Rotated : "", ...props.classes.map(c => styles[c] ?? c)]
+        .filter(c => !!c)
+        .join(" ")}
       style={
         {
           ...(props.color && { "--item-color": props.color }),
@@ -110,6 +110,9 @@ const HexMenuItem = (props: HexMenuItemProps) => {
         } as React.CSSProperties
       }>
       <span className={styles.ItemLabel}>{props.label}</span>
+      <div className={`${styles.Face} ${styles.BackFace} ${styles.Face1}`}></div>
+      <div className={`${styles.Face} ${styles.BackFace} ${styles.Face2}`}></div>
+      <div className={`${styles.Face} ${styles.BackFace} ${styles.Face3}`}></div>
       <div className={`${styles.Face} ${styles.Face1}`}></div>
       <div className={`${styles.Face} ${styles.Face2}`}></div>
       <div className={`${styles.Face} ${styles.Face3}`}></div>

@@ -10,9 +10,9 @@ import remarkGfm from "remark-gfm";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 
 import { useLayout } from "../../layouts/layout";
-import { headerClasses } from "../../layouts/main";
+import { useHeaderClasses } from "../../layouts/main";
+import Page from "../../components/layouts/main/page";
 import { firebaseConfig, storage } from "../../functions/func";
-import Page from "../../components/page";
 import { blogStyles, PostProps } from "../../components/blog";
 import { getContentDir } from "../../store/misc";
 import type { PostData } from "../api/get-posts";
@@ -28,6 +28,7 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = props => {
   const { data, content, cookies } = props;
+  const headerClasses = useHeaderClasses();
   
   const returnUrl = cookies["return-url"] || "/blog";
   useLayout("main", {

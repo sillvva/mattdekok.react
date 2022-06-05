@@ -1,11 +1,12 @@
 import type { NextPage } from "next";
-import Page from "../components/page";
+import { useLayout } from "../layouts/layout";
+import { useHeaderClasses } from "../layouts/main";
+import Page from "../components/layouts/main/page";
 import Rating from "../components/ratings";
 import { firestore } from "../functions/func";
-import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
 
 const Skills: NextPage<SkillProps> = props => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Skills" }, headerClasses });
 
   const cols = {
@@ -16,7 +17,7 @@ const Skills: NextPage<SkillProps> = props => {
 
   return (
     <Page.Body>
-      <Page.Article className="w-full sm:w-9/12 md:w-10/12 lg:w-9/12">
+      <Page.Article className="w-full sm:w-8/12 md:w-10/12 lg:w-9/12">
         {props.skills.map((section, i) => (
           <Rating.Section key={`rsect${i}`} name={section.name} columns={cols}>
             {section.skills.map((skill, j) => (

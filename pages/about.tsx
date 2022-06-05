@@ -1,10 +1,9 @@
 import type { NextPage } from "next";
-import buttons from "../styles/Buttons.module.scss";
-import { PageMenuItem } from "../components/page-menu";
-import Page from "../components/page";
-import MeDetails from "../components/me-details";
 import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import { useHeaderClasses } from "../layouts/main";
+import Page from "../components/layouts/main/page";
+import MeDetails from "../components/layouts/main/me-details";
+import AnimatedButton from "../components/animated-button";
 
 const age = (birthday: Date) => {
   const ageDifMs = Date.now() - birthday.getTime();
@@ -13,6 +12,7 @@ const age = (birthday: Date) => {
 };
 
 const AboutMe: NextPage = () => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "About Me" }, headerClasses });
 
   return (
@@ -145,7 +145,7 @@ const AboutMe: NextPage = () => {
           <div className="text-center">
             <p className="pb-4">Like and want to support my work? No problem!</p>
             <div className="flex justify-center">
-              <PageMenuItem link="/donate" label="Buy me a coffee" itemClasses={[buttons.Button4]} />
+              <AnimatedButton link="/donate" label="Buy me a coffee" itemClasses={['Button4']} />
             </div>
           </div>
         </Page.Section>

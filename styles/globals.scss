@@ -20,10 +20,12 @@
   --article: #ffffff;
   --GitHub: #0d0d0d;
   --LinkedIn: #000000;
+  --ratingOn: rgb(200, 125, 0);
+  --ratingOff: #e8e8e8;
   --menu: var(--link);
-  --menuHover: #0F4C75;
+  --menuHover: #0f4c75;
   --menuText: #ffffff;
-  --loading: rgba(255,255,255,0.7);
+  --loading: rgba(255, 255, 255, 0.7);
 }
 
 @mixin dark-theme {
@@ -33,43 +35,47 @@
   --linkHover: var(--background);
   --linkText: var(--link);
   --dropShadow: #181818;
-  --headers: #BBFAE1;
+  --headers: #bbfae1;
   --text: #f5f5f5;
   --altText: #2a2a2a;
   --article: #2f2f2f;
   --GitHub: #ffffff;
   --LinkedIn: #ffffff;
+  --ratingOn: rgb(255, 200, 0);
+  --ratingOff: #202020;
   --menu: var(--link);
   --menuHover: #055;
   --menuText: #ffffff;
-  --loading: rgba(255,255,255,0.2);
+  --loading: rgba(255, 255, 255, 0.2);
 }
 
 @mixin blue-theme {
-  --background: #1B262C;
+  --background: #204067;
   --background-transparent: rgba(0, 0, 0, 0.8);
-  --link: #32b2e8;
+  --link: #17b4f7;
   --linkHover: var(--background);
   --linkText: var(--link);
   --dropShadow: #181818;
-  --headers: #BBE1FA;
+  --headers: #bbe1fa;
   --text: #f5f5f5;
   --altText: #2a2a2a;
-  --article: #393E46;
+  --article: #293e56;
   --GitHub: #ffffff;
   --LinkedIn: #ffffff;
-  --menu: var(--link);
-  --menuHover: #0F4C75;
+  --ratingOn: rgb(255, 200, 0);
+  --ratingOff: #102848;
+  --menu: #089ede;
+  --menuHover: #033247;
   --menuText: #ffffff;
-  --loading: rgba(255,255,255,0.2);
+  --loading: rgba(255, 255, 255, 0.2);
 }
 
 @mixin universal-theme {
   --darkBackground: #222629;
   --blogHeaderShade: #181818;
   --blogHeaderText: #f5f5f5;
-  --shadowColor: rgba(0,0,0,0.1);
-  --shadowHover: rgba(0,0,0,0.3);
+  --shadowColor: rgba(0, 0, 0, 0.2);
+  --shadowHover: rgba(0, 0, 0, 0.4);
   --PayPal1: #003087;
   --PayPal2: #009cde;
   --Stripe: #007bff;
@@ -112,7 +118,7 @@ body {
     }
   }
   & {
-    background: var(--background) !important;
+    background: var(--background);
     color: var(--text) !important;
   }
   .mdi {
@@ -128,10 +134,6 @@ body {
   transition: background 0.5s linear;
 }
 
-.bg-transparent {
-  --background: transparent;
-}
-
 .loading {
   @apply relative overflow-hidden;
   &::before {
@@ -144,15 +146,26 @@ body {
 
 @keyframes loading {
   from {
-      left: -200px;
+    left: -200px;
   }
-  to   {
-      left: 100%;
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
 .loading-line {
-  &.title, &.subtitle, &.text {
+  &.title,
+  &.subtitle,
+  &.text {
     @apply flex items-center;
     span {
       @apply loading block overflow-hidden w-full rounded-full bg-gray-500/40;

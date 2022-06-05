@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import type { Transition, Variants } from "framer-motion";
 import MainLayoutContext from "../../store/main-layout.context";
 
@@ -23,16 +23,48 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
 
 export default MainLayout;
 
-export const headerClasses = ["backdrop-blur-lg bg-transparent sticky z-10 top-0"];
+const headerClasses = ["transition-all duration-1000 bg-transparent sticky z-10 top-0"];
+const combined = [...headerClasses, "backdrop-blur-lg"];
 
-export const mainMotion: { variants: Variants; transition: Transition } = {
+export function useHeaderClasses() {
+  const [classes, setClasses] = useState(headerClasses);
+
+  useEffect(() => {
+    if (navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
+      setClasses(combined);
+      return;
+    }
+
+    let toggle = false;
+
+    if (window.scrollY) setClasses(combined);
+
+    const scrollHandler = async () => {
+      if (window.scrollY && !toggle) {
+        setClasses(combined);
+        toggle = true;
+      } else if (!window.scrollY && toggle) {
+        setClasses(headerClasses);
+        toggle = false;
+      }
+      return true;
+    };
+
+    window.addEventListener("scroll", scrollHandler);
+
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, []);
+
+  return classes;
+}
+
+export const mainMotion: { variants?: Variants; transition?: Transition } = {
   variants: {
     hidden: { opacity: 0 },
     enter: { opacity: 1 },
     exit: { opacity: 0 }
   },
   transition: {
-    type: "linear",
-    duration: 0.5
+    duration: 0.25
   }
 };

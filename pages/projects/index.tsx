@@ -1,21 +1,22 @@
 import type { NextPage } from "next";
-import Page from "../../components/page";
+import Page from "../../components/layouts/main/page";
 import GalleryItem from "../../components/gallery";
 import { firestore } from "../../functions/func";
-import projectStyles from "./Projects.module.scss";
 import { useLayout } from "../../layouts/layout";
-import { headerClasses } from "../../layouts/main";
+import { useHeaderClasses } from "../../layouts/main";
+import styles from "./Projects.module.scss";
 
 const Projects: NextPage<ProjectProps> = props => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Projects" }, headerClasses });
 
   return (
     <Page.Body>
       <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
-        <div className="p-2 basis-full 2xl:basis-11/12">
-          <div className={projectStyles.Projects}>
+        <div className="p-0 md:p-2 basis-full 2xl:basis-11/12">
+          <div className={styles.Projects}>
             {props.projects.map((project, i) => (
-              <div className={projectStyles.Project} key={`project-${i}`}>
+              <div className={styles.Project} key={`project-${i}`}>
                 <GalleryItem image={project.image} title={project.title} subtitle={project.subtitle} description={project.description} link={project.link} />
               </div>
             ))}

@@ -5,8 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import MainLayout, { mainMotion } from "../layouts/main";
 import { getLayout, PageHeadProps, setLayout } from "../store/slices/layout.slice";
 import { MainLayoutContextProvider } from "../store/main-layout.context";
+import PageHeader from "../components/layouts/main/page-header";
+import Page from "../components/layouts/main/page";
 import PageMeta from "../components/meta";
-import PageHeader from "../components/page-header";
 import NextNProgress from "../components/progress";
 
 function Layout({ children }: PropsWithChildren<unknown>) {
@@ -18,10 +19,17 @@ function Layout({ children }: PropsWithChildren<unknown>) {
       <MainLayoutContextProvider>
         <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
         <PageMeta title={layout.head?.meta?.title} description={layout.head?.meta?.description} articleMeta={layout.head?.meta?.articleMeta} />
-        <AnimatePresence initial={false}>
-          <MainLayout>
+        <AnimatePresence initial={false} exitBeforeEnter>
+          <MainLayout key={router.pathname}>
+            <Page.Bg />
             <PageHeader layout={layout} layoutMotion={mainMotion} />
-            <motion.main key={router.pathname} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
+            <motion.main
+              key={`main${router.pathname}`}
+              variants={mainMotion.variants}
+              initial="hidden"
+              animate="enter"
+              exit="exit"
+              transition={mainMotion.transition}>
               {children}
             </motion.main>
           </MainLayout>

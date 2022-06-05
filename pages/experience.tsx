@@ -1,10 +1,11 @@
 import type { NextPage } from "next";
-import Page from "../components/page";
+import Page from "../components/layouts/main/page";
 import { firestore } from "../functions/func";
 import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import { useHeaderClasses } from "../layouts/main";
 
 const Experience: NextPage<ExperienceProps> = props => {
+  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Experience" }, headerClasses });
 
   return (

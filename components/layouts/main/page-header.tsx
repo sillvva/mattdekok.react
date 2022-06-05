@@ -2,15 +2,15 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useContext } from "react";
 import { motion, Transition, Variants } from "framer-motion";
-import MainLayoutContext, { menuItems } from "../store/main-layout.context";
-import { AppLayout } from "../store/slices/layout.slice";
-import styles from "../layouts/main/MainLayout.module.scss";
+import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
+import { AppLayout } from "../../../store/slices/layout.slice";
+import styles from "../../../layouts/main/MainLayout.module.scss";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
 type PageHeaderProps = {
   layout: AppLayout;
-  layoutMotion?: { variants: Variants; transition: Transition }
+  layoutMotion?: { variants?: Variants; transition?: Transition };
 };
 
 const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
@@ -27,7 +27,7 @@ const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
         ? head?.headerClasses.map(c =>
             c
               .split(" ")
-              .map(c2 => styles[c2] + " " + c2 ?? c2)
+              .map(c2 => styles[c2] ?? c2)
               .join(" ")
           )
         : [])

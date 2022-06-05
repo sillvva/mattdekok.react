@@ -11,7 +11,7 @@ export const menuItems = [
   { link: "/blog", label: "Blog" }
 ];
 
-const themes = ["dark", "blue", "light"];
+export const themes = ["dark", "light", "blue"];
 
 type DrawerProps = {
   state: boolean;
@@ -22,6 +22,7 @@ type DrawerProps = {
 type ThemeProps = {
   state: string;
   themes: string[];
+  done: boolean;
   toggle: () => void;
   set: (theme: string) => void;
 };
@@ -40,6 +41,7 @@ const initState = {
   theme: {
     state: themes[0],
     themes: themes,
+    done: true,
     toggle: function () {},
     set: function (theme: string) {}
   }
@@ -81,8 +83,13 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     if (nextIndex == -1) nextIndex = themes[currentIndex + 1] ? currentIndex + 1 : 0;
     document.body.classList.replace(themes[currentIndex], themes[nextIndex]);
     context.theme.state = themes[nextIndex];
+    context.theme.done = false;
     cookie.set("theme", context.theme.state);
     setContext({ ...context, theme: context.theme });
+    setTimeout(() => {
+      context.theme.done = true;
+      setContext({ ...context, theme: context.theme });
+    }, 300);
   }
 
   function themeToggleHandler() {

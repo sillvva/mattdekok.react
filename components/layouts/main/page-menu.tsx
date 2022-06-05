@@ -1,8 +1,6 @@
-import { useState } from "react";
-import Link from "next/link";
-import styles from "../layouts/main/MainLayout.module.scss";
-import buttons from "../styles/Buttons.module.scss";
+import styles from "../../../layouts/main/MainLayout.module.scss";
 import { useRouter } from "next/router";
+import AnimatedButton from "../../animated-button";
 
 export type Item = {
   link: string;
@@ -56,7 +54,7 @@ const PageMenu = (props: PageMenuProps) => {
           <div className={styles.PageMenu} key={`menu-row${r}`}>
             {row.map((item, i) => {
               return (
-                <PageMenuItem
+                <AnimatedButton
                   key={`pmi${i}`}
                   link={item.link}
                   label={item.label}
@@ -77,54 +75,3 @@ const PageMenu = (props: PageMenuProps) => {
 };
 
 export default PageMenu;
-
-type PageMenuItemProps = {
-  link: string;
-  label: string;
-  active?: boolean;
-  color?: string;
-  hoverColor?: string;
-  activeColor?: string;
-  textColor?: string;
-  itemClasses: string[];
-};
-
-export const PageMenuItem = (props: PageMenuItemProps) => {
-  const {
-    active = false,
-    itemClasses = [buttons.Button5],
-    color = "var(--link)",
-    hoverColor = "var(--linkHover)",
-    activeColor = "var(--linkHover)",
-    textColor = "var(--linkText)",
-    link,
-    label
-  } = props;
-
-  const [classes, setClasses] = useState([buttons.Button, active ? buttons.Active : "", ...itemClasses]);
-  if (!classes.find(c => /Button\d+/.test(c))) {
-    setClasses([...classes, buttons.Button5]);
-  }
-
-  const style = {
-    ...(color && { "--item-color": color }),
-    ...(hoverColor && { "--hover-color": hoverColor }),
-    ...(activeColor && { "--active-color": activeColor }),
-    ...(textColor && { "--text-color": textColor })
-  } as React.CSSProperties;
-
-  if (!link || active)
-    return (
-      <a className={classes.join(" ")} style={style}>
-        {label}
-      </a>
-    );
-
-  return (
-    <Link href={link}>
-      <a className={classes.join(" ")} style={style}>
-        {label}
-      </a>
-    </Link>
-  );
-};

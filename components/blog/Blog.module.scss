@@ -7,7 +7,7 @@
       --tw-shadow-color: var(--shadowColor);
       --tw-shadow: var(--tw-shadow-colored);
       background-color: var(--article);
-      transition: box-shadow 0.5s;
+      transition: all 0.5s linear;
       &:hover {
         @apply shadow-xl;
         --tw-shadow-color: var(--shadowHover);
