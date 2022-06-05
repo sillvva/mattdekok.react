@@ -27,7 +27,7 @@ const headerClasses = ["transition-all duration-1000 bg-transparent sticky z-10 
 const combined = [...headerClasses, "backdrop-blur-lg"];
 
 export function useHeaderClasses() {
-  const [ classes, setClasses ] = useState(headerClasses);
+  const [classes, setClasses] = useState(headerClasses);
 
   useEffect(() => {
     if (navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
@@ -43,29 +43,28 @@ export function useHeaderClasses() {
       if (window.scrollY && !toggle) {
         setClasses(combined);
         toggle = true;
-      }
-      else if (!window.scrollY && toggle) {
+      } else if (!window.scrollY && toggle) {
         setClasses(headerClasses);
         toggle = false;
       }
       return true;
-    } 
+    };
 
-    window.addEventListener('scroll', scrollHandler);
+    window.addEventListener("scroll", scrollHandler);
 
-    return () => window.removeEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
   return classes;
 }
 
-export const mainMotion: { variants: Variants; transition: Transition } = {
+export const mainMotion: { variants?: Variants; transition?: Transition } = {
   variants: {
     hidden: { opacity: 0 },
     enter: { opacity: 1 },
-    exit: { opacity: 0, transition: { duration: 0 } }
+    exit: { opacity: 0 }
   },
   transition: {
-    duration: 0.5
+    duration: 0.25
   }
 };
