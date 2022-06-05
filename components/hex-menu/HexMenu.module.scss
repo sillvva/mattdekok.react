@@ -23,17 +23,17 @@
 }
 
 .HexMenuItem {
-  --baseYMargin: 30px;
+  --baseYMargin: 172px;
   --baseXMargin: 4px;
   --item-color: var(--menu);
   --active-color: var(--menuHover);
   --hover-color: var(--menuHover);
   --text-color: var(--menuText);
   position: relative;
-  margin: calc(var(--baseYMargin) * var(--scale)) calc(var(--baseXMargin) * var(--scale));
-  margin-left: calc(2px * var(--scale));
+  margin: 0 calc(var(--baseXMargin) * var(--scale)) calc(var(--baseYMargin) * var(--scale));
+  // margin-left: calc(2px * var(--scale));
   width: calc(190px * var(--scale));
-  height: calc(110px * var(--scale));
+  height: 0;
   z-index: 1;
   text-decoration: none;
   text-align: center;
@@ -83,7 +83,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(110px * var(--scale));
     overflow: hidden;
     background: inherit;
     background: var(--item-color);
@@ -116,8 +116,8 @@
     transform: rotate(-60deg);
   }
   &.Rotated {
-    --baseYMargin: 45px;
-    --baseXMargin: -20px;
+    --baseYMargin: 200px;
+    --baseXMargin: -8px;
     &:nth-child(2n) {
       top: calc(100px * var(--scale));
     }

@@ -27,7 +27,7 @@ const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
         ? head?.headerClasses.map(c =>
             c
               .split(" ")
-              .map(c2 => styles[c2] + " " + c2 ?? c2)
+              .map(c2 => styles[c2] ?? c2)
               .join(" ")
           )
         : [])

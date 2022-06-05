@@ -113,13 +113,13 @@ body {
   }
   & {
     background: var(--background);
-    background-attachment: fixed;
-    background-position: center center;
-    background-size: auto 100vh;
-    background-repeat: no-repeat;
     color: var(--text) !important;
     &.blue {
-      background-image: url('/images/wp1.jpg');
+      background: url('/images/wp1.jpg');
+      background-color: #204067;
+      background-attachment: fixed;
+      background-size: auto 100vh;
+      background-repeat: no-repeat;
     }
   }
   .mdi {
@@ -133,10 +133,6 @@ body {
 
 * {
   transition: background 0.5s linear;
-}
-
-.bg-transparent {
-  // --background: transparent;
 }
 
 .loading {

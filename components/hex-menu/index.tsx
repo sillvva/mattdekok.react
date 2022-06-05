@@ -98,9 +98,9 @@ type HexMenuItemProps = {
 const HexMenuItem = (props: HexMenuItemProps) => {
   const menuItem = props.label ? (
     <a
-      className={[styles.HexMenuItem, props.active ? styles.Active : "", props.rotated ? styles.Rotated : "", ...props.classes.map(c => styles[c] ?? c)].join(
-        " "
-      )}
+      className={[styles.HexMenuItem, props.active ? styles.Active : "", props.rotated ? styles.Rotated : "", ...props.classes.map(c => styles[c] ?? c)]
+        .filter(c => !!c)
+        .join(" ")}
       style={
         {
           ...(props.color && { "--item-color": props.color }),
