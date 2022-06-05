@@ -63,10 +63,9 @@ export const mainMotion: { variants: Variants; transition: Transition } = {
   variants: {
     hidden: { opacity: 0 },
     enter: { opacity: 1 },
-    exit: { opacity: 0 }
+    exit: { opacity: 0, transition: { duration: 0.1 } }
   },
   transition: {
-    type: "linear",
-    duration: 0.25
+    duration: 0.5
   }
 };
