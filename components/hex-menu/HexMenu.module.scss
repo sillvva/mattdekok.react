@@ -104,7 +104,7 @@
   }
   .BackFace {
     transition: all;
-    box-shadow: 0 0 3px var(--background);
+    box-shadow: 0 0 3px var(--background), 0 0 8px var(--background);
   }
   .Face1 {
     transform: rotate(60deg);
@@ -138,7 +138,7 @@
   stroke: var(--background);
   stroke-width: 0;
   .BackFace {
-    box-shadow: 0 0 6px var(--background);
+    box-shadow: none;
   }
 }
 @keyframes bounce {
