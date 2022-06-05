@@ -24,24 +24,24 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
 export default MainLayout;
 
 const headerClasses = ["transition-all duration-1000 bg-transparent sticky z-10 top-0"];
-const scrollClasses = ["backdrop-blur-lg"];
+const combined = [...headerClasses, "backdrop-blur-lg"];
 
 export function useHeaderClasses() {
   const [ classes, setClasses ] = useState(headerClasses);
 
   useEffect(() => {
     if (navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
-      setClasses(["transition-all duration-1000 bg-black/40 backdrop-blur-lg sticky z-10 top-0"]);
+      setClasses(combined);
       return;
     }
 
     let toggle = false;
 
-    if (window.scrollY) setClasses([...headerClasses, ...scrollClasses]);
+    if (window.scrollY) setClasses(combined);
 
     const scrollHandler = async () => {
       if (window.scrollY && !toggle) {
-        setClasses([...headerClasses, ...scrollClasses]);
+        setClasses(combined);
         toggle = true;
       }
       else if (!window.scrollY && toggle) {
