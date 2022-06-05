@@ -46,7 +46,7 @@
 }
 
 @mixin blue-theme {
-  --background: #1B262C;
+  --background: #204067;
   --background-transparent: rgba(0, 0, 0, 0.8);
   --link: #17b4f7;
   --linkHover: var(--background);
@@ -114,13 +114,13 @@ body {
   & {
     background: var(--background);
     color: var(--text) !important;
-    &.blue {
-      background: url('/images/wp1.jpg');
-      background-color: #204067;
-      background-attachment: fixed;
-      background-size: auto 100vh;
-      background-repeat: no-repeat;
-    }
+    // &.blue {
+    //   background: url('/images/wp1.jpg');
+    //   background-color: #204067;
+    //   background-attachment: fixed;
+    //   background-size: auto 100vh;
+    //   background-repeat: no-repeat;
+    // }
   }
   .mdi {
     color: var(--text);

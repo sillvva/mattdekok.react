@@ -1,6 +1,27 @@
 import Image from "next/image";
-import React from "react";
+import React, { useContext } from "react";
+import { motion } from "framer-motion";
+import { mainMotion } from "../layouts/main";
 import styles from "../layouts/main/MainLayout.module.scss";
+import MainLayoutContext from "../store/main-layout.context";
+
+const PageBg = (props: React.PropsWithChildren<unknown>) => {
+  const { theme } = useContext(MainLayoutContext);
+  const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
+
+  return (
+    <motion.div
+      key={`bg${theme.state}`}
+      variants={mainMotion.variants}
+      initial="hidden"
+      animate="enter"
+      exit="exit"
+      transition={mainMotion.transition}
+      className={[styles.PageBg, styles[themeBg]].filter(c => !!c).join(" ")}>
+      {props.children}
+    </motion.div>
+  );
+};
 
 const PageBody = (props: React.PropsWithChildren<unknown>) => {
   return <div className={styles.PageBody}>{props.children}</div>;
@@ -46,7 +67,8 @@ const PageSectionItem = (props: React.PropsWithChildren<PageSectionItemProps>) =
   );
 };
 
-const Page = {
+const PageComponents = {
+  Bg: PageBg,
   Body: PageBody,
   Article: PageArticle,
   Section: PageSection,
@@ -54,4 +76,4 @@ const Page = {
   SectionItem: PageSectionItem
 };
 
-export default Page;
+export default PageComponents;

@@ -8,6 +8,7 @@ import { MainLayoutContextProvider } from "../store/main-layout.context";
 import PageMeta from "../components/meta";
 import PageHeader from "../components/page-header";
 import NextNProgress from "../components/progress";
+import Page from "../components/page";
 
 function Layout({ children }: PropsWithChildren<unknown>) {
   const layout = useSelector(getLayout);
@@ -20,8 +21,15 @@ function Layout({ children }: PropsWithChildren<unknown>) {
         <PageMeta title={layout.head?.meta?.title} description={layout.head?.meta?.description} articleMeta={layout.head?.meta?.articleMeta} />
         <AnimatePresence initial={false} exitBeforeEnter>
           <MainLayout key={router.pathname}>
+            <Page.Bg />
             <PageHeader layout={layout} layoutMotion={mainMotion} />
-            <motion.main key={`main${router.pathname}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
+            <motion.main
+              key={`main${router.pathname}`}
+              variants={mainMotion.variants}
+              initial="hidden"
+              animate="enter"
+              exit="exit"
+              transition={mainMotion.transition}>
               {children}
             </motion.main>
           </MainLayout>
