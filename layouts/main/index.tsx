@@ -30,11 +30,16 @@ export function useHeaderClasses() {
   const [ classes, setClasses ] = useState(headerClasses);
 
   useEffect(() => {
+    if (navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
+      setClasses(["transition-all duration-1000 bg-black/40 backdrop-blur-lg sticky z-10 top-0"]);
+      return;
+    }
+
     let toggle = false;
 
     if (window.scrollY) setClasses([...headerClasses, ...scrollClasses]);
 
-    const scrollHandler = () => {
+    const scrollHandler = async () => {
       if (window.scrollY && !toggle) {
         setClasses([...headerClasses, ...scrollClasses]);
         toggle = true;
@@ -43,11 +48,12 @@ export function useHeaderClasses() {
         setClasses(headerClasses);
         toggle = false;
       }
+      return true;
     } 
 
     window.addEventListener('scroll', scrollHandler);
 
-    () => window.removeEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener('scroll', scrollHandler);
   }, []);
 
   return classes;

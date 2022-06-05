@@ -3,7 +3,7 @@
 }
 
 .PageBg {
-  @apply fixed w-full h-full -z-10;
+  @apply fixed -z-10 top-0 left-0 bottom-0 right-0;
   &.PageBlue {
     @apply bg-fixed bg-cover bg-no-repeat;
     background-color: var(--background);
