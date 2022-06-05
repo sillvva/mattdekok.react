@@ -1,26 +1,29 @@
 import Image from "next/image";
 import React, { useContext } from "react";
 import { motion } from "framer-motion";
-import { mainMotion } from "../layouts/main";
-import styles from "../layouts/main/MainLayout.module.scss";
-import MainLayoutContext from "../store/main-layout.context";
+import { mainMotion } from "../../../layouts/main";
+import styles from "../../../layouts/main/MainLayout.module.scss";
+import MainLayoutContext from "../../../store/main-layout.context";
 
-const PageBg = (props: React.PropsWithChildren<unknown>) => {
+const PageBg = () => {
   const { theme } = useContext(MainLayoutContext);
   const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
 
-  return (
-    <motion.div
-      key={`bg${theme.state}`}
-      variants={mainMotion.variants}
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      transition={mainMotion.transition}
-      className={[styles.PageBg, styles[themeBg]].filter(c => !!c).join(" ")}>
-      {props.children}
-    </motion.div>
-  );
+  if (styles[themeBg]) {
+    return (
+      <motion.div
+        key={`bg${theme.state}`}
+        variants={mainMotion.variants}
+        initial="hidden"
+        animate="enter"
+        exit="exit"
+        transition={mainMotion.transition}
+        className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
+      />
+    );
+  }
+
+  return <></>;
 };
 
 const PageBody = (props: React.PropsWithChildren<unknown>) => {

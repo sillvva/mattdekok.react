@@ -5,10 +5,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import MainLayout, { mainMotion } from "../layouts/main";
 import { getLayout, PageHeadProps, setLayout } from "../store/slices/layout.slice";
 import { MainLayoutContextProvider } from "../store/main-layout.context";
+import PageHeader from "../components/layouts/main/page-header";
+import Page from "../components/layouts/main/page";
 import PageMeta from "../components/meta";
-import PageHeader from "../components/page-header";
 import NextNProgress from "../components/progress";
-import Page from "../components/page";
 
 function Layout({ children }: PropsWithChildren<unknown>) {
   const layout = useSelector(getLayout);

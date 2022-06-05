@@ -61,6 +61,6 @@ export const mainMotion: { variants: Variants; transition: Transition } = {
   },
   transition: {
     type: "linear",
-    duration: 0.3
+    duration: 0.25
   }
 };

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
 import Cookies from "js-cookie";
-import Page from "../../components/page";
+import Page from "../../components/layouts/main/page";
 import { PostProps, postLoader } from "../../components/blog";
 import { useLayout } from "../../layouts/layout";
 import { useHeaderClasses } from "../../layouts/main";

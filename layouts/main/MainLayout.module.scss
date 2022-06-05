@@ -4,13 +4,15 @@
 
 .PageBg {
   @apply fixed w-full h-full -z-10;
-  opacity: 1 !important;
   &.PageBlue {
     background: url('/images/wp1.jpg');
     background-color: #204067;
     background-attachment: fixed;
     background-size: auto 100vh;
     background-repeat: no-repeat;
+  }
+  &.FixedBg {
+    opacity: 1 !important;
   }
 }
 
@@ -63,7 +65,7 @@
   }
 }
 
-.PageMenuItem {
+.AnimatedButton {
   padding: 0.75em 1.5em;
   margin: 2px;
   border-color: var(--item-color);

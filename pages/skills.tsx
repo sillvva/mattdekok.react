@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
-import Page from "../components/page";
-import Rating from "../components/ratings";
-import { firestore } from "../functions/func";
 import { useLayout } from "../layouts/layout";
 import { useHeaderClasses } from "../layouts/main";
+import Page from "../components/layouts/main/page";
+import Rating from "../components/ratings";
+import { firestore } from "../functions/func";
 
 const Skills: NextPage<SkillProps> = props => {
   const headerClasses = useHeaderClasses();

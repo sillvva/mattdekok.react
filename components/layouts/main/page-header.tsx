@@ -2,9 +2,9 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useContext } from "react";
 import { motion, Transition, Variants } from "framer-motion";
-import MainLayoutContext, { menuItems } from "../store/main-layout.context";
-import { AppLayout } from "../store/slices/layout.slice";
-import styles from "../layouts/main/MainLayout.module.scss";
+import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
+import { AppLayout } from "../../../store/slices/layout.slice";
+import styles from "../../../layouts/main/MainLayout.module.scss";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 

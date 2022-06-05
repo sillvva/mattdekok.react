@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import Page from "../components/page";
+import Page from "../components/layouts/main/page";
 import { firestore } from "../functions/func";
 import { useLayout } from "../layouts/layout";
 import { useHeaderClasses } from "../layouts/main";

@@ -1,6 +1,6 @@
 import { PropsWithChildren, Fragment } from "react";
 import ratingStyles from "./Ratings.module.scss";
-import Page from "../page";
+import Page from "../layouts/main/page";
 
 type RatingColumnBreakpoints = {
   sm?: number;

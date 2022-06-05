@@ -11,8 +11,8 @@ import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 
 import { useLayout } from "../../layouts/layout";
 import { useHeaderClasses } from "../../layouts/main";
+import Page from "../../components/layouts/main/page";
 import { firebaseConfig, storage } from "../../functions/func";
-import Page from "../../components/page";
 import { blogStyles, PostProps } from "../../components/blog";
 import { getContentDir } from "../../store/misc";
 import type { PostData } from "../api/get-posts";
