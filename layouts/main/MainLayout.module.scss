@@ -5,11 +5,20 @@
 .PageBg {
   @apply fixed w-full h-full -z-10;
   &.PageBlue {
-    background: url('/images/wp1.jpg');
-    background-color: #204067;
-    background-attachment: fixed;
-    background-size: auto 100vh;
-    background-repeat: no-repeat;
+    @apply bg-fixed bg-cover bg-no-repeat;
+    background-color: var(--background);
+    background-image: image-set(
+      url('/images/wp2-600h.webp') 1x,
+      url('/images/wp2-800h.webp') 2x,
+      url('/images/wp2.webp') 3x,
+    );
+    @media (min-width: 768px) {
+      background-image: image-set(
+        url('/images/wp1-600h.webp') 1x,
+        url('/images/wp1-800h.webp') 2x,
+        url('/images/wp1.webp') 3x,
+      );
+    }
   }
   &.FixedBg {
     opacity: 1 !important;
