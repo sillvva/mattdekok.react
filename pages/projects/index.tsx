@@ -3,11 +3,10 @@ import Page from "../../components/layouts/main/page";
 import GalleryItem from "../../components/gallery";
 import { firestore } from "../../functions/func";
 import { useLayout } from "../../layouts/layout";
-import { useHeaderClasses } from "../../layouts/main";
+import { headerClasses } from "../../layouts/main";
 import styles from "./Projects.module.scss";
 
 const Projects: NextPage<ProjectProps> = props => {
-  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Projects" }, headerClasses });
 
   return (

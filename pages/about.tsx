@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import { useLayout } from "../layouts/layout";
-import { useHeaderClasses } from "../layouts/main";
+import { headerClasses } from "../layouts/main";
 import Page from "../components/layouts/main/page";
 import MeDetails from "../components/layouts/main/me-details";
 import AnimatedButton from "../components/animated-button";
@@ -12,7 +12,6 @@ const age = (birthday: Date) => {
 };
 
 const AboutMe: NextPage = () => {
-  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "About Me" }, headerClasses });
 
   return (

@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import type { Transition, Variants } from "framer-motion";
 import MainLayoutContext from "../../store/main-layout.context";
+import { debounce } from "../../functions/misc";
 
 const Drawer = dynamic(() => import("../../components/drawer"));
 
@@ -13,6 +14,16 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
     theme.themes.forEach(t => cL.contains(t) && theme.state !== t && theme.set(t));
   }, [theme]);
 
+  useEffect(() => {
+    document.documentElement.dataset.scroll = window.scrollY.toString();
+    const scrollHandler = debounce(() => {
+      document.documentElement.dataset.scroll = window.scrollY.toString();
+    });
+
+    window.addEventListener("scroll", scrollHandler, { passive: true });
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, []);
+
   return (
     <>
       {props.children}
@@ -23,40 +34,7 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
 
 export default MainLayout;
 
-const headerClasses = ["transition-all duration-1000 bg-transparent sticky z-10 top-0"];
-const combined = [...headerClasses, "backdrop-blur-lg"];
-
-export function useHeaderClasses() {
-  const [classes, setClasses] = useState(headerClasses);
-
-  useEffect(() => {
-    if (navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i)) {
-      setClasses(combined);
-      return;
-    }
-
-    let toggle = false;
-
-    if (window.scrollY) setClasses(combined);
-
-    const scrollHandler = async () => {
-      if (window.scrollY && !toggle) {
-        setClasses(combined);
-        toggle = true;
-      } else if (!window.scrollY && toggle) {
-        setClasses(headerClasses);
-        toggle = false;
-      }
-      return true;
-    };
-
-    window.addEventListener("scroll", scrollHandler);
-
-    return () => window.removeEventListener("scroll", scrollHandler);
-  }, []);
-
-  return classes;
-}
+export const headerClasses = ["transition-all duration-1000 bg-transparent sticky z-10 top-0"];
 
 export const mainMotion: { variants?: Variants; transition?: Transition } = {
   variants: {

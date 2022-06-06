@@ -8,7 +8,7 @@ import Cookies from "js-cookie";
 import Page from "../../components/layouts/main/page";
 import { PostProps, postLoader } from "../../components/blog";
 import { useLayout } from "../../layouts/layout";
-import { useHeaderClasses } from "../../layouts/main";
+import { headerClasses } from "../../layouts/main";
 
 const Pagination = dynamic(() => import("../../components/pagination"));
 const PageMessage = dynamic(() => import("../../components/page-message"));
@@ -27,7 +27,6 @@ const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: stri
 };
 
 const Blog: NextPage = () => {
-  const headerClasses = useHeaderClasses();
   useLayout("main", { menu: true, meta: { title: "Blog" }, headerClasses });
 
   const { query, asPath } = useRouter();
