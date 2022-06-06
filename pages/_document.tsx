@@ -17,7 +17,7 @@ class MyDocument extends Document {
 
       theme = req.cookies.theme || "dark";
     } else {
-      theme = Cookies.get("theme") === "dark" ? "dark" : "light";
+      theme = Cookies.get("theme") || "dark";
     }
 
     const initialProps = await Document.getInitialProps(ctx);
@@ -29,7 +29,7 @@ class MyDocument extends Document {
     const color = themeColors[theme] ?? '#111';
 
     return (
-      <Html lang="en" prefix="og: http://ogp.me/ns#">
+      <Html lang="en" prefix="og: http://ogp.me/ns#" data-theme={theme}>
         <Head>
           <link rel="icon" href="/favicon.png" />
           <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.6.96/css/materialdesignicons.min.css" />
@@ -40,7 +40,7 @@ class MyDocument extends Document {
           <meta name="msapplication-tap-highlight" content="no" />
           <meta name="theme-color" content={color} />
         </Head>
-        <body className={`app ${theme}`}>
+        <body>
           <Main />
           <NextScript />
         </body>

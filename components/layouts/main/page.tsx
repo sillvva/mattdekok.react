@@ -9,19 +9,17 @@ const PageBg = () => {
   const { theme } = useContext(MainLayoutContext);
   const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
 
-  if (styles[themeBg]) {
-    return (
-      <motion.div
-        key={`bg${theme.state}`}
-        variants={mainMotion.variants}
-        initial="hidden"
-        animate="enter"
-        exit="exit"
-        transition={mainMotion.transition}
-        className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
-      />
-    );
-  }
+  return (
+    <motion.div
+      key={`bg${theme.state}`}
+      variants={mainMotion.variants}
+      initial="hidden"
+      animate="enter"
+      exit="exit"
+      transition={mainMotion.transition}
+      className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
+    />
+  );
 
   return <></>;
 };

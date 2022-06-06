@@ -85,36 +85,32 @@ body {
   overflow-y: scroll;
 }
 
-.app {
+html {
+  @include universal-theme();
   &,
-  .light,
-  .dark {
-    @include universal-theme();
-  }
-  &,
-  .light {
+  [data-theme="light"] {
     @include light-theme();
   }
-  &.dark,
-  .dark {
+  &[data-theme="dark"],
+  [data-theme="dark"] {
     @include dark-theme();
   }
-  &.blue,
-  .blue {
+  &[data-theme="blue"],
+  [data-theme="blue"] {
     @include blue-theme();
   }
   @media (prefers-color-scheme: dark) {
-    &.light,
-    .light {
+    &,
+    [data-theme="dark"] {
+      @include dark-theme();
+    }
+    &[data-theme="light"],
+    [data-theme="light"] {
       @include light-theme();
     }
-    &.blue,
-    .blue {
+    &[data-theme="blue"],
+    [data-theme="blue"] {
       @include blue-theme();
-    }
-    &,
-    .dark {
-      @include dark-theme();
     }
   }
   & {
