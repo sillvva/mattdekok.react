@@ -3,7 +3,7 @@
  * https://github.com/shettypuneeth/react-codepen-embed
  */
 
-import { useState, useRef, useEffect, CSSProperties } from "react";
+import { useState, useRef, useEffect, CSSProperties, useCallback } from "react";
 import PageMessage from "../page-message";
 
 const SCRIPT_URL = "https://static.codepen.io/assets/embed/ei.js"; // new embed
@@ -29,11 +29,18 @@ type CodePenProps = {
 
 function ReactCodepen(props: CodePenProps) {
   const [loadState, setLoadState] = useState(LOAD_STATE.BOOTING);
+  const [isMobile, setMobile] = useState(false);
   const [error, setError] = useState("");
   const _isMounted = useRef(false);
   const scriptId = "codepen-script";
 
-  const loadScript = () => {
+  useEffect(() => {
+    setMobile(!!navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i));
+  }, []);
+
+  const loadScript = useCallback(() => {
+    if (isMobile) return;
+
     const codepenScript = document.getElementById(scriptId);
     if (codepenScript) return;
 
@@ -53,7 +60,7 @@ function ReactCodepen(props: CodePenProps) {
 
     setLoadState(LOAD_STATE.LOADING);
     document.body.appendChild(script);
-  };
+  }, [isMobile]);
 
   useEffect(() => {
     if (_isMounted.current === false) _isMounted.current = true;
@@ -64,13 +71,21 @@ function ReactCodepen(props: CodePenProps) {
       _isMounted.current = false;
       document.getElementById(scriptId)?.remove();
     };
-  }, []);
+  }, [loadScript]);
 
   const showLoader = loadState === LOAD_STATE.LOADING && props.loader !== undefined;
   const visibility = loadState === LOAD_STATE.LOADED ? "visible" : "hidden";
   const penLink = `https://codepen.io/${props.user}/pen/${props.hash}/`;
   const userProfileLink = `https://codepen.io/${props.user}`;
   const styles = { visibility };
+
+  if (isMobile) {
+    return (
+      <p>
+        See the <a href={penLink}>{props.title}</a> Pen by <a href={userProfileLink}>@{props.user}</a> on <a href="https://codepen.io">CodePen</a>.
+      </p>
+    );
+  }
 
   return (
     <div className="codepen-container">
