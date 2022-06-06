@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styles from "./Blog.module.scss";
 
 export const blogStyles = styles;
@@ -59,15 +59,13 @@ type BlogPostProps = {
 function BlogPost({ post }: BlogPostProps) {
   const [active, setActive] = useState(false);
 
+  const activateHandler = useCallback(() => {
+    setActive(true);
+  }, []);
+
   return (
     <Link href={post.link ? post.link : `/blog/${post.slug}`}>
-      <a
-        className={[styles.BlogPost].join(" ")}
-        target={post.link ? "_blank" : ""}
-        rel={post.link ? "noreferrer noopener" : ""}
-        onClick={() => {
-          setActive(true);
-        }}>
+      <a className={[styles.BlogPost].join(" ")} target={post.link ? "_blank" : ""} rel={post.link ? "noreferrer noopener" : ""} onClick={activateHandler}>
         <div className={[styles.BlogPost__Container, ...(active && !post.link ? [styles.Focus] : [])].join(" ")}>
           <div className={[styles.BlogPost__Image, ...(!post.slug && !post.link ? ["loading"] : [])].join(" ")}>
             {post.image ? <Image src={post.image} alt={post.title} priority layout="fill" objectFit="cover" objectPosition="center" /> : ""}

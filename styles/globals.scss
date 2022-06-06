@@ -9,7 +9,7 @@
 
 @mixin light-theme {
   --background: #e5e5e5;
-  --background-transparent: rgba(246, 246, 246, 0.8);
+  --background-transparent: rgba(246, 246, 246, 0.5);
   --link: #0070e7;
   --linkHover: var(--background);
   --linkText: var(--link);
@@ -30,7 +30,7 @@
 
 @mixin dark-theme {
   --background: #202125;
-  --background-transparent: rgba(0, 0, 0, 0.8);
+  --background-transparent: rgba(0, 0, 0, 0.7);
   --link: #0a9;
   --linkHover: var(--background);
   --linkText: var(--link);
@@ -51,7 +51,7 @@
 
 @mixin blue-theme {
   --background: #204067;
-  --background-transparent: rgba(0, 0, 0, 0.8);
+  --background-transparent: rgba(16, 32, 51, 0.7);
   --link: #17b4f7;
   --linkHover: var(--background);
   --linkText: var(--link);
