@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "prestart": "node functions/start.js",
     "fetch-posts": "node builds.js",
     "serve-functions": "cd firebase/functions && pnpm run serve",
     "deploy-functions": "cd firebase/functions && pnpm run deploy",
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run prestart && next dev",
+    "build": "npm run prestart && next build",
     "start": "next start",
     "prod": "next build && next start",
     "lint": "next lint"
