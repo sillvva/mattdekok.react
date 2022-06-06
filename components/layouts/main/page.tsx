@@ -15,8 +15,7 @@ const PageBg = () => {
       variants={mainMotion.variants}
       initial="hidden"
       animate="enter"
-      exit="exit"
-      transition={mainMotion.transition}
+      transition={{ duration: 0.5 }}
       className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
     />
   );
