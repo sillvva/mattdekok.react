@@ -32,6 +32,7 @@ const AboutMe: NextPage = () => {
                 <MeDetails name="Age" value={age(new Date("1988-05-09T00:00:00-05:00"))} />
                 <MeDetails name="Location" value="SD" />
                 <MeDetails name="Experience" value={`${age(new Date("2006-06-01T00:00:00-05:00"))} years`} />
+                <MeDetails name="Hobbies" value="Dungeons &amp; Dragons, Pokemon, coding, watching anime, reading manga" full />
               </div>
               <div>&nbsp;</div>
               <div className="flex flex-wrap gap-4 justify-center">
