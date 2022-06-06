@@ -29,17 +29,16 @@ type CodePenProps = {
 
 function ReactCodepen(props: CodePenProps) {
   const [loadState, setLoadState] = useState(LOAD_STATE.BOOTING);
-  const [isMobile, setMobile] = useState(false);
   const [error, setError] = useState("");
+  const _isMobile = useRef(false);
   const _isMounted = useRef(false);
   const scriptId = "codepen-script";
 
   useEffect(() => {
-    setMobile(!!navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i));
-  }, []);
-
-  const loadScript = useCallback(() => {
-    if (isMobile) return;
+    if (!_isMounted.current) _isMounted.current = true;
+    
+    _isMobile.current = !!navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i);
+    if (_isMobile.current) return;
 
     const codepenScript = document.getElementById(scriptId);
     if (codepenScript) return;
@@ -60,18 +59,13 @@ function ReactCodepen(props: CodePenProps) {
 
     setLoadState(LOAD_STATE.LOADING);
     document.body.appendChild(script);
-  }, [isMobile]);
-
-  useEffect(() => {
-    if (_isMounted.current === false) _isMounted.current = true;
-
-    loadScript();
 
     return () => {
       _isMounted.current = false;
+      _isMobile.current = false;
       document.getElementById(scriptId)?.remove();
     };
-  }, [loadScript]);
+  }, []);
 
   const showLoader = loadState === LOAD_STATE.LOADING && props.loader !== undefined;
   const visibility = loadState === LOAD_STATE.LOADED ? "visible" : "hidden";
@@ -79,7 +73,7 @@ function ReactCodepen(props: CodePenProps) {
   const userProfileLink = `https://codepen.io/${props.user}`;
   const styles = { visibility };
 
-  if (isMobile) {
+  if (_isMobile.current) {
     return (
       <p>
         See the <a href={penLink}>{props.title}</a> Pen by <a href={userProfileLink}>@{props.user}</a> on <a href="https://codepen.io">CodePen</a>.
