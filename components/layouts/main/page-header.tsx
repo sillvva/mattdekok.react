@@ -5,6 +5,7 @@ import { motion, Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import { AppLayout } from "../../../store/slices/layout.slice";
 import styles from "../../../layouts/main/MainLayout.module.scss";
+import { useRouter } from "next/router";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
@@ -14,6 +15,7 @@ type PageHeaderProps = {
 };
 
 const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
+  const router = useRouter();
   const { drawer, theme } = useContext(MainLayoutContext);
   const { head } = layout;
   const items = head?.menu ? menuItems : [];
@@ -40,7 +42,11 @@ const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
   return (
     <header className={classes.pageHeader}>
       <nav className={classes.pageNav}>
-        {head?.backTo ? (
+        {head?.backTo === true ? (
+          <a type="button" className={styles.Fab} onClick={router.back}>
+            <i className="mdi mdi-chevron-left"></i>
+          </a>
+        ) : head?.backTo ? (
           <Link href={head?.backTo}>
             <a type="button" className={styles.Fab}>
               <i className="mdi mdi-chevron-left"></i>

@@ -10,8 +10,8 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
 
   useEffect(() => {
-    const cL = document.body.classList;
-    theme.themes.forEach(t => cL.contains(t) && theme.state !== t && theme.set(t));
+    const cur = document.documentElement.dataset.theme;
+    theme.themes.forEach(t => cur === t && theme.state !== t && theme.set(t));
   }, [theme]);
 
   useEffect(() => {

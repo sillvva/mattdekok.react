@@ -1,6 +1,6 @@
 .Projects {
-  @apply flex flex-wrap -m-2;
+  @apply flex flex-wrap -m-2 justify-center md:justify-start;
 }
 .Project {
-  @apply p-1 px-0 sm:p-3 basis-full md:basis-6/12 xl:basis-4/12;
+  @apply p-1 px-0 sm:p-3 basis-full sm:basis-9/12 md:basis-6/12 xl:basis-4/12;
 }

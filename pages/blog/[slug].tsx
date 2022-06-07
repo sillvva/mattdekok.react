@@ -27,9 +27,8 @@ type ServerProps = {
 };
 
 const Blog: NextPage<ServerProps> = props => {
-  const { data, content, cookies } = props;
-  
-  const returnUrl = cookies["return-url"] || "/blog";
+  const { data, content } = props;
+
   useLayout("main", {
     menu: true,
     smallTitle: true,
@@ -42,7 +41,7 @@ const Blog: NextPage<ServerProps> = props => {
         ...(data.updatedISO && { modified_date: data.updatedISO })
       }
     },
-    backTo: returnUrl,
+    backTo: true,
     headerClasses
   });
 
@@ -71,7 +70,7 @@ const Blog: NextPage<ServerProps> = props => {
       const text = flattenChildren(children);
       return (
         <h1>
-          <span id={text.replace(/[^a-z]{1,}/gi, "-").toLowerCase()}></span>
+          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
           {children}
         </h1>
       );
@@ -82,7 +81,7 @@ const Blog: NextPage<ServerProps> = props => {
       const text = flattenChildren(children);
       return (
         <h2>
-          <span id={text.replace(/[^a-z]{1,}/gi, "-").toLowerCase()}></span>
+          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
           {children}
         </h2>
       );
@@ -93,7 +92,7 @@ const Blog: NextPage<ServerProps> = props => {
       const text = flattenChildren(children);
       return (
         <h3>
-          <span id={text.replace(/[^a-z]{1,}/gi, "-").toLowerCase()}></span>
+          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
           {children}
         </h3>
       );
@@ -147,7 +146,11 @@ const Blog: NextPage<ServerProps> = props => {
   return (
     <Page.Body>
       <Page.Article className={[blogStyles.BlogArticle, "w-full xl:w-9/12 2xl:w-8/12"].join(" ")}>
-        {!data.full && <Page.Section className="aspect-video" bgImage={data.image} />}
+        {!data.full && (
+          <div className="aspect-video relative">
+            <Image src={data.image} alt={"Cover"} layout="fill" objectFit="cover" />
+          </div>
+        )}
         <Page.Section>
           <p className="mb-4 text-gray-400" aria-label="Date published">
             {data.date} {data.updated && `(Updated: ${data.updated})`}

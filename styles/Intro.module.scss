@@ -21,7 +21,7 @@
     background-position-x: 10%;
     &::after {
       content: "";
-      position: absolute;
+      position: fixed;
       z-index: 0;
       left: 0;
       right: 0;

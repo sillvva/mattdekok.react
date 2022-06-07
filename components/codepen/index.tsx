@@ -3,7 +3,7 @@
  * https://github.com/shettypuneeth/react-codepen-embed
  */
 
-import { useState, useRef, useEffect, CSSProperties } from "react";
+import { useState, useRef, useEffect } from "react";
 import PageMessage from "../page-message";
 
 const SCRIPT_URL = "https://static.codepen.io/assets/embed/ei.js"; // new embed
@@ -31,9 +31,17 @@ function ReactCodepen(props: CodePenProps) {
   const [loadState, setLoadState] = useState(LOAD_STATE.BOOTING);
   const [error, setError] = useState("");
   const _isMounted = useRef(false);
+  const _isMobile = useRef(false);
   const scriptId = "codepen-script";
 
-  const loadScript = () => {
+  if (typeof window !== "undefined") {
+    _isMobile.current = !!navigator.userAgent.match(/Mobile|Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i);
+  }
+
+  useEffect(() => {
+    if (!_isMounted.current) _isMounted.current = true;
+    if (_isMobile.current) return;
+
     const codepenScript = document.getElementById(scriptId);
     if (codepenScript) return;
 
@@ -53,12 +61,6 @@ function ReactCodepen(props: CodePenProps) {
 
     setLoadState(LOAD_STATE.LOADING);
     document.body.appendChild(script);
-  };
-
-  useEffect(() => {
-    if (_isMounted.current === false) _isMounted.current = true;
-
-    loadScript();
 
     return () => {
       _isMounted.current = false;
@@ -66,17 +68,16 @@ function ReactCodepen(props: CodePenProps) {
     };
   }, []);
 
-  const showLoader = loadState === LOAD_STATE.LOADING && props.loader !== undefined;
-  const visibility = loadState === LOAD_STATE.LOADED ? "visible" : "hidden";
+  const showLoader = loadState == LOAD_STATE.LOADING && props.loader;
   const penLink = `https://codepen.io/${props.user}/pen/${props.hash}/`;
   const userProfileLink = `https://codepen.io/${props.user}`;
-  const styles = { visibility };
+  const loader = typeof props.loader == "function" ? props.loader() : props.loader;
 
   return (
     <div className="codepen-container">
-      {showLoader ?? props.loader}
+      {showLoader && loader}
       {loadState == LOAD_STATE.ERROR ?? error}
-      <p
+      <div
         data-height={props.height}
         data-theme-id={props.themeId}
         data-slug-hash={props.hash}
@@ -86,11 +87,9 @@ function ReactCodepen(props: CodePenProps) {
         data-pen-title={props.title}
         data-preview={props.preview}
         data-editable={props.editable}
-        className="codepen"
-        style={styles as CSSProperties}>
-        See the Pen <a href={penLink}>{props.title}</a>
-        by {props.user} (<a href={userProfileLink}>@{props.user}</a>) on <a href="https://codepen.io">CodePen</a>.
-      </p>
+        className="codepen">
+        See the <a href={penLink}>{props.title}</a> Pen by <a href={userProfileLink}>@{props.user}</a> on <a href="https://codepen.io">CodePen</a>.
+      </div>
     </div>
   );
 }

@@ -9,12 +9,13 @@
 
 @mixin light-theme {
   --background: #e5e5e5;
-  --background-transparent: rgba(246, 246, 246, 0.8);
+  --background-transparent: #e5e5e5cc;
+  --background-transparent-light: #e5e5e599;
   --link: #0070e7;
   --linkHover: var(--background);
   --linkText: var(--link);
   --dropShadow: #888888;
-  --headers: #2a2a2a;
+  --headers: #000000;
   --text: #2a2a2a;
   --altText: #f5f5f5;
   --article: #ffffff;
@@ -30,7 +31,8 @@
 
 @mixin dark-theme {
   --background: #202125;
-  --background-transparent: rgba(0, 0, 0, 0.8);
+  --background-transparent: #202125cc;
+  --background-transparent-light: transparent;
   --link: #0a9;
   --linkHover: var(--background);
   --linkText: var(--link);
@@ -51,7 +53,8 @@
 
 @mixin blue-theme {
   --background: #204067;
-  --background-transparent: rgba(0, 0, 0, 0.8);
+  --background-transparent: #204067cc;
+  --background-transparent-light: transparent;
   --link: #17b4f7;
   --linkHover: var(--background);
   --linkText: var(--link);
@@ -65,7 +68,7 @@
   --ratingOn: rgb(255, 200, 0);
   --ratingOff: #102848;
   --menu: #089ede;
-  --menuHover: #033247;
+  --menuHover: #234287;
   --menuText: #ffffff;
   --loading: rgba(255, 255, 255, 0.2);
 }
@@ -85,36 +88,32 @@ body {
   overflow-y: scroll;
 }
 
-.app {
+html {
+  @include universal-theme();
   &,
-  .light,
-  .dark {
-    @include universal-theme();
-  }
-  &,
-  .light {
+  [data-theme="light"] {
     @include light-theme();
   }
-  &.dark,
-  .dark {
+  &[data-theme="dark"],
+  [data-theme="dark"] {
     @include dark-theme();
   }
-  &.blue,
-  .blue {
+  &[data-theme="blue"],
+  [data-theme="blue"] {
     @include blue-theme();
   }
   @media (prefers-color-scheme: dark) {
-    &.light,
-    .light {
+    &,
+    [data-theme="dark"] {
+      @include dark-theme();
+    }
+    &[data-theme="light"],
+    [data-theme="light"] {
       @include light-theme();
     }
-    &.blue,
-    .blue {
+    &[data-theme="blue"],
+    [data-theme="blue"] {
       @include blue-theme();
-    }
-    &,
-    .dark {
-      @include dark-theme();
     }
   }
   & {
