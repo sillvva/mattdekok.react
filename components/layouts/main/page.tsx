@@ -19,8 +19,6 @@ const PageBg = () => {
       className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
     />
   );
-
-  return <></>;
 };
 
 const PageBody = (props: React.PropsWithChildren<unknown>) => {
