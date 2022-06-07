@@ -1,10 +1,8 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
 import { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
-import Cookies from "js-cookie";
 import Page from "../../components/layouts/main/page";
 import { PostProps, postLoader } from "../../components/blog";
 import { useLayout } from "../../layouts/layout";
@@ -29,15 +27,11 @@ const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: stri
 const Blog: NextPage = () => {
   useLayout("main", { menu: true, meta: { title: "Blog" }, headerClasses });
 
-  const { query, asPath } = useRouter();
+  const { query } = useRouter();
   const page = (Array.isArray(query.page) ? query.page[0] : query.page) || 1;
   let { data, error } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
 
   if (!data) data = { posts: loaders, pages: 0 };
-
-  useEffect(() => {
-    Cookies.set("blog-url", asPath);
-  }, [asPath]);
 
   return (
     <Page.Body>

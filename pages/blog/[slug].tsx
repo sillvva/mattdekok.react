@@ -27,9 +27,8 @@ type ServerProps = {
 };
 
 const Blog: NextPage<ServerProps> = props => {
-  const { data, content, cookies } = props;
+  const { data, content } = props;
 
-  const returnUrl = cookies["return-url"] || "/blog";
   useLayout("main", {
     menu: true,
     smallTitle: true,
@@ -42,7 +41,7 @@ const Blog: NextPage<ServerProps> = props => {
         ...(data.updatedISO && { modified_date: data.updatedISO })
       }
     },
-    backTo: returnUrl,
+    backTo: true,
     headerClasses
   });
 

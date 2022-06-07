@@ -59,7 +59,7 @@
 }
 
 .Fab {
-  @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl;
+  @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl cursor-pointer;
   @apply transition-[background] duration-500 ease-linear;
   background-color: transparent;
   &.MenuFab {

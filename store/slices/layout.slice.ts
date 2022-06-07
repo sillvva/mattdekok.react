@@ -34,7 +34,7 @@ export type PageHeadProps = {
   smallTitle?: boolean;
   meta?: LayoutMeta;
   headerClasses?: string[];
-  backTo?: string;
+  backTo?: string | boolean;
 };
 
 type LayoutMeta = {
