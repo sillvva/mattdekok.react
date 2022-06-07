@@ -48,7 +48,7 @@ const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
           </a>
         ) : head?.backTo ? (
           <Link href={head?.backTo}>
-            <a type="button" className={styles.Fab} onClick={router.back}>
+            <a type="button" className={styles.Fab}>
               <i className="mdi mdi-chevron-left"></i>
             </a>
           </Link>

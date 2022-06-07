@@ -30,6 +30,7 @@
   }
   html:not([data-scroll="0"]) & {
     @apply backdrop-blur-lg;
+    background-color: var(--background-transparent-light);
   }
 }
 
@@ -47,9 +48,9 @@
 
 .PageTitle {
   font-family: "Montserrat", sans-serif;
-  @apply text-3xl text-center lg:mt-4 lg:mb-4;
+  @apply text-3xl text-center lg:mt-4 lg:mb-4 font-medium;
   color: var(--headers);
-  text-shadow: 1px 1px 1px var(--background);
+  text-shadow: 1px 1px 0 var(--background-transparent-light), -1px -1px 0 var(--background-transparent-light), 1px -1px 0 var(--background-transparent-light), -1px 1px 0 var(--background-transparent-light);
   &.SmallTitle {
     @apply text-lg my-2;
     @media (max-width: 400px) {
