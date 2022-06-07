@@ -28,7 +28,7 @@ type ServerProps = {
 
 const Blog: NextPage<ServerProps> = props => {
   const { data, content, cookies } = props;
-  
+
   const returnUrl = cookies["return-url"] || "/blog";
   useLayout("main", {
     menu: true,
@@ -147,7 +147,11 @@ const Blog: NextPage<ServerProps> = props => {
   return (
     <Page.Body>
       <Page.Article className={[blogStyles.BlogArticle, "w-full xl:w-9/12 2xl:w-8/12"].join(" ")}>
-        {!data.full && <Page.Section className="aspect-video" bgImage={data.image} />}
+        {!data.full && (
+          <div className="aspect-video relative">
+            <Image src={data.image} alt={"Cover"} layout="fill" objectFit="cover" />
+          </div>
+        )}
         <Page.Section>
           <p className="mb-4 text-gray-400" aria-label="Date published">
             {data.date} {data.updated && `(Updated: ${data.updated})`}
