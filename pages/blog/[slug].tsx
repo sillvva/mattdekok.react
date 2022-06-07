@@ -70,7 +70,7 @@ const Blog: NextPage<ServerProps> = props => {
       const text = flattenChildren(children);
       return (
         <h1>
-          <span id={text.replace(/[^a-z]{1,}/gi, "-").toLowerCase()}></span>
+          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
           {children}
         </h1>
       );
@@ -81,7 +81,7 @@ const Blog: NextPage<ServerProps> = props => {
       const text = flattenChildren(children);
       return (
         <h2>
-          <span id={text.replace(/[^a-z]{1,}/gi, "-").toLowerCase()}></span>
+          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
           {children}
         </h2>
       );
@@ -92,7 +92,7 @@ const Blog: NextPage<ServerProps> = props => {
       const text = flattenChildren(children);
       return (
         <h3>
-          <span id={text.replace(/[^a-z]{1,}/gi, "-").toLowerCase()}></span>
+          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
           {children}
         </h3>
       );
