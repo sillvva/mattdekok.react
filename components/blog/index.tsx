@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useCallback, useState } from "react";
 import styles from "./Blog.module.scss";
+
+const Pagination = dynamic(() => import("../../components/pagination"));
 
 export const blogStyles = styles;
 
@@ -10,9 +13,9 @@ export type PostProps = {
   title: string;
   date: string;
   dateISO?: string;
-  updated: string;
+  updated?: string;
   updatedISO?: string;
-  description: string;
+  description?: string;
   tags: string[];
   image: string;
   link?: string;
@@ -20,7 +23,7 @@ export type PostProps = {
 };
 
 export type DirectoryProps = {
-  data: DirectoryData;
+  data?: DirectoryData;
   page: string | number;
 };
 
@@ -29,24 +32,26 @@ export type DirectoryData = {
   pages: number;
 };
 
-export const postLoader: PostProps = {
+const loaders: PostProps[] = Array(6).fill({
   title: "",
   date: "",
   image: "",
-  description: "",
   slug: "",
-  link: "",
-  updated: "",
   tags: []
-};
+});
 
-function BlogDirectory(props: DirectoryProps) {
+function BlogDirectory({ data, page }: DirectoryProps) {
+  if (!data) data = { posts: loaders, pages: 0 };
+
   return (
-    <div className={styles.BlogDirectory}>
-      {props.data.posts.map((post, p) => (
-        <BlogPost key={`post${p}`} post={post} />
-      ))}
-    </div>
+    <>
+      <div className={styles.BlogDirectory}>
+        {data.posts.map((post, p) => (
+          <BlogPost key={`post${p}`} post={post} />
+        ))}
+      </div>
+      {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
+    </>
   );
 }
 

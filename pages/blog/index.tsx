@@ -4,16 +4,13 @@ import dynamic from "next/dynamic";
 import { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
 import Page from "../../components/layouts/main/page";
-import { PostProps, postLoader } from "../../components/blog";
+import { PostProps } from "../../components/blog";
 import { useLayout } from "../../layouts/layout";
 import { headerClasses } from "../../layouts/main";
-import { useEffect } from "react";
 
-const Pagination = dynamic(() => import("../../components/pagination"));
 const PageMessage = dynamic(() => import("../../components/page-message"));
 const BlogDirectory = dynamic(() => import("../../components/blog"));
 
-const loaders: PostProps[] = Array(6).fill(postLoader);
 const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: string) => {
   const res = await fetch(url);
 
@@ -30,21 +27,16 @@ const Blog: NextPage = () => {
 
   const { query } = useRouter();
   const page = (Array.isArray(query.page) ? query.page[0] : query.page) || 1;
-  let { data, error } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
-
-  if (!data) data = { posts: loaders, pages: 0 };
+  let { data, error, isValidating } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
 
   return (
     <Page.Body>
       {error ? (
         <PageMessage>{error.message}</PageMessage>
-      ) : !(data.posts || []).length ? (
+      ) : !isValidating && !(data?.posts || []).length ? (
         <PageMessage>No posts found.</PageMessage>
       ) : (
-        <>
-          <BlogDirectory data={data} page={page} />
-          {data.pages > 1 && <Pagination page={page} pages={data.pages} />}
-        </>
+        <BlogDirectory data={data} page={page} />
       )}
     </Page.Body>
   );
