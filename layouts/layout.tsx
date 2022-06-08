@@ -1,12 +1,10 @@
 import { useRouter } from "next/router";
 import { PropsWithChildren, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AnimatePresence, motion } from "framer-motion";
-import MainLayout, { mainMotion } from "../layouts/main";
+import { AnimatePresence } from "framer-motion";
+import MainLayout from "../layouts/main";
 import { getLayout, PageHeadProps, setLayout } from "../store/slices/layout.slice";
 import { MainLayoutContextProvider } from "../store/main-layout.context";
-import PageHeader from "../components/layouts/main/page-header";
-import Page from "../components/layouts/main/page";
 import PageMeta from "../components/meta";
 import NextNProgress from "../components/progress";
 
@@ -20,18 +18,8 @@ function Layout({ children }: PropsWithChildren<unknown>) {
         <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
         <PageMeta title={layout.head?.meta?.title} description={layout.head?.meta?.description} articleMeta={layout.head?.meta?.articleMeta} />
         <AnimatePresence initial={false} exitBeforeEnter>
-          <MainLayout key={router.pathname}>
-            <Page.Bg />
-            <PageHeader layout={layout} layoutMotion={mainMotion} />
-            <motion.main
-              key={`main${router.pathname}`}
-              variants={mainMotion.variants}
-              initial="hidden"
-              animate="enter"
-              exit="exit"
-              transition={mainMotion.transition}>
-              {children}
-            </motion.main>
+          <MainLayout key={router.pathname} layout={layout} path={router.pathname}>
+            {children}
           </MainLayout>
         </AnimatePresence>
       </MainLayoutContextProvider>

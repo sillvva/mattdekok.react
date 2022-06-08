@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState: AppLayout = {
-    name: 'main',
-    path: '',
-    head: {}
-  }
+  name: "main",
+  path: "",
+  head: {}
+};
 
 export const appSlice = createSlice({
-  name: 'layout',
+  name: "layout",
   initialState,
   reducers: {
-    setLayout(state: any, action: { type?: string, payload: AppLayout }) {
-      state.name = action.payload.name;
-      state.path = action.payload.path || "";
-      state.head = action.payload.head || {};
+    setLayout(state: any, { payload }: { payload: AppLayout }) {
+      state.name = payload.name;
+      state.path = payload.path || "";
+      state.head = payload.head || {};
     }
   }
 });
