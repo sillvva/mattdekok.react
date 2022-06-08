@@ -7,6 +7,7 @@ import Page from "../../components/layouts/main/page";
 import { PostProps, postLoader } from "../../components/blog";
 import { useLayout } from "../../layouts/layout";
 import { headerClasses } from "../../layouts/main";
+import { useEffect } from "react";
 
 const Pagination = dynamic(() => import("../../components/pagination"));
 const PageMessage = dynamic(() => import("../../components/page-message"));

@@ -1,6 +1,7 @@
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import { useRouter } from "next/router";
 import AnimatedButton from "../../animated-button";
+import { useEffect } from "react";
 
 export type Item = {
   link: string;
@@ -32,7 +33,7 @@ const PageMenu = (props: PageMenuProps) => {
     items
   } = props;
 
-  const router = useRouter();
+  const { pathname } = useRouter();
 
   const menuRows: Item[][] = [[]];
   items.forEach((item, i) => {
@@ -40,7 +41,7 @@ const PageMenu = (props: PageMenuProps) => {
     if (item)
       menuRows[rowIndex].push({
         ...item,
-        ...(item.link === router.pathname && { active: true })
+        ...(item.link === pathname && { active: true })
       });
     if (maxLength >= 0 && menuRows[rowIndex].length === maxLength && items.length - 1 > i) {
       menuRows.push([]);

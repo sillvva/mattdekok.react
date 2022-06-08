@@ -46,7 +46,7 @@ export default function AnimatedButton(props: AnimatedButtonProps) {
     );
 
   return (
-    <Link href={link}>
+    <Link href={link} scroll={false}>
       <a className={classes.join(" ")} style={style}>
         {label}
       </a>

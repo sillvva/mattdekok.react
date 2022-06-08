@@ -102,7 +102,7 @@ const Blog: NextPage<ServerProps> = props => {
       const { href, children } = anchor;
       const isExternal = href.startsWith("http");
       return (
-        <Link href={href}>
+        <Link href={href} scroll={false}>
           <a target={isExternal ? "_blank" : ""} rel={isExternal ? "noreferrer noopener" : ""}>
             {children}
           </a>
