@@ -27,7 +27,7 @@
       right: 0;
       bottom: 0;
       height: 80vh;
-      background-image: linear-gradient(transparent, var(--background-transparent));
+      background-image: linear-gradient(transparent, rgba(var(--background), 0.8));
     }
   }
   @media (max-width: 768px) {
@@ -42,7 +42,7 @@
 .IntroSubject {
   @apply mt-0 fixed bottom-12 left-0 right-0 z-10 text-center lg:relative lg:text-right lg:bottom-0;
   font-family: "Montserrat", sans-serif;
-  text-shadow: 2px 2px var(--background), 1px 1px 5px var(--background);
+  text-shadow: 2px 2px rgb(var(--background)), 1px 1px 5px rgb(var(--background));
 }
 
 .IntroName {

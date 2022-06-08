@@ -6,8 +6,7 @@ a.Button {
   text-transform: uppercase;
   position: relative;
   transition: 0.2s linear;
-  text-shadow: 1px 1px 1px var(--background);
-
+  text-shadow: 1px 1px 1px rgb(var(--background));
 }
 
 .Button1 {
