@@ -7,8 +7,8 @@
     "fetch-posts": "node builds.js",
     "serve-functions": "cd firebase/functions && pnpm run serve",
     "deploy-functions": "cd firebase/functions && pnpm run deploy",
-    "dev": "npm run prestart && next dev",
-    "build": "npm run prestart && next build",
+    "dev": "pnpm run prestart && next dev",
+    "build": "pnpm run prestart && next build",
     "start": "next start",
     "prod": "next build && next start",
     "lint": "next lint"
