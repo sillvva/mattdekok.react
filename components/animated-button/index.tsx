@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { MouseEventHandler, useCallback, useRef, useState } from "react";
+import { Key, MouseEventHandler, useCallback, useRef, useState } from "react";
 import { wait } from "../../functions/misc";
 import buttons from "./Buttons.module.scss";
 
@@ -31,7 +31,7 @@ export default function AnimatedButton(props: AnimatedButtonProps) {
     clickRipple
   } = props;
   const btnRef = useRef<HTMLAnchorElement>(null);
-  const [ripples, setRipples] = useState<JSX.Element[]>([]);
+  const [ripples, setRipples] = useState<Map<Key, JSX.Element>>(new Map());
 
   const propClasses = itemClasses.map(c => buttons[c] ?? c);
   const [classes, setClasses] = useState([buttons.Button, active ? buttons.Active : "", clickRipple ? buttons.Ripple : "", ...propClasses]);
@@ -47,26 +47,26 @@ export default function AnimatedButton(props: AnimatedButtonProps) {
     ...(active && { cursor: "default" })
   } as React.CSSProperties;
 
-  const rippleUnload = useCallback(() => {
+  const rippleUnload = () => {
     wait(
       () => {
-        setRipples([]);
+        setRipples(new Map());
       },
       "ripples",
       600
     );
-  }, []);
+  };
 
   const mouseHandler: MouseEventHandler<HTMLAnchorElement> = e => {
-    if (!clickRipple || active) return;
-    const key = Math.max(-1, ...ripples.map(r => parseInt(r.key?.toString() || ""))) + 1;
+    if (!clickRipple) return;
+    const key = Math.max(-1, ...[...ripples.keys()].map(r => parseInt(r.toString() || ""))) + 1;
     const ripple = <Ripple key={key} index={key} onUnload={rippleUnload} x={e.nativeEvent.offsetX} y={e.nativeEvent.offsetY}></Ripple>;
-    setRipples([...ripples, ripple]);
+    setRipples(new Map(ripples).set(key, ripple));
   };
 
   const btn = (
     <a className={classes.join(" ")} style={style} ref={btnRef} onMouseDown={mouseHandler} onClick={e => active && e.preventDefault()}>
-      {ripples}
+      {[...ripples.values()]}
       {label}
     </a>
   );

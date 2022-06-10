@@ -19,8 +19,8 @@ export default function Ripple({ onUnload, index, x, y }: RippleProps) {
   } as React.CSSProperties;
 
   return (
-    <div className={buttons.RipEl}>
-      <span key={index} data-ripple-index={index} style={style}></span>
+    <div className={buttons.RipEl} style={style}>
+      <span></span>
     </div>
   );
 }
