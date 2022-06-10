@@ -120,9 +120,6 @@ html {
     background: rgb(var(--background));
     color: var(--text) !important;
   }
-  .mdi {
-    color: var(--text);
-  }
   a {
     color: var(--link);
     text-decoration: none;
@@ -149,15 +146,6 @@ html {
   }
   to {
     left: 100%;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
   }
 }
 

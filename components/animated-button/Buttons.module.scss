@@ -1,12 +1,32 @@
 a.Button {
-  padding: 1rem 1.5rem;
-  display: block;
+  @apply relative py-4 px-6 no-underline uppercase duration-200 ease-linear select-none;
   color: var(--text-color);
-  text-decoration: none;
-  text-transform: uppercase;
-  position: relative;
-  transition: 0.2s linear;
   text-shadow: 1px 1px 1px rgb(var(--background));
+}
+
+a.Ripple {
+  @apply isolate;
+  .RipEl {
+    @apply absolute top-0 left-0 right-0 bottom-0 overflow-hidden;
+    span {
+      @apply absolute block top-[var(--y)] left-[var(--x)] -translate-x-1/2 -translate-y-1/2 opacity-0 -z-[1];
+      @apply w-[100%] aspect-square rounded-full;
+      background-color: var(--link);
+      animation: ripple .5s linear;
+    }
+  }
+}
+
+@keyframes ripple {
+  0% {
+    @apply opacity-0 w-[5%];
+  }
+  80% {
+    @apply opacity-25 w-[100%];
+  }
+  100% {
+    @apply opacity-0;
+  }
 }
 
 .Button1 {

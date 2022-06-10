@@ -65,6 +65,7 @@ const PageMenu = (props: PageMenuProps) => {
                   activeColor={item.activeColor || activeColor}
                   hoverColor={item.hoverColor || hoverColor}
                   textColor={item.textColor || textColor}
+                  clickRipple
                 />
               );
             })}
