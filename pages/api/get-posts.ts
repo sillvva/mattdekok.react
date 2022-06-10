@@ -40,7 +40,7 @@ export const getPosts = async (options?: PostFetchOptions) => {
         let match = 0;
         let found: string[] = [];
         if (post.title.toLowerCase().includes(query.toLowerCase())) match += 100;
-        if (post.description.toLowerCase().includes(query.toLowerCase())) match += 50;
+        if (post.description?.toLowerCase().includes(query.toLowerCase())) match += 50;
 
         const tagMatches = words.filter(c => post.tags.map(t => t.toLowerCase()).includes(c));
         found = found.concat(tagMatches);
@@ -50,7 +50,7 @@ export const getPosts = async (options?: PostFetchOptions) => {
         found = found.concat(titleMatches);
         match += titleMatches.length * 5;
 
-        const descriptionMatches = words.filter(c => post.description.toLowerCase().includes(c));
+        const descriptionMatches = words.filter(c => post.description?.toLowerCase().includes(c));
         found = found.concat(descriptionMatches);
         match += descriptionMatches.length * 1;
 
