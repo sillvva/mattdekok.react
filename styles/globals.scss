@@ -13,7 +13,7 @@
   --linkHover: rgb(227, 249, 255);
   --linkText: var(--link);
   --dropShadow: rgb(136, 136, 136);
-  --headerOpacity: 0.4;
+  --headerOpacity: 0.8;
   --headers: rgb(0, 0, 0);
   --text: rgb(42, 42, 42);
   --altText: rgb(245, 245, 245);
@@ -79,6 +79,9 @@
   --PayPal1: rgb(0, 48, 135);
   --PayPal2: rgb(0, 156, 222);
   --Stripe: rgb(0, 123, 255);
+  @supports (not (backdrop-filter: blur(0px))) {
+    --headerOpacity: 0.9 !important;
+  }
 }
 
 body {
