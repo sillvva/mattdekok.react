@@ -64,7 +64,7 @@ export const getPosts = async (options?: PostFetchOptions) => {
       })
       .filter(post => post.match)
       .sort((a, b) => (a.match > b.match ? -1 : 1));
-      num = posts.length;
+    num = posts.length;
   } else posts = posts.sort((a, b) => (a.date > b.date ? -1 : 1));
 
   return {
@@ -76,17 +76,18 @@ export const getPosts = async (options?: PostFetchOptions) => {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {
-    const { page, q, limit } = req.query;
+    const { p, q, limit } = req.query;
 
     try {
       res.setHeader("Cache-Control", "public, max-age=21600");
-      const p = parseInt(Array.isArray(page) ? page[0] : page) || 1;
+      const page = parseInt(Array.isArray(p) ? p[0] : p) || 1;
+      const query = Array.isArray(q) ? q[0] : q;
       const result = await getPosts({
-        page: p,
-        query: Array.isArray(q) ? q[0] : q,
+        page,
+        query,
         limit: parseInt(Array.isArray(limit) ? limit[0] : limit) || perPage
       });
-      if (result.pages < p) throw new Error("Invalid page count");
+      if (result.pages < page) throw new Error("Invalid page count");
       return res.status(200).json(result);
     } catch (err: any) {
       return res.status(401).json({

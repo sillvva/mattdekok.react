@@ -25,9 +25,10 @@ const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: stri
 const Blog: NextPage = () => {
   useLayout("main", { menu: true, meta: { title: "Blog" }, headerClasses });
 
-  const { query } = useRouter();
-  const page = (Array.isArray(query.page) ? query.page[0] : query.page) || 1;
-  let { data, error, isValidating } = useSWRImmutable(`/api/get-posts?page=${page}`, fetcher);
+  const { query: { p, q } } = useRouter();
+  const page = (Array.isArray(p) ? p[0] : p) || 1;
+  const search = (Array.isArray(q) ? q[0] : q) || "";
+  let { data, error, isValidating } = useSWRImmutable(`/api/get-posts?p=${page}&q=${search}`, fetcher);
 
   return (
     <Page.Body>

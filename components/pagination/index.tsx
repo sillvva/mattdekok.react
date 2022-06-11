@@ -32,8 +32,8 @@ function Pagination(props: PaginationProps) {
 
   const pageHandler = (page: number) => {
     const query = router.query;
-    query.page = page.toString();
-    if (page == 1) delete query.page;
+    query.p = page.toString();
+    if (page == 1) delete query.p;
     const params = Object.entries(query)
       .map(q => `${q[0]}=${q[1]}`)
       .join("&");
