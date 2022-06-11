@@ -4,7 +4,7 @@ const firebase = require('./firebase.js');
 const { writeFileSync } = require('fs');
 const { getContentDir } = require('../store/misc.js');
 
-async function fetchPosts(getPosts) {
+async function fetchPosts(getPosts, page, perpage, query) {
   const { firestore, storage, firebaseConfig } = firebase;
   let [contentList] = await storage.getFiles({ prefix: firebaseConfig.blogStorage });
 
@@ -13,6 +13,8 @@ async function fetchPosts(getPosts) {
   });
 
   const collection = firestore.collection(firebaseConfig.blogCollection);
+  const list = await collection.listDocuments();
+  if (getPosts && page && perpage && !query) collection.limit(perpage).offset((page - 1) * perpage);
   const docs = await collection.get();
 
   let posts = [];
@@ -25,6 +27,8 @@ async function fetchPosts(getPosts) {
       ...(post.updated?._seconds && { updated: new Date(post.updated._seconds * 1000).toISOString() }),
     });
   });
+
+  if (getPosts && page && perpage) return { posts, num: list.length };
 
   let changes = 0;
   let added = [];
@@ -109,7 +113,8 @@ async function fetchPosts(getPosts) {
     added,
     updated,
     removed,
-    posts: getPosts && posts
+    posts: getPosts && posts,
+    num: list.length
   };
 }
 

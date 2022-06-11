@@ -24,12 +24,15 @@ export const getPosts = async (options?: PostFetchOptions) => {
   const jsonFile = `${getContentDir()}/${firebaseConfig.blogCollection}.json`;
 
   let posts: PostData[] = [];
+  let num = 0;
   if (existsSync(jsonFile)) {
     const metaJson = readFileSync(jsonFile, { encoding: "utf-8" });
     posts = JSON.parse(metaJson);
+    num = posts.length;
   } else {
-    const result = await fetchPosts(true);
+    const result = await fetchPosts(true, page, limit, query);
     posts = result.posts;
+    num = result.num;
   }
 
   if (query) {
@@ -61,11 +64,13 @@ export const getPosts = async (options?: PostFetchOptions) => {
       })
       .filter(post => post.match)
       .sort((a, b) => (a.match > b.match ? -1 : 1));
+      num = posts.length;
   } else posts = posts.sort((a, b) => (a.date > b.date ? -1 : 1));
 
   return {
-    pages: Math.ceil(posts.length / limit),
-    posts: posts.slice((page - 1) * limit, page * limit)
+    pages: Math.ceil(num / limit),
+    posts: posts.slice((page - 1) * limit, page * limit),
+    num
   };
 };
 
