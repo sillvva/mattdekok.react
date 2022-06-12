@@ -46,10 +46,10 @@ export const useRipple = (props?: UseRippleProps) => {
     );
   }, []);
 
-  const mouseHandler: MouseEventHandler<any> = e => {
+  const mouseHandler: MouseEventHandler<any> = (e:any) => {
     if (!enabled || active) return;
     const key = Math.max(-1, ...[...ripples.keys()].map(r => parseInt(r.toString() || ""))) + 1;
-    const ripple = <Ripple key={key} index={key} onUnload={rippleUnload} x={e.nativeEvent.offsetX} y={e.nativeEvent.offsetY}></Ripple>;
+    const ripple = <Ripple key={key} index={key} onUnload={rippleUnload} x={e.nativeEvent.layerX} y={e.nativeEvent.layerY}></Ripple>;
     setRipples(new Map(ripples).set(key, ripple));
   };
 
