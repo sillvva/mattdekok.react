@@ -15,7 +15,7 @@ function Layout({ children }: PropsWithChildren<unknown>) {
   const theme = useTheme();
 
   useEffect(() => {
-    const cur = document.documentElement.dataset.theme;
+    const cur = document.querySelector<HTMLDivElement>('#app')?.dataset.theme;
     theme.themes.forEach(t => cur === t && theme.name !== t && theme.set(t));
   }, [theme]);
 

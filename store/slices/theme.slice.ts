@@ -18,7 +18,8 @@ export const appSlice: Slice<AppTheme> = createSlice({
     setTheme(state, { payload }: { payload: string }) {
       let nextIndex = themes[themes.findIndex(t => t === state.name) + 1] || themes[0];
       let next = (payload && themes.find(t => t === payload)) || nextIndex;
-      document.documentElement.dataset.theme = next;
+      const app = document.querySelector<HTMLDivElement>('#app');
+      if (app) app.dataset.theme = next;
       state.name = next;
       state.done = false;
       cookie.set("theme", state.name);

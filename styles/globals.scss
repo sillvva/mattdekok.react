@@ -88,7 +88,7 @@ body {
   overflow-y: scroll;
 }
 
-html {
+html, #app {
   @include universal-theme();
   &,
   [data-theme="light"] {
