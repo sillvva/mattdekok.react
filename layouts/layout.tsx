@@ -7,10 +7,17 @@ import { getLayout, PageHeadProps, setLayout } from "../store/slices/layout.slic
 import { MainLayoutContextProvider } from "../store/main-layout.context";
 import PageMeta from "../components/meta";
 import NextNProgress from "../components/progress";
+import { useTheme } from "../store/slices/theme.slice";
 
 function Layout({ children }: PropsWithChildren<unknown>) {
   const layout = useSelector(getLayout);
   const router = useRouter();
+  const theme = useTheme();
+
+  useEffect(() => {
+    const cur = document.documentElement.dataset.theme;
+    theme.themes.forEach(t => cur === t && theme.name !== t && theme.set(t));
+  }, [theme]);
 
   if (layout.name == "main")
     return (

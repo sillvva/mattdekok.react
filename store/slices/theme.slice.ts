@@ -1,12 +1,14 @@
 import { createSlice, Slice } from "@reduxjs/toolkit";
 import cookie from "js-cookie";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export const themes = ["dark", "light", "blue"];
 
 const initialState: AppTheme = {
   name: "dark",
-  done: true
+  done: true,
+  init: false
 };
 
 export const appSlice: Slice<AppTheme> = createSlice({
@@ -22,7 +24,10 @@ export const appSlice: Slice<AppTheme> = createSlice({
       cookie.set("theme", state.name);
     },
     done(state, { payload }: { payload: boolean }) {
-      state.done = payload
+      state.done = payload;
+    },
+    init(state, { payload }: { payload: boolean }) {
+      state.init = payload;
     }
   }
 });
@@ -34,18 +39,29 @@ export default appSlice.reducer;
 export type AppTheme = {
   name: string;
   done: boolean;
+  init: boolean;
 };
 
 export const useTheme = () => {
   const dispatch = useDispatch();
   const theme = useSelector(getTheme);
 
-  const setTheme = (payload?: string) => {
-    dispatch(appSlice.actions.setTheme(payload));
-    setTimeout(() => {
+  const setTheme = useCallback(
+    (payload?: string) => {
+      dispatch(appSlice.actions.setTheme(payload));
+      setTimeout(() => {
+        dispatch(appSlice.actions.done(true));
+      }, 300);
+    },
+    [dispatch]
+  );
+
+  useEffect(() => {
+    if (!theme.init && themes.includes(cookie.get("theme") || "")) {
+      setTheme(cookie.get("theme"));
       dispatch(appSlice.actions.done(true));
-    }, 300);
-  }
+    }
+  }, [theme.init, dispatch, setTheme]);
 
   const set = (name: string) => {
     setTheme(name);

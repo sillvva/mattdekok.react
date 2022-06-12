@@ -18,12 +18,7 @@ type MainLayoutProps = {
 
 const MainLayout = (props: React.PropsWithChildren<MainLayoutProps>) => {
   const { drawer } = useContext(MainLayoutContext);
-  const theme = useTheme();
-
-  useEffect(() => {
-    const cur = document.documentElement.dataset.theme;
-    theme.themes.forEach(t => cur === t && theme.name !== t && theme.set(t));
-  }, [theme]);
+  const { init } = useTheme();
 
   useEffect(() => {
     document.documentElement.dataset.scroll = window.scrollY.toString();
@@ -37,7 +32,7 @@ const MainLayout = (props: React.PropsWithChildren<MainLayoutProps>) => {
 
   return (
     <>
-      <Page.Bg />
+      <Page.Bg key={`theme${init ? 1 : 0}`} />
       <PageHeader layout={props.layout} layoutMotion={mainMotion} />
       <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
         {props.children}
