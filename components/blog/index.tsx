@@ -85,10 +85,10 @@ function BlogPost({ post }: BlogPostProps) {
             </div>
           ) : (
             <div className="p-3 w-full">
-              <div className="loading-line title">
+              <div className="loading-line title max-w-[200px]">
                 <span></span>
               </div>
-              <div className="loading-line subtitle">
+              <div className="loading-line text max-w-[150px]">
                 <span></span>
               </div>
               <div className="loading-line text">

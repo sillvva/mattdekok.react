@@ -151,7 +151,6 @@ html, #app {
 
 .loading-line {
   &.title,
-  &.subtitle,
   &.text {
     @apply flex items-center;
     span {
@@ -159,15 +158,9 @@ html, #app {
     }
   }
   &.title {
-    @apply w-full max-w-[200px] h-7;
+    @apply w-full h-7;
     span {
       @apply h-[18px];
-    }
-  }
-  &.subtitle {
-    @apply w-full max-w-[150px] h-6;
-    span {
-      @apply h-[14px];
     }
   }
   &.text {
