@@ -1,27 +1,28 @@
 import Image from "next/image";
-import React, { useContext } from "react";
+import type { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import MainLayoutContext from "../../../store/main-layout.context";
+import { useTheme } from "../../../store/slices/theme.slice";
 
 const PageBg = () => {
-  const { theme } = useContext(MainLayoutContext);
-  const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
+  const theme = useTheme();
+  const themeBg = `Page${theme.name.charAt(0).toUpperCase() + theme.name.slice(1)}`;
 
   return (
     <motion.div
-      key={`bg${theme.state}`}
+      key={`bg${theme.name}`}
       variants={mainMotion.variants}
       initial="hidden"
       animate="enter"
+      exit="exit"
       transition={{ duration: 0.5 }}
       className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
     />
   );
 };
 
-const PageBody = (props: React.PropsWithChildren<unknown>) => {
+const PageBody = (props: PropsWithChildren<unknown>) => {
   return <div className={styles.PageBody}>{props.children}</div>;
 };
 
@@ -29,7 +30,7 @@ interface PageArticleProps {
   className?: string;
 }
 
-const PageArticle = (props: React.PropsWithChildren<PageArticleProps>) => {
+const PageArticle = (props: PropsWithChildren<PageArticleProps>) => {
   return <article className={[styles.PageArticle, props.className || ""].join(" ")}>{props.children}</article>;
 };
 
@@ -38,7 +39,7 @@ interface PageSectionProps {
   bgImage?: string;
 }
 
-const PageSection = (props: React.PropsWithChildren<PageSectionProps>) => {
+const PageSection = (props: PropsWithChildren<PageSectionProps>) => {
   return (
     <section className={[props.className || "", "bg-cover bg-center"].join(" ")} style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
       {props.children}
@@ -46,7 +47,7 @@ const PageSection = (props: React.PropsWithChildren<PageSectionProps>) => {
   );
 };
 
-const PageSectionItems = (props: React.PropsWithChildren<unknown>) => {
+const PageSectionItems = (props: PropsWithChildren<unknown>) => {
   return <div className={styles.SectionItems}>{props.children}</div>;
 };
 
@@ -54,7 +55,7 @@ type PageSectionItemProps = {
   image: string;
 };
 
-const PageSectionItem = (props: React.PropsWithChildren<PageSectionItemProps>) => {
+const PageSectionItem = (props: PropsWithChildren<PageSectionItemProps>) => {
   return (
     <div className={styles.SectionItem}>
       <div className={styles.SectionItem__Image}>

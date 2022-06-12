@@ -7,6 +7,7 @@ import Page from "../../components/layouts/main/page";
 import { debounce } from "../../functions/misc";
 import PageHeader from "../../components/layouts/main/page-header";
 import type { AppLayout } from "../../store/slices/layout.slice";
+import { useTheme } from "../../store/slices/theme.slice";
 
 const Drawer = dynamic(() => import("../../components/drawer"));
 
@@ -16,11 +17,12 @@ type MainLayoutProps = {
 };
 
 const MainLayout = (props: React.PropsWithChildren<MainLayoutProps>) => {
-  const { drawer, theme } = useContext(MainLayoutContext);
+  const { drawer } = useContext(MainLayoutContext);
+  const theme = useTheme();
 
   useEffect(() => {
     const cur = document.documentElement.dataset.theme;
-    theme.themes.forEach(t => cur === t && theme.state !== t && theme.set(t));
+    theme.themes.forEach(t => cur === t && theme.name !== t && theme.set(t));
   }, [theme]);
 
   useEffect(() => {
