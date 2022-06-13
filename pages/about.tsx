@@ -1,6 +1,5 @@
-import type { NextPage } from "next";
-import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import type { NextPageWithLayout } from "./_app";
+import MainLayout, { headerClasses } from "../layouts/main";
 import Page from "../components/layouts/main/page";
 import MeDetails from "../components/layouts/main/me-details";
 import AnimatedButton from "../components/animated-button";
@@ -11,9 +10,7 @@ const age = (birthday: Date) => {
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 };
 
-const AboutMe: NextPage = () => {
-  useLayout("main", { menu: true, meta: { title: "About Me" }, headerClasses });
-
+const AboutMe: NextPageWithLayout = () => {
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
@@ -145,7 +142,7 @@ const AboutMe: NextPage = () => {
           <div className="text-center">
             <p className="pb-4">Like and want to support my work? No problem!</p>
             <div className="flex justify-center">
-              <AnimatedButton link="/donate" label="Buy me a coffee" itemClasses={['Button4']} clickRipple /> 
+              <AnimatedButton link="/donate" label="Buy me a coffee" itemClasses={["Button4"]} clickRipple />
             </div>
           </div>
         </Page.Section>
@@ -155,3 +152,11 @@ const AboutMe: NextPage = () => {
 };
 
 export default AboutMe;
+
+AboutMe.getLayout = function (page) {
+  return (
+    <MainLayout title="About Me" menu headerClasses={headerClasses}>
+      {page}
+    </MainLayout>
+  );
+};

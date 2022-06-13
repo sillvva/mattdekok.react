@@ -1,14 +1,11 @@
-import type { NextPage } from "next";
+import type { NextPageWithLayout } from "../_app";
 import Page from "../../components/layouts/main/page";
 import GalleryItem from "../../components/gallery";
 import { firestore } from "../../lib/func";
-import { useLayout } from "../../layouts/layout";
-import { headerClasses } from "../../layouts/main";
+import MainLayout, { headerClasses } from "../../layouts/main";
 import styles from "./Projects.module.scss";
 
-const Projects: NextPage<ProjectProps> = props => {
-  useLayout("main", { menu: true, meta: { title: "Projects" }, headerClasses });
-
+const Projects: NextPageWithLayout<ProjectProps> = props => {
   return (
     <Page.Body>
       <div className="flex flex-wrap justify-center lg:mt-0 pb-4">
@@ -27,6 +24,14 @@ const Projects: NextPage<ProjectProps> = props => {
 };
 
 export default Projects;
+
+Projects.getLayout = function (page) {
+  return (
+    <MainLayout title="Projects" menu headerClasses={headerClasses}>
+      {page}
+    </MainLayout>
+  );
+};
 
 type Project = {
   title: string;

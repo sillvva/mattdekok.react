@@ -1,25 +1,24 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import { motion, Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
-import { AppLayout } from "../../../store/slices/layout.slice";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import { useRouter } from "next/router";
 import { useTheme } from "../../../store/slices/theme.slice";
+import { PageHeadProps } from "../../../layouts/main";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
 type PageHeaderProps = {
-  layout: AppLayout;
+  head: PageHeadProps;
   layoutMotion?: { variants?: Variants; transition?: Transition };
 };
 
-const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
+const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
   const theme = useTheme();
   const { drawer } = useContext(MainLayoutContext);
-  const { head } = layout;
   const items = head?.menu ? menuItems : [];
 
   const classes = {
@@ -59,22 +58,22 @@ const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
             <i className="mdi mdi-menu"></i>
           </button>
         )}
-        <div className={classes.pageMenuContainer}>{items.length ? <PageMenu key={layout.path} items={items} /> : ""}</div>
-        <h1 className={classes.pageTitle}>{head?.meta?.title}</h1>
+        <div className={classes.pageMenuContainer}>{items.length ? <PageMenu key={router.pathname} items={items} /> : ""}</div>
+        <h1 className={classes.pageTitle}>{head?.title}</h1>
         <button type="button" aria-label="Toggle Theme" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
           <i className="mdi mdi-brightness-6"></i>
         </button>
       </nav>
-      {head?.meta?.title && (
+      {head?.title && (
         <motion.h1
           variants={layoutMotion?.variants}
-          key={`title: ${head?.meta?.title}`}
+          key={`title: ${head?.title}`}
           initial="hidden"
           animate="enter"
           exit="exit"
           transition={layoutMotion?.transition}
           className={`${styles.PageTitle} hidden lg:block`}>
-          {head?.meta?.title}
+          {head?.title}
         </motion.h1>
       )}
     </header>

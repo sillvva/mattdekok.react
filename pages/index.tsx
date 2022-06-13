@@ -1,11 +1,9 @@
-import type { NextPage } from "next";
+import type { NextPageWithLayout } from "./_app";
 import HexMenu, { Item } from "../components/hex-menu";
 import styles from "../styles/Intro.module.scss";
-import { useLayout } from "../layouts/layout";
+import MainLayout from "../layouts/main";
 
-const Home: NextPage = () => {
-  useLayout("main", { headerClasses: ["bg-transparent w-full absolute"] });
-
+const Home: NextPageWithLayout = () => {
   const items: (Item | null)[] = [
     { link: "/about", label: "About Me" },
     { link: "/experience", label: "Experience" },
@@ -31,3 +29,11 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+Home.getLayout = function (page) {
+  return (
+    <MainLayout headerClasses={["bg-transparent w-full absolute"]}>
+      {page}
+    </MainLayout>
+  );
+};

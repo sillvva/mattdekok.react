@@ -1,13 +1,10 @@
-import type { NextPage } from "next";
-import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import type { NextPageWithLayout } from "./_app";
+import MainLayout, { headerClasses } from "../layouts/main";
 import Page from "../components/layouts/main/page";
 import Rating from "../components/ratings";
 import { firestore } from "../lib/func";
 
-const Skills: NextPage<SkillProps> = props => {
-  useLayout("main", { menu: true, meta: { title: "Skills" }, headerClasses });
-
+const Skills: NextPageWithLayout<SkillProps> = props => {
   const cols = {
     sm: 12,
     md: 6,
@@ -30,6 +27,14 @@ const Skills: NextPage<SkillProps> = props => {
 };
 
 export default Skills;
+
+Skills.getLayout = function (page) {
+  return (
+    <MainLayout title="Skills" menu headerClasses={headerClasses}>
+      {page}
+    </MainLayout>
+  );
+};
 
 type Skill = {
   [name: string]: number;
