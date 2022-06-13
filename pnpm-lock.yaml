@@ -1,7 +1,6 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@reduxjs/toolkit': ^1.8.2
   '@types/js-cookie': ^3.0.2
   '@types/node': 17.0.33
   '@types/nprogress': ^0.2.0
@@ -19,13 +18,11 @@ specifiers:
   js-cookie: ^3.0.1
   next: 12.1.6
   next-pwa: ^5.5.2
-  next-redux-wrapper: ^7.0.5
   nprogress: ^0.2.0
   postcss: ^8.4.13
   react: 18.1.0
   react-dom: 18.1.0
   react-markdown: ^8.0.3
-  react-redux: ^8.0.2
   react-syntax-highlighter: ^15.5.0
   remark-gfm: ^3.0.1
   sass: ^1.51.0
@@ -34,7 +31,6 @@ specifiers:
   typescript: 4.6.4
 
 dependencies:
-  '@reduxjs/toolkit': 1.8.2_ctm756ikdwcjcvyfxxwskzbr6q
   axios: 0.27.2
   firebase-admin: 10.2.0
   framer-motion: 6.3.4_ef5jwxihqo6n7gxfmzogljlgcm
@@ -42,12 +38,10 @@ dependencies:
   js-cookie: 3.0.1
   next: 12.1.6_r4x3shsibbhjfvhxzsevzwdixm
   next-pwa: 5.5.2_next@12.1.6
-  next-redux-wrapper: 7.0.5_oiwxj7q2byvh6f4rwrkfauzoem
   nprogress: 0.2.0
   react: 18.1.0
   react-dom: 18.1.0_react@18.1.0
   react-markdown: 8.0.3_7cpxmzzodpxnolj5zcc5cr63ji
-  react-redux: 8.0.2_e6senhi6gkhdouiqizr2s56gsi
   react-syntax-highlighter: 15.5.0_react@18.1.0
   remark-gfm: 3.0.1
   swr: 1.3.0_react@18.1.0
@@ -1663,25 +1657,6 @@ packages:
     dev: false
     optional: true
 
-  /@reduxjs/toolkit/1.8.2_ctm756ikdwcjcvyfxxwskzbr6q:
-    resolution: {integrity: sha512-CtPw5TkN1pHRigMFCOS/0qg3b/yfPV5qGCsltVnIz7bx4PKTJlGHYfIxm97qskLknMzuGfjExaYdXJ77QTL0vg==}
-    peerDependencies:
-      react: ^16.9.0 || ^17.0.0 || ^18
-      react-redux: ^7.2.1 || ^8.0.0-beta
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-redux:
-        optional: true
-    dependencies:
-      immer: 9.0.14
-      react: 18.1.0
-      react-redux: 8.0.2_e6senhi6gkhdouiqizr2s56gsi
-      redux: 4.2.0
-      redux-thunk: 2.4.1_redux@4.2.0
-      reselect: 4.1.5
-    dev: false
-
   /@rollup/plugin-babel/5.3.1_yptw753gbjw4bq4jhepuxp7o2a:
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
     engines: {node: '>= 10.0.0'}
@@ -1808,13 +1783,6 @@ packages:
       '@types/unist': 2.0.6
     dev: false
 
-  /@types/hoist-non-react-statics/3.3.1:
-    resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
-    dependencies:
-      '@types/react': 18.0.9
-      hoist-non-react-statics: 3.3.2
-    dev: false
-
   /@types/js-cookie/3.0.2:
     resolution: {integrity: sha512-6+0ekgfusHftJNYpihfkMu8BWdeHs9EOJuGcSofErjstGPfPGEu9yTu4t460lTzzAMl2cM5zngQJqPMHbbnvYA==}
     dev: true
@@ -1876,6 +1844,7 @@ packages:
     resolution: {integrity: sha512-FgTtbqPOCI3dzZPZoC2T/sx3L34qxy99ITWn4eoSA95qPyXDMH0ALoAqUp49ITniiJFsXUVBtalh/KffMpg21Q==}
     dependencies:
       '@types/react': 18.0.9
+    dev: true
 
   /@types/react-syntax-highlighter/15.5.1:
     resolution: {integrity: sha512-+yD6D8y21JqLf89cRFEyRfptVMqo2ROHyAlysRvFwT28gT5gDo3KOiXHwGilHcq9y/OKTjlWK0f/hZUicrBFPQ==}
@@ -1912,10 +1881,6 @@ packages:
 
   /@types/unist/2.0.6:
     resolution: {integrity: sha512-PBjIUxZHOuj0R15/xuwJYjFi+KZdNFrehocChv4g5hu6aFroHue8m0lBP0POdK2nKzbw0cgV1mws8+V/JAcEkQ==}
-    dev: false
-
-  /@types/use-sync-external-store/0.0.3:
-    resolution: {integrity: sha512-EwmlvuaxPNej9+T4v5AuBPJa2x2UOJVdjCtDHgcDqitUeOtjnJKJ+apYjVcAoBEMjKW1VVFGZLUb5+qqa09XFA==}
     dev: false
 
   /@typescript-eslint/parser/5.26.0_hcfsmds2fshutdssjqluwm76uu:
@@ -3568,12 +3533,6 @@ packages:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
     dev: false
 
-  /hoist-non-react-statics/3.3.2:
-    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
-    dependencies:
-      react-is: 16.13.1
-    dev: false
-
   /http-parser-js/0.5.6:
     resolution: {integrity: sha512-vDlkRPDJn93swjcjqMSaGSPABbIarsr1TLAui/gLDXzV5VsJNdXNzMYDyNBLQkjWQCJ1uizu8T2oDMhmGt0PRA==}
     dev: false
@@ -3608,10 +3567,6 @@ packages:
   /ignore/5.2.0:
     resolution: {integrity: sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==}
     engines: {node: '>= 4'}
-
-  /immer/9.0.14:
-    resolution: {integrity: sha512-ubBeqQutOSLIFCUBN03jGeOS6a3DoYlSYwYJTa+gSKEZKU5redJIqkIdZ3JVv/4RZpfcXdAWH5zCNLWPRv2WDw==}
-    dev: false
 
   /immutable/4.1.0:
     resolution: {integrity: sha512-oNkuqVTA8jqG1Q6c+UglTOD1xhC1BtjKI7XkCXRkZHrN5m18/XsnUp8Q89GkQO/z+0WjonSvl0FLhDYftp46nQ==}
@@ -4668,18 +4623,6 @@ packages:
       - webpack
     dev: false
 
-  /next-redux-wrapper/7.0.5_oiwxj7q2byvh6f4rwrkfauzoem:
-    resolution: {integrity: sha512-UFXdAWG5i+GFT8+Hoqpx3GArkPh34fVWF9YoA2VSHlBzsrPtnRd7NWM6FNSYUennpommTpWJ09mu+r/1UxyIkg==}
-    peerDependencies:
-      next: '>=10.0.3'
-      react: '*'
-      react-redux: '*'
-    dependencies:
-      next: 12.1.6_r4x3shsibbhjfvhxzsevzwdixm
-      react: 18.1.0
-      react-redux: 8.0.2_e6senhi6gkhdouiqizr2s56gsi
-    dev: false
-
   /next/12.1.6_r4x3shsibbhjfvhxzsevzwdixm:
     resolution: {integrity: sha512-cebwKxL3/DhNKfg9tPZDQmbRKjueqykHHbgaoG4VBRH3AHQJ2HO0dbKFiS1hPhe1/qgc2d/hFeadsbPicmLD+A==}
     engines: {node: '>=12.22.0'}
@@ -5199,39 +5142,6 @@ packages:
       - supports-color
     dev: false
 
-  /react-redux/8.0.2_e6senhi6gkhdouiqizr2s56gsi:
-    resolution: {integrity: sha512-nBwiscMw3NoP59NFCXFf02f8xdo+vSHT/uZ1ldDwF7XaTpzm+Phk97VT4urYBl5TYAPNVaFm12UHAEyzkpNzRA==}
-    peerDependencies:
-      '@types/react': ^16.8 || ^17.0 || ^18.0
-      '@types/react-dom': ^16.8 || ^17.0 || ^18.0
-      react: ^16.8 || ^17.0 || ^18.0
-      react-dom: ^16.8 || ^17.0 || ^18.0
-      react-native: '>=0.59'
-      redux: ^4
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-      '@types/react-dom':
-        optional: true
-      react-dom:
-        optional: true
-      react-native:
-        optional: true
-      redux:
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.18.3
-      '@types/hoist-non-react-statics': 3.3.1
-      '@types/react': 18.0.9
-      '@types/react-dom': 18.0.4
-      '@types/use-sync-external-store': 0.0.3
-      hoist-non-react-statics: 3.3.2
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-is: 18.1.0
-      use-sync-external-store: 1.1.0_react@18.1.0
-    dev: false
-
   /react-syntax-highlighter/15.5.0_react@18.1.0:
     resolution: {integrity: sha512-+zq2myprEnQmH5yw6Gqc8lD55QHnpKaU8TOcFeC/Lg/MQSs8UknEA0JC4nTZGFAXC2J2Hyj/ijJ7NlabyPi2gg==}
     peerDependencies:
@@ -5272,20 +5182,6 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
-
-  /redux-thunk/2.4.1_redux@4.2.0:
-    resolution: {integrity: sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==}
-    peerDependencies:
-      redux: ^4
-    dependencies:
-      redux: 4.2.0
-    dev: false
-
-  /redux/4.2.0:
-    resolution: {integrity: sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==}
-    dependencies:
-      '@babel/runtime': 7.18.3
-    dev: false
 
   /refractor/3.6.0:
     resolution: {integrity: sha512-MY9W41IOWxxk31o+YvFCNyNzdkc9M20NoZK5vq6jkv4I/uh2zkWcfudj0Q1fovjUQJrNewS9NMzeTtqPf+n5EA==}
@@ -5390,10 +5286,6 @@ packages:
   /require-from-string/2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /reselect/4.1.5:
-    resolution: {integrity: sha512-uVdlz8J7OO+ASpBYoz1Zypgx0KasCY20H+N8JD13oUMtPvSHQuscrHop4KbXrbsBcdB9Ds7lVK7eRkBIfO43vQ==}
     dev: false
 
   /resolve-from/4.0.0:
@@ -6098,14 +5990,6 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.1.1
-
-  /use-sync-external-store/1.1.0_react@18.1.0:
-    resolution: {integrity: sha512-SEnieB2FPKEVne66NpXPd1Np4R1lTNKfjuy3XdIoPQKYBAFdzbzSZlSn1KJZUiihQLQC5Znot4SBz1EOTBwQAQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.1.0
-    dev: false
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=}

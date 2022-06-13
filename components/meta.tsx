@@ -1,6 +1,7 @@
 import Head from "next/head";
-import { PropsWithChildren } from "react";
-import { useTheme } from "../store/slices/theme.slice";
+import { useContext } from "react";
+import type { PropsWithChildren } from "react";
+import MainLayoutContext from "../store/main-layout.context";
 
 type MetaProps = {
   title?: string;
@@ -16,8 +17,8 @@ const themeColors: { [key: string]: string } = {
 };
 
 const PageMeta = (props: PropsWithChildren<MetaProps>) => {
-  const theme = useTheme();
-  const color = themeColors[theme.name] ?? "#111";
+  const { theme } = useContext(MainLayoutContext);
+  const color = themeColors[theme.state] ?? "#111";
 
   const dtitle = props.title ? `${props.title} - Matt DeKok` : "Matt DeKok";
   const description = props.description || "Experienced full stack web developer with a demonstrated history of working in the wireless industry.";

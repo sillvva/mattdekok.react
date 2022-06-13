@@ -6,7 +6,6 @@ import type { Transition, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 import { debounce } from "../../lib/misc";
 import MainLayoutContext, { MainLayoutContextProvider } from "../../store/main-layout.context";
-import { useTheme } from "../../store/slices/theme.slice";
 import Page from "../../components/layouts/main/page";
 import PageHeader from "../../components/layouts/main/page-header";
 import NextNProgress from "../../components/progress";
@@ -15,14 +14,13 @@ import PageMeta from "../../components/meta";
 const Drawer = dynamic(() => import("../../components/drawer"));
 
 const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
-  const { drawer } = useContext(MainLayoutContext);
-  const { name, themes, init, set } = useTheme();
+  const { drawer, theme } = useContext(MainLayoutContext);
   const router = useRouter();
 
   useEffect(() => {
     const cur = document.querySelector<HTMLDivElement>("#app")?.dataset.theme;
-    themes.forEach(t => cur === t && name !== t && set(t));
-  }, [themes, name, set]);
+    theme.themes.forEach(t => cur === t && theme.state !== t && theme.set(t));
+  }, [theme]);
 
   useEffect(() => {
     document.documentElement.dataset.scroll = window.scrollY.toString();
@@ -35,8 +33,8 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
   }, []);
 
   return (
-    <>
-      <Page.Bg key={`theme${init ? 1 : 0}`} />
+    <div id="app" data-theme={theme?.state} className="min-h-screen min-w-screen">
+      <Page.Bg />
       <PageHeader head={props} layoutMotion={mainMotion} />
       <motion.main
         key={`main${router.pathname}`}
@@ -48,7 +46,7 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
         {props.children}
       </motion.main>
       {drawer.state ? <Drawer /> : ""}
-    </>
+    </div>
   );
 };
 

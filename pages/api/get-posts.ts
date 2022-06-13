@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { PostProps } from "../../components/blog";
 import { fetchPosts } from "../../lib/blog";
 import { firebaseConfig } from "../../lib/firebase";
-import { getContentDir } from "../../store/misc";
+import { getContentDir } from "../../store/content";
 
 type PostFetchOptions = {
   page?: number;

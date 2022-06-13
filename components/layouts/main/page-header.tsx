@@ -5,7 +5,6 @@ import { useContext } from "react";
 import { motion, Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import { useTheme } from "../../../store/slices/theme.slice";
 import { PageHeadProps } from "../../../layouts/main";
 
 const PageMenu = dynamic(() => import("./page-menu"));
@@ -17,8 +16,7 @@ type PageHeaderProps = {
 
 const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
-  const theme = useTheme();
-  const { drawer } = useContext(MainLayoutContext);
+  const { drawer, theme } = useContext(MainLayoutContext);
   const items = head?.menu ? menuItems : [];
 
   const classes = {

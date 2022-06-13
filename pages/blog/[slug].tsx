@@ -14,7 +14,7 @@ import Page from "../../components/layouts/main/page";
 import { blogStyles, PostProps } from "../../components/blog";
 import { firebaseConfig, storage } from "../../lib/func";
 import { fetchPosts } from "../../lib/blog";
-import { getContentDir } from "../../store/misc";
+import { getContentDir } from "../../store/content";
 import type { PostData } from "../api/get-posts";
 import PageMessage from "../../components/page-message";
 

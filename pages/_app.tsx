@@ -4,29 +4,22 @@ import { ReactElement, ReactNode } from "react";
 import "../styles/globals.scss";
 import "../styles/mdi.scss";
 import "../styles/montserrat.font.css";
-import { storeWrapper } from "../store/app.store";
-import { useTheme } from "../store/slices/theme.slice";
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
-  getLayout?: (page: ReactElement, pageProps: AppPropsWithLayout) => ReactNode
-}
+  getLayout?: (page: ReactElement, pageProps: AppPropsWithLayout) => ReactNode;
+};
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+  Component: NextPageWithLayout;
+};
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const getLayout = Component.getLayout ?? ((page) => page);
-  const theme = useTheme();
-  
-  return (
-    <div id="app" data-theme={pageProps.cookies?.theme || theme?.name} className="min-h-screen min-w-screen">
-      {getLayout(<Component {...pageProps} />, pageProps)}        
-    </div>
-  );
+  const getLayout = Component.getLayout ?? (page => page);
+
+  return getLayout(<Component {...pageProps} />, pageProps);
 }
 
-export default storeWrapper.withRedux(MyApp);
+export default MyApp;
 
 // const routeChange = () => {
 //   // Temporary fix to avoid flash of unstyled content
