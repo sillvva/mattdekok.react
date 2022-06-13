@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
-import { ReactElement, ReactNode } from "react";
+import type { ReactElement, ReactNode } from "react";
 import "../styles/globals.scss";
 import "../styles/mdi.scss";
 import "../styles/montserrat.font.css";
@@ -15,7 +15,6 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page);
-
   return getLayout(<Component {...pageProps} />, pageProps);
 }
 
