@@ -44,7 +44,7 @@ export const useRipple = (props?: UseRippleProps) => {
       "ripples",
       duration
     );
-  }, []);
+  }, [duration]);
 
   const mouseHandler: MouseEventHandler<any> = (e:any) => {
     if (!enabled || active) return;

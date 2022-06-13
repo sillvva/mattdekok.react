@@ -41,7 +41,7 @@ type ProjectProps = {
   projects: Project[];
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const doc = firestore.doc("website/projects");
   const document = await doc.get();
   const projects: Project[] = document.data()?.data || [];
@@ -54,6 +54,7 @@ export async function getServerSideProps() {
           sort: i
         }))
         .sort((a, b) => (a.sort < b.sort ? 1 : -1))
-    }
+    },
+    revalidate: 6 * 3600
   };
 }

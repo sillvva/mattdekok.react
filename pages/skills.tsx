@@ -53,7 +53,7 @@ type SkillProps = {
   skills: SkillPropsSection[];
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const doc = firestore.doc("website/skills");
   const document = await doc.get();
   const sections: SkillSection = document.data() || {};
@@ -71,6 +71,7 @@ export async function getServerSideProps() {
             }))
             .sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
         }))
-    }
+    },
+    revalidate: 6 * 3600
   };
 }
