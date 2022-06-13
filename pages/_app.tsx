@@ -1,5 +1,4 @@
 import type { AppProps } from "next/app";
-import App from "next/app";
 import Router from "next/router";
 import "../styles/globals.scss";
 import "../styles/mdi.scss";
@@ -19,12 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
     </div>
   );
 }
-
-// MyApp.getInitialProps = async (appContext: any) => {
-//   const appProps = await App.getInitialProps(appContext);
-//   appProps.pageProps = { ...appProps.pageProps, cookies: appContext.ctx?.req?.cookies, path: appContext.ctx?.pathname };
-//   return { ...appProps };
-// };
 
 export default storeWrapper.withRedux(MyApp);
 
