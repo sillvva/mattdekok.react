@@ -82,7 +82,7 @@ type ExperienceSections = {
   [name: string]: ExperienceSection;
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const doc = firestore.doc("website/experience");
   const document = await doc.get();
   const experience: ExperienceSections = document.data() || {};

@@ -20,11 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-MyApp.getInitialProps = async (appContext: any) => {
-  const appProps = await App.getInitialProps(appContext);
-  appProps.pageProps = { ...appProps.pageProps, cookies: appContext.ctx?.req?.cookies, path: appContext.ctx?.pathname };
-  return { ...appProps };
-};
+// MyApp.getInitialProps = async (appContext: any) => {
+//   const appProps = await App.getInitialProps(appContext);
+//   appProps.pageProps = { ...appProps.pageProps, cookies: appContext.ctx?.req?.cookies, path: appContext.ctx?.pathname };
+//   return { ...appProps };
+// };
 
 export default storeWrapper.withRedux(MyApp);
 

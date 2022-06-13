@@ -53,7 +53,7 @@ type SkillProps = {
   skills: SkillPropsSection[];
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const doc = firestore.doc("website/skills");
   const document = await doc.get();
   const sections: SkillSection = document.data() || {};

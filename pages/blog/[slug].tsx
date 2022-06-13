@@ -12,8 +12,9 @@ import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 import { useLayout } from "../../layouts/layout";
 import { headerClasses } from "../../layouts/main";
 import Page from "../../components/layouts/main/page";
-import { firebaseConfig, storage } from "../../functions/func";
 import { blogStyles, PostProps } from "../../components/blog";
+import { firebaseConfig, storage } from "../../functions/func";
+import { fetchPosts } from "../../functions/blog";
 import { getContentDir } from "../../store/misc";
 import type { PostData } from "../api/get-posts";
 
@@ -33,17 +34,27 @@ const Blog: NextPage<ServerProps> = props => {
     menu: true,
     smallTitle: true,
     meta: {
-      title: data.title,
-      description: data.description,
-      image: data.image || "",
+      title: data?.title,
+      description: data?.description,
+      image: data?.image || "",
       articleMeta: {
-        published_date: data.dateISO,
-        ...(data.updatedISO && { modified_date: data.updatedISO })
+        published_date: data?.dateISO,
+        ...(data?.updatedISO && { modified_date: data?.updatedISO })
       }
     },
     backTo: true,
     headerClasses
   });
+
+  if (!data) {
+    return (
+      <Page.Body>
+        <Page.Article>
+          <Page.Section>Page Not Found</Page.Section>
+        </Page.Article>
+      </Page.Body>
+    );
+  }
 
   const renderers = {
     p(paragraph: any) {
@@ -188,9 +199,10 @@ export default Blog;
  * @param context
  * @returns Server Side Properties
  */
-export async function getServerSideProps(context: any) {
-  const { params } = context;
-  const { slug } = params;
+export async function getStaticProps(context: any) {
+  const {
+    params: { slug }
+  } = context;
 
   const dirPath = getContentDir();
   const postsPath = `${dirPath}/posts.json`;
@@ -227,6 +239,7 @@ export async function getServerSideProps(context: any) {
   }
 
   const { content, data } = matter(result.data);
+  console.log(slug, data);
   if (data.date) data.dateISO = new Date(data.date).toISOString();
   if (data.updated) data.updatedISO = new Date(data.updated).toISOString();
   for (let key in data) {
@@ -240,6 +253,27 @@ export async function getServerSideProps(context: any) {
       content,
       data
     }
+  };
+}
+
+export async function getStaticPaths() {
+  const dirPath = getContentDir();
+  const postsPath = `${dirPath}/posts.json`;
+
+  let posts: PostData[];
+  if (existsSync(postsPath)) {
+    const data = readFileSync(postsPath, "utf8");
+    posts = JSON.parse(data);
+  } else {
+    const result = await fetchPosts(true);
+    posts = result?.posts || [];
+  }
+
+  return {
+    paths: posts.map(p => ({
+      params: { slug: p.slug }
+    })),
+    fallback: true
   };
 }
 

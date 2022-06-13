@@ -41,7 +41,7 @@ type ProjectProps = {
   projects: Project[];
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const doc = firestore.doc("website/projects");
   const document = await doc.get();
   const projects: Project[] = document.data()?.data || [];
