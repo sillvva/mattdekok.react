@@ -17,6 +17,7 @@ import { firebaseConfig, storage } from "../../functions/func";
 import { fetchPosts } from "../../functions/blog";
 import { getContentDir } from "../../store/misc";
 import type { PostData } from "../api/get-posts";
+import PageMessage from "../../components/page-message";
 
 const ReactCodepen = dynamic(() => import("../../components/codepen"));
 const SyntaxHighlighter: ComponentType<any> = dynamic(() => import("react-syntax-highlighter").then((mod: any) => mod.PrismLight));
@@ -30,163 +31,169 @@ type ServerProps = {
 const Blog: NextPage<ServerProps> = props => {
   const { data, content } = props;
 
-  useLayout("main", {
-    menu: true,
-    smallTitle: true,
-    meta: {
-      title: data?.title,
-      description: data?.description,
-      image: data?.image || "",
-      articleMeta: {
-        published_date: data?.dateISO,
-        ...(data?.updatedISO && { modified_date: data?.updatedISO })
-      }
-    },
-    backTo: true,
-    headerClasses
-  });
+  try {
+    useLayout("main", {
+      menu: true,
+      smallTitle: true,
+      meta: {
+        title: data?.title,
+        description: data?.description,
+        image: data?.image || "",
+        articleMeta: {
+          published_date: data?.dateISO,
+          ...(data?.updatedISO && { modified_date: data?.updatedISO })
+        }
+      },
+      backTo: true,
+      headerClasses
+    });
 
-  if (!data) {
+    if (!data) throw new Error("Could not load data");
+
+    const renderers = {
+      p(paragraph: any) {
+        const { node } = paragraph;
+
+        if (node.children[0].tagName === "img") {
+          const image = node.children[0];
+
+          return (
+            <figure className={blogStyles.BlogFigure}>
+              <a href={image.properties.src} target="_blank" rel="noreferrer noopener" className={blogStyles.BlogImage}>
+                <Image src={image.properties.src} alt={image.alt} layout="fill" objectFit="contain" />
+              </a>
+              <figcaption>Click to open full screen</figcaption>
+            </figure>
+          );
+        }
+
+        return <p>{paragraph.children}</p>;
+      },
+
+      h1(h: any) {
+        const { children } = h;
+        const text = flattenChildren(children);
+        return (
+          <h1>
+            <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
+            {children}
+          </h1>
+        );
+      },
+
+      h2(h: any) {
+        const { children } = h;
+        const text = flattenChildren(children);
+        return (
+          <h2>
+            <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
+            {children}
+          </h2>
+        );
+      },
+
+      h3(h: any) {
+        const { children } = h;
+        const text = flattenChildren(children);
+        return (
+          <h3>
+            <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
+            {children}
+          </h3>
+        );
+      },
+
+      a(anchor: any) {
+        const { href, children } = anchor;
+        const isExternal = href.startsWith("http");
+        return (
+          <Link href={href} scroll={false}>
+            <a target={isExternal ? "_blank" : ""} rel={isExternal ? "noreferrer noopener" : ""}>
+              {children}
+            </a>
+          </Link>
+        );
+      },
+
+      pre(pre: any) {
+        const { node, children } = pre;
+        try {
+          if (node.children[0].tagName === "code") {
+            const code = node.children[0];
+            const { properties, children } = code;
+            const { className } = properties;
+            const { value } = children[0];
+            const language = ((className || [""])[0] || "").split("-")[1];
+            if (language == "codepen") {
+              const codepen = JSON.parse(value.trim());
+              return <ReactCodepen {...codepen} />;
+            }
+          }
+        } catch (err) {
+          console.log(err);
+        }
+        return <pre>{children}</pre>;
+      },
+
+      code(code: any) {
+        const { className, children } = code;
+        const language = (className || "").split("-")[1];
+        if (!language) return <code>{children}</code>;
+        if (language == "codepen") return <code>{children}</code>;
+        return (
+          <SyntaxHighlighter style={atomDark} language={language}>
+            {children}
+          </SyntaxHighlighter>
+        );
+      }
+    };
+
+    return (
+      <Page.Body>
+        <Page.Article className={[blogStyles.BlogArticle, "w-full xl:w-9/12 2xl:w-8/12"].join(" ")}>
+          {!data.full && (
+            <div className="aspect-video relative">
+              <Image src={data.image} alt={"Cover"} layout="fill" objectFit="cover" priority />
+            </div>
+          )}
+          <Page.Section>
+            <p className="mb-4 text-gray-400" aria-label="Date published">
+              {data.date} {data.updated && `(Updated: ${data.updated})`}
+            </p>
+            <div className={blogStyles.BlogContent}>
+              <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+                {content}
+              </ReactMarkdown>
+            </div>
+            {!!(data.tags || []).length && (
+              <>
+                <p className="mb-2">Tags:</p>
+                <div className="flex flex-wrap gap-2">
+                  {data.tags.map((tag, i) => (
+                    <span className="rounded-full text-white py-1 px-3" style={{ backgroundColor: "var(--menuHover)" }} key={`tag${i}`}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
+          </Page.Section>
+        </Page.Article>
+      </Page.Body>
+    );
+  } catch (e) {
     return (
       <Page.Body>
         <Page.Article>
-          <Page.Section>Page Not Found</Page.Section>
+          <Page.Section>
+            <PageMessage>
+              {e instanceof Error ? e.message : typeof e === "string" ? e : typeof e === "object" ? <pre>{JSON.stringify(e)}</pre> : "Unkown Error"}
+            </PageMessage>
+          </Page.Section>
         </Page.Article>
       </Page.Body>
     );
   }
-
-  const renderers = {
-    p(paragraph: any) {
-      const { node } = paragraph;
-
-      if (node.children[0].tagName === "img") {
-        const image = node.children[0];
-
-        return (
-          <figure className={blogStyles.BlogFigure}>
-            <a href={image.properties.src} target="_blank" rel="noreferrer noopener" className={blogStyles.BlogImage}>
-              <Image src={image.properties.src} alt={image.alt} layout="fill" objectFit="contain" />
-            </a>
-            <figcaption>Click to open full screen</figcaption>
-          </figure>
-        );
-      }
-
-      return <p>{paragraph.children}</p>;
-    },
-
-    h1(h: any) {
-      const { children } = h;
-      const text = flattenChildren(children);
-      return (
-        <h1>
-          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
-          {children}
-        </h1>
-      );
-    },
-
-    h2(h: any) {
-      const { children } = h;
-      const text = flattenChildren(children);
-      return (
-        <h2>
-          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
-          {children}
-        </h2>
-      );
-    },
-
-    h3(h: any) {
-      const { children } = h;
-      const text = flattenChildren(children);
-      return (
-        <h3>
-          <span id={text.replace(/[^a-z0-9]{1,}/gi, "-").toLowerCase()}></span>
-          {children}
-        </h3>
-      );
-    },
-
-    a(anchor: any) {
-      const { href, children } = anchor;
-      const isExternal = href.startsWith("http");
-      return (
-        <Link href={href} scroll={false}>
-          <a target={isExternal ? "_blank" : ""} rel={isExternal ? "noreferrer noopener" : ""}>
-            {children}
-          </a>
-        </Link>
-      );
-    },
-
-    pre(pre: any) {
-      const { node, children } = pre;
-      try {
-        if (node.children[0].tagName === "code") {
-          const code = node.children[0];
-          const { properties, children } = code;
-          const { className } = properties;
-          const { value } = children[0];
-          const language = ((className || [""])[0] || "").split("-")[1];
-          if (language == "codepen") {
-            const codepen = JSON.parse(value.trim());
-            return <ReactCodepen {...codepen} />;
-          }
-        }
-      } catch (err) {
-        console.log(err);
-      }
-      return <pre>{children}</pre>;
-    },
-
-    code(code: any) {
-      const { className, children } = code;
-      const language = (className || "").split("-")[1];
-      if (!language) return <code>{children}</code>;
-      if (language == "codepen") return <code>{children}</code>;
-      return (
-        <SyntaxHighlighter style={atomDark} language={language}>
-          {children}
-        </SyntaxHighlighter>
-      );
-    }
-  };
-
-  return (
-    <Page.Body>
-      <Page.Article className={[blogStyles.BlogArticle, "w-full xl:w-9/12 2xl:w-8/12"].join(" ")}>
-        {!data.full && (
-          <div className="aspect-video relative">
-            <Image src={data.image} alt={"Cover"} layout="fill" objectFit="cover" priority />
-          </div>
-        )}
-        <Page.Section>
-          <p className="mb-4 text-gray-400" aria-label="Date published">
-            {data.date} {data.updated && `(Updated: ${data.updated})`}
-          </p>
-          <div className={blogStyles.BlogContent}>
-            <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
-              {content}
-            </ReactMarkdown>
-          </div>
-          {!!(data.tags || []).length && (
-            <>
-              <p className="mb-2">Tags:</p>
-              <div className="flex flex-wrap gap-2">
-                {data.tags.map((tag, i) => (
-                  <span className="rounded-full text-white py-1 px-3" style={{ backgroundColor: "var(--menuHover)" }} key={`tag${i}`}>
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </>
-          )}
-        </Page.Section>
-      </Page.Article>
-    </Page.Body>
-  );
 };
 
 export default Blog;
@@ -239,7 +246,7 @@ export async function getStaticProps(context: any) {
   }
 
   const { content, data } = matter(result.data);
-  console.log(slug, data);
+  console.log("Revalidating...", slug);
   if (data.date) data.dateISO = new Date(data.date).toISOString();
   if (data.updated) data.updatedISO = new Date(data.updated).toISOString();
   for (let key in data) {
