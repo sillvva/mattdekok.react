@@ -6,6 +6,7 @@ import MainLayoutContext, { menuItems } from "../../../store/main-layout.context
 import { AppLayout } from "../../../store/slices/layout.slice";
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import { useRouter } from "next/router";
+import { useTheme } from "../../../store/slices/theme.slice";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
@@ -16,7 +17,8 @@ type PageHeaderProps = {
 
 const PageHeader = ({ layout, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
-  const { drawer, theme } = useContext(MainLayoutContext);
+  const theme = useTheme();
+  const { drawer } = useContext(MainLayoutContext);
   const { head } = layout;
   const items = head?.menu ? menuItems : [];
 

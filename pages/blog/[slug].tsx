@@ -102,7 +102,7 @@ const Blog: NextPage<ServerProps> = props => {
       const { href, children } = anchor;
       const isExternal = href.startsWith("http");
       return (
-        <Link href={href}>
+        <Link href={href} scroll={false}>
           <a target={isExternal ? "_blank" : ""} rel={isExternal ? "noreferrer noopener" : ""}>
             {children}
           </a>
@@ -148,7 +148,7 @@ const Blog: NextPage<ServerProps> = props => {
       <Page.Article className={[blogStyles.BlogArticle, "w-full xl:w-9/12 2xl:w-8/12"].join(" ")}>
         {!data.full && (
           <div className="aspect-video relative">
-            <Image src={data.image} alt={"Cover"} layout="fill" objectFit="cover" />
+            <Image src={data.image} alt={"Cover"} layout="fill" objectFit="cover" priority />
           </div>
         )}
         <Page.Section>

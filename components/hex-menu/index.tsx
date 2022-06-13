@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import styles from "./HexMenu.module.scss";
 import { useRouter } from "next/router";
@@ -25,7 +25,7 @@ type HexMenuProps = {
 };
 
 const HexMenu = (props: HexMenuProps) => {
-  const router = useRouter();
+  const { pathname } = useRouter();
 
   const menuRows: Item[][] = [[]];
   props.items.forEach((item, i) => {
@@ -33,7 +33,7 @@ const HexMenu = (props: HexMenuProps) => {
     if (item)
       menuRows[rowIndex].push({
         ...item,
-        ...(item.link === router.pathname && { active: true })
+        ...(item.link === pathname && { active: true })
       });
     else menuRows[rowIndex].push({ link: "", label: "" });
     const rotDiff = !props.rotated && menuRows.length % 2 === 0 ? 1 : 0;

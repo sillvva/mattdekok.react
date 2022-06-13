@@ -1,18 +1,24 @@
 import dynamic from "next/dynamic";
 import { useContext, useEffect } from "react";
 import type { Transition, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import MainLayoutContext from "../../store/main-layout.context";
+import Page from "../../components/layouts/main/page";
 import { debounce } from "../../functions/misc";
+import PageHeader from "../../components/layouts/main/page-header";
+import type { AppLayout } from "../../store/slices/layout.slice";
+import { useTheme } from "../../store/slices/theme.slice";
 
 const Drawer = dynamic(() => import("../../components/drawer"));
 
-const MainLayout = (props: React.PropsWithChildren<unknown>) => {
-  const { drawer, theme } = useContext(MainLayoutContext);
+type MainLayoutProps = {
+  layout: AppLayout;
+  path: string;
+};
 
-  useEffect(() => {
-    const cur = document.documentElement.dataset.theme;
-    theme.themes.forEach(t => cur === t && theme.state !== t && theme.set(t));
-  }, [theme]);
+const MainLayout = (props: React.PropsWithChildren<MainLayoutProps>) => {
+  const { drawer } = useContext(MainLayoutContext);
+  const { init } = useTheme();
 
   useEffect(() => {
     document.documentElement.dataset.scroll = window.scrollY.toString();
@@ -26,7 +32,11 @@ const MainLayout = (props: React.PropsWithChildren<unknown>) => {
 
   return (
     <>
-      {props.children}
+      <Page.Bg key={`theme${init ? 1 : 0}`} />
+      <PageHeader layout={props.layout} layoutMotion={mainMotion} />
+      <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
+        {props.children}
+      </motion.main>
       {drawer.state ? <Drawer /> : ""}
     </>
   );

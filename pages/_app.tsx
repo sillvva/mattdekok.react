@@ -6,12 +6,17 @@ import "../styles/mdi.scss";
 import "../styles/montserrat.font.css";
 import { storeWrapper } from "../store/app.store";
 import Layout from "../layouts/layout";
+import { useTheme } from "../store/slices/theme.slice";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const theme = useTheme();
+  
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <div id="app" data-theme={pageProps.cookies?.theme || theme?.name} className="min-h-screen min-w-screen">
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </div>
   );
 }
 

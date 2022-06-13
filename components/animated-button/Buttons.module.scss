@@ -1,13 +1,7 @@
 a.Button {
-  padding: 1rem 1.5rem;
-  display: block;
+  @apply relative py-4 px-6 no-underline uppercase duration-200 ease-linear select-none;
   color: var(--text-color);
-  text-decoration: none;
-  text-transform: uppercase;
-  position: relative;
-  transition: 0.2s linear;
-  text-shadow: 1px 1px 1px var(--background);
-
+  text-shadow: 1px 1px 1px rgb(var(--background));
 }
 
 .Button1 {

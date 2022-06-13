@@ -145,7 +145,7 @@ const AboutMe: NextPage = () => {
           <div className="text-center">
             <p className="pb-4">Like and want to support my work? No problem!</p>
             <div className="flex justify-center">
-              <AnimatedButton link="/donate" label="Buy me a coffee" itemClasses={['Button4']} />
+              <AnimatedButton link="/donate" label="Buy me a coffee" itemClasses={['Button4']} clickRipple /> 
             </div>
           </div>
         </Page.Section>

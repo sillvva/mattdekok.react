@@ -1,6 +1,5 @@
 import { useState, createContext } from "react";
 import type { PropsWithChildren } from "react";
-import cookie from "js-cookie";
 
 export const menuItems = [
   { link: "/", label: "Intro" },
@@ -11,25 +10,14 @@ export const menuItems = [
   { link: "/blog", label: "Blog" }
 ];
 
-export const themes = ["dark", "light", "blue"];
-
 type DrawerProps = {
   state: boolean;
   action: string;
   toggle: () => void;
 };
 
-type ThemeProps = {
-  state: string;
-  themes: string[];
-  done: boolean;
-  toggle: () => void;
-  set: (theme: string) => void;
-};
-
 type MainLayoutProps = {
   drawer: DrawerProps;
-  theme: ThemeProps;
 };
 
 const initState = {
@@ -37,13 +25,6 @@ const initState = {
     state: false,
     action: "",
     toggle: function () {}
-  },
-  theme: {
-    state: themes[0],
-    themes: themes,
-    done: true,
-    toggle: function () {},
-    set: function (theme: string) {}
   }
 };
 
@@ -77,38 +58,11 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
     setContext({ ...context, drawer: drawer });
   }
 
-  function setTheme(theme?: string) {
-    let nextIndex = themes[themes.findIndex(t => t === context.theme.state) + 1] || themes[0];
-    let next = (theme && themes.find(t => t === theme)) || nextIndex;
-    document.documentElement.dataset.theme = next;
-    context.theme.state = next;
-    context.theme.done = false;
-    cookie.set("theme", context.theme.state);
-    setContext({ ...context, theme: context.theme });
-    setTimeout(() => {
-      context.theme.done = true;
-      setContext({ ...context, theme: context.theme });
-    }, 300);
-  }
-
-  function themeToggleHandler() {
-    setTheme();
-  }
-
-  function themeSetHandler(theme: string) {
-    setTheme(theme);
-  }
-
   const ctx = {
     ...context,
     drawer: {
       ...context.drawer,
       toggle: drawerToggleHandler
-    },
-    theme: {
-      ...context.theme,
-      toggle: themeToggleHandler,
-      set: themeSetHandler
     }
   };
 
