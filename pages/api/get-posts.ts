@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from "fs";
 import { NextApiRequest, NextApiResponse } from "next";
 import { PostProps } from "../../components/blog";
-import { fetchPosts } from "../../functions/blog";
-import { firebaseConfig } from "../../functions/firebase";
+import { fetchPosts } from "../../lib/blog";
+import { firebaseConfig } from "../../lib/firebase";
 import { getContentDir } from "../../store/misc";
 
 type PostFetchOptions = {

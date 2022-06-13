@@ -2,7 +2,7 @@ import matter from "gray-matter";
 import { NextApiRequest, NextApiResponse } from "next";
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import { getContentDir } from "../../store/misc";
-import { firebaseConfig, storage } from "../../functions/func";
+import { firebaseConfig, storage } from "../../lib/func";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method == "GET") {

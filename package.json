@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "prestart": "node functions/start.js",
+    "prestart": "node lib/start.js",
     "fetch-posts": "node builds.js",
     "serve-functions": "cd firebase/functions && pnpm run serve",
     "deploy-functions": "cd firebase/functions && pnpm run deploy",

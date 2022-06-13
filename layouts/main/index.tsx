@@ -4,7 +4,7 @@ import type { Transition, Variants } from "framer-motion";
 import { motion } from "framer-motion";
 import MainLayoutContext from "../../store/main-layout.context";
 import Page from "../../components/layouts/main/page";
-import { debounce } from "../../functions/misc";
+import { debounce } from "../../lib/misc";
 import PageHeader from "../../components/layouts/main/page-header";
 import type { AppLayout } from "../../store/slices/layout.slice";
 import { useTheme } from "../../store/slices/theme.slice";
