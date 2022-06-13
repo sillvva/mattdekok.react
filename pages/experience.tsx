@@ -100,6 +100,7 @@ export async function getStaticProps() {
               ...exp
             }))
         }))
-    }
+    },
+    revalidate: 6 * 3600
   };
 }

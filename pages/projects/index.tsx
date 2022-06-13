@@ -54,6 +54,7 @@ export async function getStaticProps() {
           sort: i
         }))
         .sort((a, b) => (a.sort < b.sort ? 1 : -1))
-    }
+    },
+    revalidate: 6 * 3600
   };
 }

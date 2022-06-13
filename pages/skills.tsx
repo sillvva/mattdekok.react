@@ -71,6 +71,7 @@ export async function getStaticProps() {
             }))
             .sort((a, b) => (a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1))
         }))
-    }
+    },
+    revalidate: 6 * 3600
   };
 }
