@@ -17,6 +17,7 @@ import { fetchPosts } from "../../lib/blog";
 import { getContentDir } from "../../store/content";
 import type { PostData } from "../api/get-posts";
 import PageMessage from "../../components/page-message";
+import { AppProps } from "next/app";
 
 const ReactCodepen = dynamic(() => import("../../components/codepen"));
 const SyntaxHighlighter: ComponentType<any> = dynamic(() => import("react-syntax-highlighter").then((mod: any) => mod.PrismLight));
@@ -181,8 +182,8 @@ const Blog: NextPageWithLayout<ServerProps> = props => {
 
 export default Blog;
 
-Blog.getLayout = function (page, pageProps: any) {
-  const data: PostProps = pageProps.data;
+Blog.getLayout = function (page, props) {
+  const data: PostProps = props.data;
   const meta = {
     title: data?.title,
     description: data?.description,
@@ -200,14 +201,6 @@ Blog.getLayout = function (page, pageProps: any) {
   );
 };
 
-/**
- * Use local file if it exists. If it does not, fetch it from Firebase Storage, and store it.
- * If the file in Firebase Storage is newer, fetch it and store it.
- * With this, only the latest version should show, and this should reduce the calls to Firebase Storage.
- *
- * @param context
- * @returns Server Side Properties
- */
 export async function getStaticProps(context: any) {
   const {
     params: { slug }

@@ -6,7 +6,7 @@ import "../styles/globals.scss";
 import "../styles/montserrat.font.css";
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
-  getLayout?: (page: ReactElement, pageProps: AppPropsWithLayout) => ReactNode;
+  getLayout?: (page: ReactElement, props: P) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
