@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -9,13 +8,13 @@ import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 
-import { useLayout } from "../../layouts/layout";
-import { headerClasses } from "../../layouts/main";
+import type { NextPageWithLayout } from "../_app";
+import MainLayout, { headerClasses } from "../../layouts/main";
 import Page from "../../components/layouts/main/page";
 import { blogStyles, PostProps } from "../../components/blog";
-import { firebaseConfig, storage } from "../../functions/func";
-import { fetchPosts } from "../../functions/blog";
-import { getContentDir } from "../../store/misc";
+import { firebaseConfig, storage } from "../../lib/func";
+import { fetchPosts } from "../../lib/blog";
+import { getContentDir } from "../../store/content";
 import type { PostData } from "../api/get-posts";
 import PageMessage from "../../components/page-message";
 
@@ -28,27 +27,11 @@ type ServerProps = {
   cookies: any;
 };
 
-const Blog: NextPage<ServerProps> = props => {
+const Blog: NextPageWithLayout<ServerProps> = props => {
   const { data, content } = props;
 
   try {
-    useLayout("main", {
-      menu: true,
-      smallTitle: true,
-      meta: {
-        title: data?.title,
-        description: data?.description,
-        image: data?.image || "",
-        articleMeta: {
-          published_date: data?.dateISO,
-          ...(data?.updatedISO && { modified_date: data?.updatedISO })
-        }
-      },
-      backTo: true,
-      headerClasses
-    });
-
-    if (!data) throw new Error("Could not load data");
+    if (!data) throw new Error("Could not load post");
 
     const renderers = {
       p(paragraph: any) {
@@ -197,6 +180,25 @@ const Blog: NextPage<ServerProps> = props => {
 };
 
 export default Blog;
+
+Blog.getLayout = function (page, pageProps: any) {
+  const data: PostProps = pageProps.data;
+  const meta = {
+    title: data?.title,
+    description: data?.description,
+    image: data?.image || "",
+    articleMeta: {
+      published_date: data?.dateISO,
+      ...(data?.updatedISO && { modified_date: data?.updatedISO })
+    }
+  };
+  
+  return (
+    <MainLayout title={data?.title} smallTitle menu backTo meta={meta} headerClasses={headerClasses}>
+      {page}
+    </MainLayout>
+  );
+};
 
 /**
  * Use local file if it exists. If it does not, fetch it from Firebase Storage, and store it.

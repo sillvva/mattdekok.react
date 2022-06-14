@@ -1,4 +1,6 @@
 import { PropsWithChildren, Fragment } from "react";
+import { mdiStar, mdiStarHalfFull, mdiStarOutline } from "@mdi/js";
+import Icon from "@mdi/react";
 import ratingStyles from "./Ratings.module.scss";
 import Page from "../layouts/main/page";
 
@@ -82,13 +84,13 @@ const RatingStars = (props: RatingStarsProps) => {
       }
     }
 
-    return [...Array(full).fill("mdi-star"), ...Array(half).fill("mdi-star-half-full"), ...Array(empty).fill("mdi-star-outline")];
+    return [...Array(full).fill(mdiStar), ...Array(half).fill(mdiStarHalfFull), ...Array(empty).fill(mdiStarOutline)];
   };
 
   return (
     <div className={`rating text-right ${ratingStyles.Zoom}`}>
       {getStars().map((star, s) => (
-        <i className={["mdi", star].join(" ")} key={`star${s}`}></i>
+        <Icon path={star} key={`star${s}`} style={{ color: star === mdiStarOutline ? `var(--ratingOff)` : `var(--ratingOn)` }} />
       ))}
     </div>
   );

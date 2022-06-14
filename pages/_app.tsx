@@ -1,25 +1,24 @@
+import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Router from "next/router";
+import type { ReactElement, ReactNode } from "react";
 import "../styles/globals.scss";
-import "../styles/mdi.scss";
 import "../styles/montserrat.font.css";
-import { storeWrapper } from "../store/app.store";
-import Layout from "../layouts/layout";
-import { useTheme } from "../store/slices/theme.slice";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const theme = useTheme();
-  
-  return (
-    <div id="app" data-theme={pageProps.cookies?.theme || theme?.name} className="min-h-screen min-w-screen">
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </div>
-  );
+export type NextPageWithLayout<P = {}> = NextPage<P> & {
+  getLayout?: (page: ReactElement, pageProps: AppPropsWithLayout) => ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
+
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? (page => page);
+  return getLayout(<Component {...pageProps} />, pageProps);
 }
 
-export default storeWrapper.withRedux(MyApp);
+export default MyApp;
 
 const routeChange = () => {
   // Temporary fix to avoid flash of unstyled content

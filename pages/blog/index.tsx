@@ -1,12 +1,11 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
-import { Fetcher } from "swr";
+import { useRouter } from "next/router";
+import type { Fetcher } from "swr";
 import useSWRImmutable from "swr/immutable";
+import type { NextPageWithLayout } from "../_app";
+import MainLayout, { headerClasses } from "../../layouts/main";
 import Page from "../../components/layouts/main/page";
 import { PostProps } from "../../components/blog";
-import { useLayout } from "../../layouts/layout";
-import { headerClasses } from "../../layouts/main";
 
 const PageMessage = dynamic(() => import("../../components/page-message"));
 const BlogDirectory = dynamic(() => import("../../components/blog"));
@@ -22,9 +21,7 @@ const fetcher: Fetcher<{ posts: PostProps[]; pages: number }> = async (url: stri
   return res.json();
 };
 
-const Blog: NextPage = () => {
-  useLayout("main", { menu: true, meta: { title: "Blog" }, headerClasses });
-
+const Blog: NextPageWithLayout = () => {
   const { query: { p, q } } = useRouter();
   const page = (Array.isArray(p) ? p[0] : p) || 1;
   const search = (Array.isArray(q) ? q[0] : q) || "";
@@ -44,3 +41,11 @@ const Blog: NextPage = () => {
 };
 
 export default Blog;
+
+Blog.getLayout = function (page) {
+  return (
+    <MainLayout title="Blog" menu headerClasses={headerClasses}>
+      {page}
+    </MainLayout>
+  );
+};

@@ -60,42 +60,8 @@
   }
 }
 
-.Fab {
-  @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl cursor-pointer;
-  @apply transition-[background] duration-500 ease-linear;
-  background-color: transparent;
-  &.MenuFab {
-    @apply lg:hidden;
-  }
-  &:hover {
-    background-color: var(--link);
-    i {
-      color: var(--menuText);
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-  }
-}
-
-.AnimatedButton {
-  padding: 0.75em 1.5em;
-  margin: 2px;
-  border-color: var(--item-color);
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  &:hover,
-  &.active {
-    background: transparent;
-    background-image: linear-gradient(180deg, transparent 0%, var(--item-color) 100%);
-    border-color: white;
-    text-shadow: 1px 1px 1px black;
-    span.item-label {
-      color: white;
-    }
-  }
-}
-
 .PageBody {
-  @apply flex flex-col justify-center items-center relative px-4 mt-24 lg:mt-0 pb-4;
+  @apply flex flex-col justify-center items-center relative px-4 pt-24 lg:pt-0 pb-4;
 }
 
 .PageArticle {
@@ -185,15 +151,54 @@
   }
 }
 
+.Fab {
+  @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl cursor-pointer;
+  @apply transition-[background] duration-500 ease-linear;
+  background-color: transparent;
+  &.MenuFab {
+    @apply lg:hidden;
+  }
+  svg {
+    @apply w-7;
+    color: var(--text);
+    transition: all 0.5s;
+  }
+  &:hover {
+    background-color: var(--link);
+    svg {
+      color: var(--menuText);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+.AnimatedButton {
+  padding: 0.75em 1.5em;
+  margin: 2px;
+  border-color: var(--item-color);
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  &:hover,
+  &.active {
+    background: transparent;
+    background-image: linear-gradient(180deg, transparent 0%, var(--item-color) 100%);
+    border-color: white;
+    text-shadow: 1px 1px 1px black;
+    span.item-label {
+      color: white;
+    }
+  }
+}
+
 .MeDetails__Name {
   @apply w-6/12 sm:w-3/12 md:w-6/12 2xl:w-3/12 text-right md:text-right py-1 px-1.5 font-semibold;
   &.Full {
-    @apply w-full text-center sm:w-3/12 sm:text-right md:w-full md:text-center 2xl:w-3/12 2xl:text-right;
+    @apply w-full text-center pb-0 sm:w-3/12 sm:text-right md:w-full md:text-center 2xl:w-3/12 2xl:text-right;
   }
 }
 .MeDetails__Value {
   @apply w-6/12 sm:w-3/12 md:w-6/12 2xl:w-3/12 text-left md:text-left py-1 px-1.5;
   &.Full {
-    @apply w-full text-center sm:w-9/12 sm:text-left md:w-full md:text-center 2xl:w-9/12 2xl:text-left;
+    @apply w-full text-center pt-0 sm:w-9/12 sm:text-left md:w-full md:text-center 2xl:w-9/12 2xl:text-left;
   }
 }

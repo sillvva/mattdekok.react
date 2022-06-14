@@ -1,24 +1,25 @@
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import type { Transition, Variants } from "framer-motion";
-import { motion } from "framer-motion";
-import MainLayoutContext from "../../store/main-layout.context";
+import cookie from "js-cookie";
+import { debounce } from "../../lib/misc";
+import MainLayoutContext, { MainLayoutContextProvider } from "../../store/main-layout.context";
 import Page from "../../components/layouts/main/page";
-import { debounce } from "../../functions/misc";
 import PageHeader from "../../components/layouts/main/page-header";
-import type { AppLayout } from "../../store/slices/layout.slice";
-import { useTheme } from "../../store/slices/theme.slice";
+import NextNProgress from "../../components/progress";
+import PageMeta from "../../components/meta";
 
 const Drawer = dynamic(() => import("../../components/drawer"));
 
-type MainLayoutProps = {
-  layout: AppLayout;
-  path: string;
-};
+const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
+  const { drawer, theme } = useContext(MainLayoutContext);
 
-const MainLayout = (props: React.PropsWithChildren<MainLayoutProps>) => {
-  const { drawer } = useContext(MainLayoutContext);
-  const { init } = useTheme();
+  useEffect(() => {
+    const cur = cookie.get("theme");
+    theme.themes.forEach(t => t === cur && theme.state !== t && theme.set(t));
+  }, [theme]);
 
   useEffect(() => {
     document.documentElement.dataset.scroll = window.scrollY.toString();
@@ -31,14 +32,28 @@ const MainLayout = (props: React.PropsWithChildren<MainLayoutProps>) => {
   }, []);
 
   return (
-    <>
-      <Page.Bg key={`theme${init ? 1 : 0}`} />
-      <PageHeader layout={props.layout} layoutMotion={mainMotion} />
-      <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
-        {props.children}
-      </motion.main>
-      {drawer.state ? <Drawer /> : ""}
-    </>
+    <AnimatePresence initial={false} exitBeforeEnter>
+      <div key={props.path} id="app" data-theme={theme?.state} className="min-h-screen min-w-screen">
+        <Page.Bg key={theme.state} />
+        <PageHeader key={props.path} head={props} layoutMotion={mainMotion} />
+        <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
+          {props.children}
+        </motion.main>
+        {drawer.state ? <Drawer /> : ""}
+      </div>
+    </AnimatePresence>
+  );
+};
+
+const MainLayout = (props: React.PropsWithChildren<PageHeadProps>) => {
+  const router = useRouter();
+
+  return (
+    <MainLayoutContextProvider>
+      <NextNProgress color="var(--link)" height={1} options={{ showSpinner: false }} />
+      <PageMeta title={props.title} description={props.meta?.description} articleMeta={props.meta?.articleMeta} />
+      <Layout {...{ ...props, path: router.pathname }}>{props.children}</Layout>
+    </MainLayoutContextProvider>
   );
 };
 
@@ -55,4 +70,20 @@ export const mainMotion: { variants?: Variants; transition?: Transition } = {
   transition: {
     duration: 0.25
   }
+};
+
+export type PageHeadProps = {
+  title?: string;
+  menu?: boolean;
+  path?: string;
+  smallTitle?: boolean;
+  meta?: LayoutMeta;
+  headerClasses?: string[];
+  backTo?: string | boolean;
+};
+
+type LayoutMeta = {
+  description?: string;
+  image?: string;
+  articleMeta?: object;
 };

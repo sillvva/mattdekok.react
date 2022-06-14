@@ -1,17 +1,18 @@
 import Image from "next/image";
+import { useContext } from "react";
 import type { PropsWithChildren } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import { useTheme } from "../../../store/slices/theme.slice";
+import MainLayoutContext from "../../../store/main-layout.context";
 
 const PageBg = () => {
-  const theme = useTheme();
-  const themeBg = `Page${theme.name.charAt(0).toUpperCase() + theme.name.slice(1)}`;
+  const { theme } = useContext(MainLayoutContext);
+  const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
 
   return (
     <motion.div
-      key={`bg${theme.name}`}
+      key={`bg${theme.state}`}
       variants={mainMotion.variants}
       initial="hidden"
       animate="enter"

@@ -1,11 +1,8 @@
-import type { NextPage } from "next";
-import { useLayout } from "../layouts/layout";
-import { headerClasses } from "../layouts/main";
+import type { NextPageWithLayout } from "./_app";
+import MainLayout, { headerClasses } from "../layouts/main";
 import Page from "../components/layouts/main/page";
 
-const Donate: NextPage = () => {
-  useLayout("main", { menu: true, meta: { title: "Donate" }, headerClasses });
-
+const Donate: NextPageWithLayout = () => {
   return (
     <Page.Body>
       <Page.Article className="w-full md:w-9/12 lg:w-9/12 xl:w-8/12 2xl:w-7/12">
@@ -55,3 +52,11 @@ const Donate: NextPage = () => {
 };
 
 export default Donate;
+
+Donate.getLayout = function (page) {
+  return (
+    <MainLayout title="Donate" menu headerClasses={headerClasses}>
+      {page}
+    </MainLayout>
+  );
+};

@@ -1,5 +1,5 @@
 import { Key, useEffect, useState, useCallback, MouseEventHandler } from "react";
-import { wait } from "../../functions/misc";
+import { wait } from "../../lib/misc";
 import ripple from "./Ripple.module.scss";
 
 type RippleProps = {
