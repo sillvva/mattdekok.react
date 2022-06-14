@@ -2,6 +2,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext } from "react";
+import Icon from "@mdi/react";
+import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
 import { motion, Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import styles from "../../../layouts/main/MainLayout.module.scss";
@@ -43,23 +45,23 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
       <nav className={classes.pageNav}>
         {head?.backTo === true ? (
           <a type="button" className={styles.Fab} onClick={router.back}>
-            <i className="mdi mdi-chevron-left"></i>
+            <Icon path={mdiChevronLeft} />
           </a>
         ) : head?.backTo ? (
           <Link href={head?.backTo}>
             <a type="button" className={styles.Fab}>
-              <i className="mdi mdi-chevron-left"></i>
+              <Icon path={mdiChevronLeft} />
             </a>
           </Link>
         ) : (
           <button type="button" aria-label="Open Drawer" onClick={drawer.toggle} className={`${styles.Fab} ${styles.MenuFab}`}>
-            <i className="mdi mdi-menu"></i>
+            <Icon path={mdiMenu} />
           </button>
         )}
         <div className={classes.pageMenuContainer}>{items.length ? <PageMenu key={router.pathname} items={items} /> : ""}</div>
         <h1 className={classes.pageTitle}>{head?.title}</h1>
         <button type="button" aria-label="Toggle Theme" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
-          <i className="mdi mdi-brightness-6"></i>
+          <Icon path={mdiBrightness6} />
         </button>
       </nav>
       {head?.title && (

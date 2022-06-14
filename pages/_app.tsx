@@ -2,7 +2,6 @@ import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import type { ReactElement, ReactNode } from "react";
 import "../styles/globals.scss";
-import "../styles/mdi.scss";
 import "../styles/montserrat.font.css";
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {
