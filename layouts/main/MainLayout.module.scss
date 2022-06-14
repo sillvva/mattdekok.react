@@ -36,6 +36,15 @@
 
 .PageNav {
   @apply flex w-full px-3 items-center max-h-[80px];
+  .PageTitle {
+    @apply p-2 text-sm sm:text-lg md:text-2xl;
+  }
+  @media (max-width: 400px) {
+    @apply px-0;
+    .Fab {
+      @apply w-9 h-9 my-2 mx-2;
+    }
+  }
 }
 
 .PageMenuContainer {
@@ -52,16 +61,10 @@
   color: var(--headers);
   text-shadow: 1px 1px 0 rgba(var(--background), var(--headerOpacity)), -1px -1px 0 rgba(var(--background), var(--headerOpacity)),
     1px -1px 0 rgba(var(--background), var(--headerOpacity)), -1px 1px 0 rgba(var(--background), var(--headerOpacity));
-  &.SmallTitle {
-    @apply text-lg my-2;
-    @media (max-width: 400px) {
-      @apply text-base;
-    }
-  }
 }
 
 .PageBody {
-  @apply flex flex-col justify-center items-center relative px-4 pt-24 lg:pt-0 pb-4;
+  @apply flex flex-col justify-center items-center relative px-2 md:px-4 pt-24 lg:pt-0 pb-4;
 }
 
 .PageArticle {
