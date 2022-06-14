@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 import { useContext } from "react";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
-import { motion, Transition, Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import type { Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import { PageHeadProps } from "../../../layouts/main";
+import type { PageHeadProps } from "../../../layouts/main";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
@@ -20,6 +21,7 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
   const { drawer, theme } = useContext(MainLayoutContext);
   const items = head?.menu ? menuItems : [];
+  const smallTitle = (head?.title?.length || 0) > 12;
 
   const classes = {
     pageHeader: [
@@ -37,7 +39,7 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
     ].join(" "),
     pageNav: [styles.PageNav, ...(head?.backTo ? [] : ["lg:pl-3"])].join(" "),
     pageMenuContainer: [styles.PageMenuContainer, ...(head?.backTo ? [] : ["lg:pl-14"])].join(" "),
-    pageTitle: [styles.PageTitle, ...(head?.smallTitle ? [styles.SmallTitle] : []), "block lg:hidden flex-1"].join(" ")
+    pageTitle: [styles.PageTitle, ...(smallTitle ? [styles.SmallTitle] : []), "block lg:hidden flex-1"].join(" ")
   };
 
   return (

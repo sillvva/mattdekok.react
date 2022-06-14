@@ -76,7 +76,6 @@ export type PageHeadProps = {
   title?: string;
   menu?: boolean;
   path?: string;
-  smallTitle?: boolean;
   meta?: LayoutMeta;
   headerClasses?: string[];
   backTo?: string | boolean;
