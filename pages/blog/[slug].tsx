@@ -17,7 +17,6 @@ import { fetchPosts } from "../../lib/blog";
 import { getContentDir } from "../../store/content";
 import type { PostData } from "../api/get-posts";
 import PageMessage from "../../components/page-message";
-import { AppProps } from "next/app";
 
 const ReactCodepen = dynamic(() => import("../../components/codepen"));
 const SyntaxHighlighter: ComponentType<any> = dynamic(() => import("react-syntax-highlighter").then((mod: any) => mod.PrismLight));
