@@ -9,6 +9,7 @@ import type { Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import type { PageHeadProps } from "../../../layouts/main";
+import { parseCSSModules, conClasses } from "../../../lib/auxx";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
@@ -20,31 +21,14 @@ type PageHeaderProps = {
 const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
   const { drawer, theme } = useContext(MainLayoutContext);
+
   const items = head?.menu ? menuItems : [];
   const smallTitle = (head?.title?.length || 0) > 12;
-
-  const classes = {
-    pageHeader: [
-      styles.PageHeader,
-      ...(typeof head?.headerClasses == "string"
-        ? [head?.headerClasses]
-        : head?.headerClasses
-        ? head?.headerClasses.map(c =>
-            c
-              .split(" ")
-              .map(c2 => styles[c2] ?? c2)
-              .join(" ")
-          )
-        : [])
-    ].join(" "),
-    pageNav: [styles.PageNav, ...(head?.backTo ? [] : ["lg:pl-3"])].join(" "),
-    pageMenuContainer: [styles.PageMenuContainer, ...(head?.backTo ? [] : ["lg:pl-14"])].join(" "),
-    pageTitle: [styles.PageTitle, ...(smallTitle ? [styles.SmallTitle] : []), "block lg:hidden flex-1"].join(" ")
-  };
+  const headerClasses = parseCSSModules(styles, head?.headerClasses);
 
   return (
-    <header className={classes.pageHeader}>
-      <nav className={classes.pageNav}>
+    <header className={conClasses([styles.PageHeader, headerClasses])}>
+      <nav className={conClasses([styles.PageNav, !head?.backTo && "lg:pl-3"])}>
         {head?.backTo === true ? (
           <a type="button" className={styles.Fab} onClick={router.back}>
             <Icon path={mdiChevronLeft} />
@@ -60,8 +44,10 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
             <Icon path={mdiMenu} />
           </button>
         )}
-        <div className={classes.pageMenuContainer}>{items.length ? <PageMenu key={router.pathname} items={items} /> : ""}</div>
-        <h1 className={classes.pageTitle}>{head?.title}</h1>
+        <div className={conClasses([styles.PageMenuContainer, !head?.backTo && "lg:pl-14"])}>
+          {items.length ? <PageMenu key={router.pathname} items={items} /> : ""}
+        </div>
+        <h1 className={conClasses([styles.PageTitle, smallTitle && styles.SmallTitle, "block lg:hidden flex-1"])}>{head?.title}</h1>
         <button type="button" aria-label="Toggle Theme" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
           <Icon path={mdiBrightness6} />
         </button>

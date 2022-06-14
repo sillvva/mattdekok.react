@@ -54,7 +54,7 @@ export default Experience;
 
 Experience.getLayout = function (page) {
   return (
-    <MainLayout title="Experience" menu headerClasses={headerClasses}>
+    <MainLayout title="Experience" menu>
       {page}
     </MainLayout>
   );

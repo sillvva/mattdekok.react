@@ -1,7 +1,6 @@
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import { useRouter } from "next/router";
 import AnimatedButton from "../../animated-button";
-import { useEffect } from "react";
 
 export type Item = {
   link: string;

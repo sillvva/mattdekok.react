@@ -55,7 +55,7 @@ export default Donate;
 
 Donate.getLayout = function (page) {
   return (
-    <MainLayout title="Donate" menu headerClasses={headerClasses}>
+    <MainLayout title="Donate" menu>
       {page}
     </MainLayout>
   );

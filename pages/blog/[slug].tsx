@@ -192,7 +192,7 @@ Blog.getLayout = function (page, { data }) {
   };
   
   return (
-    <MainLayout title={data?.title} meta={meta} menu backTo headerClasses={headerClasses}>
+    <MainLayout title={data?.title} meta={meta} menu backTo>
       {page}
     </MainLayout>
   );

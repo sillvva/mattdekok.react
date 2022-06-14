@@ -35,7 +35,7 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
     <AnimatePresence initial={false} exitBeforeEnter>
       <div key={props.path} id="app" data-theme={theme?.state} className="min-h-screen min-w-screen">
         <Page.Bg key={theme.state} />
-        <PageHeader key={props.path} head={props} layoutMotion={mainMotion} />
+        <PageHeader key={props.path} head={{ ...props, headerClasses: props.headerClasses || headerClasses }} layoutMotion={mainMotion} />
         <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
           {props.children}
         </motion.main>

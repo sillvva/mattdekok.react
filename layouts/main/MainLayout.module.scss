@@ -37,7 +37,10 @@
 .PageNav {
   @apply flex w-full px-3 items-center max-h-[80px];
   .PageTitle {
-    @apply p-2 text-sm sm:text-lg md:text-2xl;
+    @apply p-2;
+    &.SmallTitle {
+      @apply text-sm sm:text-lg md:text-2xl;
+    }
   }
   @media (max-width: 400px) {
     @apply px-0;
