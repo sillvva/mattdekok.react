@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useContext } from "react";
 import type { PropsWithChildren } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import MainLayoutContext from "../../../store/main-layout.context";

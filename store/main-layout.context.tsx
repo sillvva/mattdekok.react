@@ -80,7 +80,8 @@ export const MainLayoutContextProvider = (props: PropsWithChildren<unknown>) => 
   function setTheme(theme?: string) {
     let nextIndex = themes[themes.findIndex(t => t === context.theme.state) + 1] || themes[0];
     let next = (theme && themes.find(t => t === theme)) || nextIndex;
-    document.documentElement.dataset.theme = next;
+    const app = document.querySelector<HTMLDivElement>("#app");
+    if (app) app.dataset.theme = next;
     context.theme.state = next;
     context.theme.done = false;
     cookie.set("theme", context.theme.state);
