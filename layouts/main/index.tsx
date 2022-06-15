@@ -17,8 +17,15 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
   const { drawer, theme } = useContext(MainLayoutContext);
 
   useEffect(() => {
-    const cur = cookie.get("theme");
+    const mm = matchMedia("(prefers-color-scheme: dark)");
+    const cur = cookie.get("theme") || (mm.matches ? "dark" : "light");
+    const listener = () => {
+      theme.set(mm.matches ? "dark" : "light");
+    };
+
     theme.themes.forEach(t => t === cur && theme.state !== t && theme.set(t));
+    mm.addEventListener("change", listener);
+    return () => mm.removeEventListener("change", listener);
   }, [theme]);
 
   useEffect(() => {
