@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 import Router from "next/router";
+import { ThemeProvider } from "next-themes";
 import type { ReactElement, ReactNode } from "react";
 import "../styles/globals.scss";
 import "../styles/montserrat.font.css";
@@ -15,7 +16,11 @@ type AppPropsWithLayout = AppProps & {
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page);
-  return getLayout(<Component {...pageProps} />, pageProps);
+  return (
+    <ThemeProvider enableSystem={false} themes={["dark", "light", "blue"]}>
+      {getLayout(<Component {...pageProps} />, pageProps)}
+    </ThemeProvider>
+  );
 }
 
 export default MyApp;

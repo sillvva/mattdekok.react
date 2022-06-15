@@ -1,25 +1,24 @@
 import Image from "next/image";
-import { useContext } from "react";
+import { useTheme } from "next-themes";
 import type { PropsWithChildren } from "react";
 import { motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import MainLayoutContext from "../../../store/main-layout.context";
 import { conClasses } from "../../../lib/auxx";
 
 const PageBg = () => {
-  const { theme } = useContext(MainLayoutContext);
-  const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
+  const { theme } = useTheme();
+  const themeBg = `Page${(theme || "system").charAt(0).toUpperCase() + (theme || "system").slice(1)}`;
 
   return (
     <motion.div
-      key={`bg${theme.state}`}
+      key={themeBg}
       variants={mainMotion.variants}
       initial="hidden"
       animate="enter"
       exit="exit"
       transition={{ duration: 0.5 }}
-      className={conClasses([styles.PageBg, styles[themeBg], theme.done && styles.FixedBg])}
+      className={conClasses([styles.PageBg, styles[themeBg]])}
     />
   );
 };
@@ -43,7 +42,9 @@ interface PageSectionProps {
 
 const PageSection = (props: PropsWithChildren<PageSectionProps>) => {
   return (
-    <section className={conClasses([props.className || "", "bg-cover bg-center"])} style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
+    <section
+      className={conClasses([props.className || "", "bg-cover bg-center"])}
+      style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
       {props.children}
     </section>
   );

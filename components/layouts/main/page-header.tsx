@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 import { useContext } from "react";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
@@ -20,11 +21,13 @@ type PageHeaderProps = {
 
 const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
-  const { drawer, theme } = useContext(MainLayoutContext);
+  const { drawer } = useContext(MainLayoutContext);
+  const { theme, setTheme, themes } = useTheme();
 
   const items = head?.menu ? menuItems : [];
   const smallTitle = (head?.title?.length || 0) > 12;
   const headerClasses = parseCSSModules(styles, head?.headerClasses);
+  let nextTheme = themes[themes.findIndex(t => t === theme) + 1] || themes[0];
 
   return (
     <header className={conClasses([styles.PageHeader, headerClasses])}>
@@ -48,7 +51,7 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
           {items.length ? <PageMenu key={router.pathname} items={items} /> : ""}
         </div>
         <h1 className={conClasses([styles.PageTitle, smallTitle && styles.SmallTitle, "block lg:hidden flex-1"])}>{head?.title}</h1>
-        <button type="button" aria-label="Toggle Theme" onClick={theme.toggle} className={`${styles.Fab} my-3`}>
+        <button type="button" aria-label="Toggle Theme" onClick={() => setTheme(nextTheme)} className={`${styles.Fab} my-3`}>
           <Icon path={mdiBrightness6} />
         </button>
       </nav>

@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 import { useContext, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Transition, Variants } from "framer-motion";
-import cookie from "js-cookie";
 import { debounce } from "../../lib/misc";
 import MainLayoutContext, { MainLayoutContextProvider } from "../../store/main-layout.context";
 import Page from "../../components/layouts/main/page";
@@ -14,19 +14,17 @@ import PageMeta from "../../components/meta";
 const Drawer = dynamic(() => import("../../components/drawer"));
 
 const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
-  const { drawer, theme } = useContext(MainLayoutContext);
+  const { drawer } = useContext(MainLayoutContext);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const mm = matchMedia("(prefers-color-scheme: dark)");
-    const cur = cookie.get("theme") || (mm.matches ? "dark" : "light");
-    const listener = () => {
-      theme.set(mm.matches ? "dark" : "light");
-    };
+    const listener = () => setTheme(mm.matches ? "dark" : "light");
 
-    theme.themes.forEach(t => t === cur && theme.state !== t && theme.set(t));
+    if (!theme) listener();
     mm.addEventListener("change", listener);
     return () => mm.removeEventListener("change", listener);
-  }, [theme]);
+  }, [theme, setTheme]);
 
   useEffect(() => {
     document.documentElement.dataset.scroll = window.scrollY.toString();
@@ -39,9 +37,9 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
   }, []);
 
   return (
-    <AnimatePresence initial={false} exitBeforeEnter>
-      <div key={props.path} id="app" data-theme={theme?.state} className="min-h-screen min-w-screen">
-        <Page.Bg key={theme.state} />
+    <AnimatePresence initial={false}>
+      <div key={props.path} id="app" className="min-h-screen min-w-screen">
+        <Page.Bg key={theme} />
         <PageHeader key={props.path} head={{ ...props, headerClasses: props.headerClasses || headerClasses }} layoutMotion={mainMotion} />
         <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
           {props.children}
