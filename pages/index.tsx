@@ -2,6 +2,7 @@ import type { NextPageWithLayout } from "./_app";
 import HexMenu, { Item } from "../components/hex-menu";
 import styles from "../styles/Intro.module.scss";
 import MainLayout from "../layouts/main";
+import Image from "next/image";
 
 const Home: NextPageWithLayout = () => {
   const items: (Item | null)[] = [
@@ -15,6 +16,7 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <div className={styles.Me}>
+      <Image src="/images/me4x.webp" id="me" alt="" layout="fill" objectFit="cover" objectPosition="left" />
       <div className={styles.Intro}>
         <div className={styles.IntroSubject}>
           <h2 className={styles.IntroName}>Matt DeKok</h2>
