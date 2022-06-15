@@ -27,7 +27,8 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const items = head?.menu ? menuItems : [];
   const smallTitle = (head?.title?.length || 0) > 12;
   const headerClasses = parseCSSModules(styles, head?.headerClasses);
-  let nextTheme = themes[themes.findIndex(t => t === theme) + 1] || themes[0];
+  const baseThemes = themes.filter(t => t !== "system");
+  const nextTheme = baseThemes[(baseThemes.indexOf(theme || "") + 1) % baseThemes.length];
 
   return (
     <header className={conClasses([styles.PageHeader, headerClasses])}>

@@ -20,8 +20,7 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
   useEffect(() => {
     const mm = matchMedia("(prefers-color-scheme: dark)");
     const listener = () => setTheme(mm.matches ? "dark" : "light");
-
-    if (!theme) listener();
+    
     mm.addEventListener("change", listener);
     return () => mm.removeEventListener("change", listener);
   }, [theme, setTheme]);

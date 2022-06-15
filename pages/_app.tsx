@@ -17,7 +17,7 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page);
   return (
-    <ThemeProvider enableSystem={false} themes={["dark", "light", "blue"]}>
+    <ThemeProvider themes={["dark", "light", "blue"]}>
       {getLayout(<Component {...pageProps} />, pageProps)}
     </ThemeProvider>
   );
