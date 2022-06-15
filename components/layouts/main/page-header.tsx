@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
 import { motion } from "framer-motion";
@@ -23,8 +23,16 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const router = useRouter();
   const { drawer } = useContext(MainLayoutContext);
   const { theme, setTheme, themes } = useTheme();
+  const [menu, setMenu] = useState(true);
 
-  const items = head?.menu ? menuItems : [];
+  if (router.events) {
+    router.events.on("routeChangeStart", (ev: string) => {
+      if (ev == "/") setMenu(false);
+      else setMenu(true);
+    });
+  }
+
+  const items = head?.menu && menu ? menuItems : [];
   const smallTitle = (head?.title?.length || 0) > 12;
   const headerClasses = parseCSSModules(styles, head?.headerClasses);
   const baseThemes = themes.filter(t => t !== "system");
