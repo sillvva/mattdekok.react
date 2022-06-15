@@ -26,6 +26,7 @@
   --menuHover: rgb(15, 76, 117);
   --menuText: rgb(255, 255, 255);
   --loading: rgba(255, 255, 255, 0.7);
+  --shadowHoverOpacity: 0.4;
 }
 
 @mixin dark-theme {
@@ -47,6 +48,7 @@
   --menuHover: hwb(180 0% 67%);
   --menuText: rgb(255, 255, 255);
   --loading: rgba(255, 255, 255, 0.2);
+  --shadowHoverOpacity: 1;
 }
 
 @mixin blue-theme {
@@ -68,6 +70,7 @@
   --menuHover: rgb(35, 66, 135);
   --menuText: rgb(255, 255, 255);
   --loading: rgba(255, 255, 255, 0.2);
+  --shadowHoverOpacity: 0.6;
 }
 
 @mixin universal-theme {
@@ -75,7 +78,7 @@
   --blogHeaderShade: rgb(24, 24, 24);
   --blogHeaderText: rgb(245, 245, 245);
   --shadowColor: rgba(0, 0, 0, 0.2);
-  --shadowHover: rgba(0, 0, 0, 0.4);
+  --shadowHover: rgba(0, 0, 0, var(--shadowHoverOpacity));
   --PayPal1: rgb(0, 48, 135);
   --PayPal2: rgb(0, 156, 222);
   --Stripe: rgb(0, 123, 255);
