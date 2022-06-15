@@ -25,12 +25,15 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
   const { theme, setTheme, themes } = useTheme();
   const [menu, setMenu] = useState(true);
 
-  if (router.events) {
-    router.events.on("routeChangeStart", (ev: string) => {
+  useEffect(() => {
+    const listener = (ev: string) => {
       if (ev == "/") setMenu(false);
       else setMenu(true);
-    });
-  }
+    };
+
+    router.events.on("routeChangeStart", listener);
+    return () => router.events.off("routeChangeStart", listener);
+  }, [router.events]);
 
   const items = head?.menu && menu ? menuItems : [];
   const smallTitle = (head?.title?.length || 0) > 12;
