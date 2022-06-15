@@ -1,24 +1,24 @@
 import Image from "next/image";
-import { useContext } from "react";
+import { useTheme } from "next-themes";
 import type { PropsWithChildren } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import MainLayoutContext from "../../../store/main-layout.context";
+import { conClasses } from "../../../lib/auxx";
 
 const PageBg = () => {
-  const { theme } = useContext(MainLayoutContext);
-  const themeBg = `Page${theme.state.charAt(0).toUpperCase() + theme.state.slice(1)}`;
+  const { theme } = useTheme();
+  const themeBg = `Page${(theme || "system").charAt(0).toUpperCase() + (theme || "system").slice(1)}`;
 
   return (
     <motion.div
-      key={`bg${theme.state}`}
+      key={themeBg}
       variants={mainMotion.variants}
       initial="hidden"
       animate="enter"
       exit="exit"
       transition={{ duration: 0.5 }}
-      className={[styles.PageBg, styles[themeBg], theme.done && styles.FixedBg].filter(c => !!c).join(" ")}
+      className={conClasses([styles.PageBg, styles[themeBg]])}
     />
   );
 };
@@ -32,7 +32,7 @@ interface PageArticleProps {
 }
 
 const PageArticle = (props: PropsWithChildren<PageArticleProps>) => {
-  return <article className={[styles.PageArticle, props.className || ""].join(" ")}>{props.children}</article>;
+  return <article className={conClasses([styles.PageArticle, props.className || ""])}>{props.children}</article>;
 };
 
 interface PageSectionProps {
@@ -42,7 +42,9 @@ interface PageSectionProps {
 
 const PageSection = (props: PropsWithChildren<PageSectionProps>) => {
   return (
-    <section className={[props.className || "", "bg-cover bg-center"].join(" ")} style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
+    <section
+      className={conClasses([props.className || "", "bg-cover bg-center"])}
+      style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
       {props.children}
     </section>
   );

@@ -155,7 +155,7 @@ export default AboutMe;
 
 AboutMe.getLayout = function (page) {
   return (
-    <MainLayout title="About Me" menu headerClasses={headerClasses}>
+    <MainLayout title="About Me" menu>
       {page}
     </MainLayout>
   );

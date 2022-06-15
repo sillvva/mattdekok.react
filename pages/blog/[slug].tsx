@@ -24,7 +24,6 @@ const SyntaxHighlighter: ComponentType<any> = dynamic(() => import("react-syntax
 type ServerProps = {
   data: PostProps;
   content: string;
-  cookies: any;
 };
 
 const Blog: NextPageWithLayout<ServerProps> = props => {
@@ -181,8 +180,7 @@ const Blog: NextPageWithLayout<ServerProps> = props => {
 
 export default Blog;
 
-Blog.getLayout = function (page, props) {
-  const data: PostProps = props.data;
+Blog.getLayout = function (page, { data }) {
   const meta = {
     title: data?.title,
     description: data?.description,
@@ -194,7 +192,7 @@ Blog.getLayout = function (page, props) {
   };
   
   return (
-    <MainLayout title={data?.title} smallTitle menu backTo meta={meta} headerClasses={headerClasses}>
+    <MainLayout title={data?.title} meta={meta} menu backTo>
       {page}
     </MainLayout>
   );

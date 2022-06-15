@@ -44,7 +44,7 @@ export default Blog;
 
 Blog.getLayout = function (page) {
   return (
-    <MainLayout title="Blog" menu headerClasses={headerClasses}>
+    <MainLayout title="Blog" menu>
       {page}
     </MainLayout>
   );

@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 import styles from "./HexMenu.module.scss";
 import { useRouter } from "next/router";
+import { conClasses, parseCSSModules } from "../../lib/auxx";
 
 export type Item = {
   link: string;
@@ -43,10 +44,10 @@ const HexMenu = (props: HexMenuProps) => {
   });
 
   return (
-    <div className={[styles.HexWrapper, props.rotated ? styles.Rotated : "", ...props.classes].join(" ").trim()}>
+    <div className={conClasses([styles.HexWrapper, props.rotated && styles.Rotated, ...props.classes])}>
       {menuRows.map((row, r) => {
         return (
-          <div className={[styles.HexRow, r % 2 === 1 && !props.rotated ? styles.Shift : ""].join(" ").trim()} key={`hex-row${r}`}>
+          <div className={conClasses([styles.HexRow, r % 2 === 1 && !props.rotated && styles.Shift])} key={`hex-row${r}`}>
             {row.map((item, i) => {
               return (
                 <HexMenuItem
@@ -98,9 +99,7 @@ type HexMenuItemProps = {
 const HexMenuItem = (props: HexMenuItemProps) => {
   const menuItem = props.label ? (
     <a
-      className={[styles.HexMenuItem, props.active ? styles.Active : "", props.rotated ? styles.Rotated : "", ...props.classes.map(c => styles[c] ?? c)]
-        .filter(c => !!c)
-        .join(" ")}
+      className={parseCSSModules(styles, ['HexMenuItem', props.active && 'Active', props.rotated && 'Rotated', ...props.classes])}
       style={
         {
           ...(props.color && { "--item-color": props.color }),
@@ -118,7 +117,7 @@ const HexMenuItem = (props: HexMenuItemProps) => {
       <div className={`${styles.Face} ${styles.Face3}`}></div>
     </a>
   ) : (
-    <span className={[styles.HexMenuItem, props.rotated ? styles.Rotated : "", styles.Empty].join(" ")}></span>
+    <span className={parseCSSModules(styles, ['HexMenuItem', props.rotated && 'Rotated', 'Empty'])}></span>
   );
 
   if (!props.link) return menuItem;

@@ -1,8 +1,8 @@
 import type { NextPageWithLayout } from "../_app";
+import MainLayout, { headerClasses } from "../../layouts/main";
 import Page from "../../components/layouts/main/page";
 import GalleryItem from "../../components/gallery";
 import { firestore } from "../../lib/func";
-import MainLayout, { headerClasses } from "../../layouts/main";
 import styles from "./Projects.module.scss";
 
 const Projects: NextPageWithLayout<ProjectProps> = props => {
@@ -27,7 +27,7 @@ export default Projects;
 
 Projects.getLayout = function (page) {
   return (
-    <MainLayout title="Projects" menu headerClasses={headerClasses}>
+    <MainLayout title="Projects" menu>
       {page}
     </MainLayout>
   );

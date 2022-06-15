@@ -30,7 +30,7 @@ export default Skills;
 
 Skills.getLayout = function (page) {
   return (
-    <MainLayout title="Skills" menu headerClasses={headerClasses}>
+    <MainLayout title="Skills" menu>
       {page}
     </MainLayout>
   );

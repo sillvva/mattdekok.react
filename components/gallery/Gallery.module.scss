@@ -6,7 +6,7 @@
   --tw-shadow: var(--tw-shadow-colored);
   > span {
     @apply aspect-video;
-    @apply block #{!important};
+    display: block !important;
   }
   .Cover {
     @apply absolute top-0 bottom-0 left-0 right-0 m-2 p-2 flex flex-col justify-end;

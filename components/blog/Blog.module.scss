@@ -115,7 +115,8 @@
       }
     }
     pre {
-      @apply text-sm mb-4 p-4 bg-gray-800 rounded-lg overflow-x-auto;
+      @apply text-sm mb-4 md:p-4 bg-gray-800 rounded-lg overflow-x-auto;
+
     }
     .BlogFigure {
       @apply flex flex-col mb-6 mt-6;
