@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
 import { motion } from "framer-motion";
@@ -35,11 +35,14 @@ const PageHeader = ({ head, layoutMotion }: PageHeaderProps) => {
     return () => router.events.off("routeChangeStart", listener);
   }, [router.events]);
 
-  const items = head?.menu && menu ? menuItems : [];
   const smallTitle = (head?.title?.length || 0) > 12;
-  const headerClasses = parseCSSModules(styles, head?.headerClasses);
-  const baseThemes = themes.filter(t => t !== "system");
-  const nextTheme = baseThemes[(baseThemes.indexOf(theme || "") + 1) % baseThemes.length];
+  const items = useMemo(() => head?.menu && menu ? menuItems : [], [head?.menu, menu]);
+  const headerClasses = useMemo(() => parseCSSModules(styles, head?.headerClasses), [head?.headerClasses]);
+  const nextTheme = useMemo(() => {
+    const baseThemes = themes.filter(t => t !== "system");
+    return baseThemes[(baseThemes.indexOf(theme || "") + 1) % baseThemes.length];
+  }, [theme, themes]);
+  
 
   return (
     <header className={conClasses([styles.PageHeader, headerClasses])}>

@@ -1,6 +1,7 @@
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import { useRouter } from "next/router";
 import AnimatedButton from "../../animated-button";
+import { useMemo } from "react";
 
 export type Item = {
   link: string;
@@ -34,43 +35,50 @@ const PageMenu = (props: PageMenuProps) => {
 
   const { pathname } = useRouter();
 
-  const menuRows: Item[][] = [[]];
-  items.forEach((item, i) => {
-    const rowIndex = menuRows.length - 1;
-    if (item)
-      menuRows[rowIndex].push({
-        ...item,
-        ...(item.link === pathname && { active: true })
-      });
-    if (maxLength >= 0 && menuRows[rowIndex].length === maxLength && items.length - 1 > i) {
-      menuRows.push([]);
-    }
-  });
+  const menuRows = useMemo(() => {
+    const out: Item[][] = [[]];
+    items.forEach((item, i) => {
+      const rowIndex = out.length - 1;
+      if (item)
+        out[rowIndex].push({
+          ...item,
+          ...(item.link === pathname && { active: true })
+        });
+      if (maxLength >= 0 && out[rowIndex].length === maxLength && items.length - 1 > i) {
+        out.push([]);
+      }
+    });
+    return out;
+  }, [items, maxLength, pathname]);
 
   return (
     <>
-      {menuRows.map((row, r) => {
-        return (
-          <div className={styles.PageMenu} key={`menu-row${r}`}>
-            {row.map((item, i) => {
-              return (
-                <AnimatedButton
-                  key={`pmi${i}`}
-                  link={item.link}
-                  label={item.label}
-                  color={item.color || color}
-                  itemClasses={itemClasses}
-                  active={!!item.active}
-                  activeColor={item.activeColor || activeColor}
-                  hoverColor={item.hoverColor || hoverColor}
-                  textColor={item.textColor || textColor}
-                  clickRipple
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+      {useMemo(
+        () =>
+          menuRows.map((row, r) => {
+            return (
+              <div className={styles.PageMenu} key={`menu-row${r}`}>
+                {row.map((item, i) => {
+                  return (
+                    <AnimatedButton
+                      key={`pmi${i}`}
+                      link={item.link}
+                      label={item.label}
+                      color={item.color || color}
+                      itemClasses={itemClasses}
+                      active={!!item.active}
+                      activeColor={item.activeColor || activeColor}
+                      hoverColor={item.hoverColor || hoverColor}
+                      textColor={item.textColor || textColor}
+                      clickRipple
+                    />
+                  );
+                })}
+              </div>
+            );
+          }),
+        [menuRows, color, hoverColor, activeColor, textColor, itemClasses]
+      )}
     </>
   );
 };
