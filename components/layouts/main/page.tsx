@@ -1,25 +1,32 @@
 import Image from "next/image";
-import { useTheme } from "next-themes";
-import type { PropsWithChildren } from "react";
-import { motion } from "framer-motion";
+import type { FunctionComponent, PropsWithChildren } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import { conClasses } from "../../../lib/auxx";
 
-const PageBg = () => {
-  const { theme } = useTheme();
-  const themeBg = `Page${(theme || "system").charAt(0).toUpperCase() + (theme || "system").slice(1)}`;
+type PageBgProps = {
+  theme: string;
+  fixed?: boolean;
+  init?: boolean;
+};
+
+const PageBg: FunctionComponent<PageBgProps> = ({ theme, fixed, init }) => {
+  if (fixed) return <div data-theme={theme} className={conClasses([styles.PageBg, styles.FixedBg])} />;
 
   return (
-    <motion.div
-      key={themeBg}
-      variants={mainMotion.variants}
-      initial="hidden"
-      animate="enter"
-      exit="exit"
-      transition={{ duration: 0.5 }}
-      className={conClasses([styles.PageBg, styles[themeBg]])}
-    />
+    <AnimatePresence initial={init || false}>
+      <motion.div
+        key={theme}
+        data-test={init}
+        variants={mainMotion.variants}
+        initial="hidden"
+        animate="enter"
+        exit="exit"
+        transition={{ duration: 0.5 }}
+        className={styles.PageBg}
+      />
+    </AnimatePresence>
   );
 };
 

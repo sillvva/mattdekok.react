@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import type { Transition, Variants } from "framer-motion";
 import { debounce } from "../../lib/misc";
@@ -16,11 +16,13 @@ const Drawer = dynamic(() => import("../../components/drawer"));
 const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
   const { drawer } = useContext(MainLayoutContext);
   const { theme, setTheme } = useTheme();
+  const [oldTheme, setOldTheme] = useState(theme || "");
+  const init = useRef(false);
 
   useEffect(() => {
     const mm = matchMedia("(prefers-color-scheme: dark)");
     const listener = () => setTheme(mm.matches ? "dark" : "light");
-    
+
     if (theme == "system") listener();
     mm.addEventListener("change", listener);
     return () => mm.removeEventListener("change", listener);
@@ -32,21 +34,27 @@ const Layout = (props: React.PropsWithChildren<PageHeadProps>) => {
       document.documentElement.dataset.scroll = window.scrollY.toString();
     });
 
+    init.current = true;
     window.addEventListener("scroll", scrollHandler, { passive: true });
     return () => window.removeEventListener("scroll", scrollHandler);
   }, []);
 
+  const themeChangeHandler = (newTheme: string) => {
+    setOldTheme(newTheme);
+  };
+
   return (
-    <AnimatePresence initial={false}>
-      <div key={props.path} id="app" className="min-h-screen min-w-screen">
-        <Page.Bg key={theme} />
-        <PageHeader key={props.path} head={{ ...props, headerClasses: props.headerClasses || headerClasses }} layoutMotion={mainMotion} />
+    <div id="app" className="min-h-screen min-w-screen">
+      {theme && theme !== oldTheme && <Page.Bg fixed theme={oldTheme || ""} />}
+      <Page.Bg key={theme} theme={theme || ""} init={init.current} />
+      <PageHeader head={{ ...props, headerClasses: props.headerClasses || headerClasses }} layoutMotion={mainMotion} onThemeChange={themeChangeHandler} />
+      <AnimatePresence initial={false} exitBeforeEnter>
         <motion.main key={`main${props.path}`} variants={mainMotion.variants} initial="hidden" animate="enter" exit="exit" transition={mainMotion.transition}>
           {props.children}
         </motion.main>
-        {drawer.state ? <Drawer /> : ""}
-      </div>
-    </AnimatePresence>
+      </AnimatePresence>
+      {drawer.state ? <Drawer /> : ""}
+    </div>
   );
 };
 
