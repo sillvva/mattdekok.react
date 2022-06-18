@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Router from "next/router";
 import { ThemeProvider } from "next-themes";
 import type { ReactElement, ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import "../styles/globals.scss";
 import "../styles/montserrat.font.css";
 
@@ -14,12 +15,14 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
+const queryClient = new QueryClient();
+
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? (page => page);
   return (
-    <ThemeProvider themes={["dark", "light", "blue"]}>
-      {getLayout(<Component {...pageProps} />, pageProps)}
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider themes={["dark", "light", "blue"]}>{getLayout(<Component {...pageProps} />, pageProps)}</ThemeProvider>
+    </QueryClientProvider>
   );
 }
 

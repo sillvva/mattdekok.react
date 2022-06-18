@@ -9,7 +9,7 @@ import remarkGfm from "remark-gfm";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 
 import type { NextPageWithLayout } from "../_app";
-import MainLayout, { headerClasses } from "../../layouts/main";
+import MainLayout from "../../layouts/main";
 import Page from "../../components/layouts/main/page";
 import { blogStyles, PostProps } from "../../components/blog";
 import { firebaseConfig, storage } from "../../lib/func";
@@ -192,7 +192,7 @@ Blog.getLayout = function (page, { data }) {
   };
   
   return (
-    <MainLayout title={data?.title} meta={meta} menu backTo>
+    <MainLayout title={data?.title} meta={meta} menu backTo="/blog">
       {page}
     </MainLayout>
   );

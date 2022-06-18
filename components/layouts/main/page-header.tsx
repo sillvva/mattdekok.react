@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useQuery } from "react-query";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
 import { AnimatePresence, motion } from "framer-motion";
@@ -22,6 +23,7 @@ type PageHeaderProps = {
 
 const PageHeader = ({ head, layoutMotion, onThemeChange }: PageHeaderProps) => {
   const router = useRouter();
+  const { data } = useQuery<string>(["backTo", head?.backTo]);
   const { drawer } = useContext(MainLayoutContext);
   const { theme, setTheme, themes } = useTheme();
   const [menu, setMenu] = useState(true);
@@ -63,7 +65,7 @@ const PageHeader = ({ head, layoutMotion, onThemeChange }: PageHeaderProps) => {
             <Icon path={mdiChevronLeft} />
           </a>
         ) : head?.backTo ? (
-          <Link href={head?.backTo}>
+          <Link href={data || head?.backTo}>
             <a type="button" className={styles.Fab}>
               <Icon path={mdiChevronLeft} />
             </a>
