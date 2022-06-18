@@ -1,7 +1,7 @@
 import type { NextPageWithLayout } from "./_app";
 import Page from "../components/layouts/main/page";
 import { firestore } from "../lib/func";
-import MainLayout, { headerClasses } from "../layouts/main";
+import MainLayout from "../layouts/main";
 
 const Experience: NextPageWithLayout<ExperienceProps> = props => {
   return (

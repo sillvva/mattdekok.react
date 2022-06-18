@@ -1,5 +1,5 @@
 import type { NextPageWithLayout } from "./_app";
-import MainLayout, { headerClasses } from "../layouts/main";
+import MainLayout from "../layouts/main";
 import Page from "../components/layouts/main/page";
 import Rating from "../components/ratings";
 import { firestore } from "../lib/func";
