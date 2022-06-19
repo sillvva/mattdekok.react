@@ -1,8 +1,7 @@
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRipple } from "../ripple";
 import buttons from "./Buttons.module.scss";
-import ripple from "../ripple/Ripple.module.scss";
 
 type AnimatedButtonProps = {
   link?: string;
@@ -30,8 +29,7 @@ export default function AnimatedButton(props: AnimatedButtonProps) {
   } = props;
   const btnRef = useRef<HTMLAnchorElement>(null);
   const { ripples, mouseEvents, rippleClass } = useRipple({ enabled: clickRipple, active });
-
-  const propClasses = itemClasses.map(c => buttons[c] ?? c);
+  const propClasses = useMemo(() => itemClasses.map(c => buttons[c] ?? c), [itemClasses]);
   const [classes, setClasses] = useState([buttons.Button, active ? buttons.Active : "", rippleClass, ...propClasses]);
   if (!classes.find(c => /Button\d+/.test(c))) {
     setClasses([...classes, buttons.Button5]);

@@ -34,7 +34,7 @@ export default Home;
 
 Home.getLayout = function (page) {
   return (
-    <MainLayout headerClasses={["bg-transparent w-full absolute"]}>
+    <MainLayout headerClasses={["bg-transparent w-full sticky top-0"]}>
       {page}
     </MainLayout>
   );

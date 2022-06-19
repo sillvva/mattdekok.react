@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import Link from "next/link";
 import styles from "./HexMenu.module.scss";
 import { useRouter } from "next/router";
@@ -28,45 +28,52 @@ type HexMenuProps = {
 const HexMenu = (props: HexMenuProps) => {
   const { pathname } = useRouter();
 
-  const menuRows: Item[][] = [[]];
-  props.items.forEach((item, i) => {
-    const rowIndex = menuRows.length - 1;
-    if (item)
-      menuRows[rowIndex].push({
-        ...item,
-        ...(item.link === pathname && { active: true })
-      });
-    else menuRows[rowIndex].push({ link: "", label: "" });
-    const rotDiff = !props.rotated && menuRows.length % 2 === 0 ? 1 : 0;
-    if (props.maxLength >= 0 && menuRows[rowIndex].length === props.maxLength - rotDiff && props.items.length - 1 > i) {
-      menuRows.push([]);
-    }
-  });
+  const menuRows = useMemo(() => {
+    const out: Item[][] = [[]];
+    props.items.forEach((item, i) => {
+      const rowIndex = out.length - 1;
+      if (item)
+        out[rowIndex].push({
+          ...item,
+          ...(item.link === pathname && { active: true })
+        });
+      else out[rowIndex].push({ link: "", label: "" });
+      const rotDiff = !props.rotated && out.length % 2 === 0 ? 1 : 0;
+      if (props.maxLength >= 0 && out[rowIndex].length === props.maxLength - rotDiff && props.items.length - 1 > i) {
+        out.push([]);
+      }
+    });
+    return out;
+  }, [props.items, props.maxLength, pathname, props.rotated]);
 
   return (
     <div className={conClasses([styles.HexWrapper, props.rotated && styles.Rotated, ...props.classes])}>
-      {menuRows.map((row, r) => {
-        return (
-          <div className={conClasses([styles.HexRow, r % 2 === 1 && !props.rotated && styles.Shift])} key={`hex-row${r}`}>
-            {row.map((item, i) => {
-              return (
-                <HexMenuItem
-                  key={`hex-item-${i}`}
-                  link={item.link}
-                  label={item.label}
-                  active={!!item.active}
-                  rotated={props.rotated}
-                  color={item.color || props.color}
-                  activeColor={item.activeColor || props.activeColor}
-                  hoverColor={item.hoverColor || props.hoverColor}
-                  textColor={item.textColor || props.textColor}
-                  classes={props.itemClasses}
-                />
-              );
-            })}
-          </div>
-        );
-      })}
+      {useMemo(
+        () =>
+          menuRows.map((row, r) => {
+            return (
+              <div className={conClasses([styles.HexRow, r % 2 === 1 && !props.rotated && styles.Shift])} key={`hex-row${r}`}>
+                {row.map((item, i) => {
+                  return (
+                    <HexMenuItem
+                      key={`hex-item-${i}`}
+                      link={item.link}
+                      label={item.label}
+                      active={!!item.active}
+                      rotated={props.rotated}
+                      color={item.color || props.color}
+                      activeColor={item.activeColor || props.activeColor}
+                      hoverColor={item.hoverColor || props.hoverColor}
+                      textColor={item.textColor || props.textColor}
+                      classes={props.itemClasses}
+                    />
+                  );
+                })}
+              </div>
+            );
+          }),
+        [menuRows, props.rotated, props.activeColor, props.hoverColor, props.textColor, props.itemClasses, props.color]
+      )}
     </div>
   );
 };
@@ -99,7 +106,7 @@ type HexMenuItemProps = {
 const HexMenuItem = (props: HexMenuItemProps) => {
   const menuItem = props.label ? (
     <a
-      className={parseCSSModules(styles, ['HexMenuItem', props.active && 'Active', props.rotated && 'Rotated', ...props.classes])}
+      className={parseCSSModules(styles, ["HexMenuItem", props.active && "Active", props.rotated && "Rotated", ...props.classes])}
       style={
         {
           ...(props.color && { "--item-color": props.color }),
@@ -117,7 +124,7 @@ const HexMenuItem = (props: HexMenuItemProps) => {
       <div className={`${styles.Face} ${styles.Face3}`}></div>
     </a>
   ) : (
-    <span className={parseCSSModules(styles, ['HexMenuItem', props.rotated && 'Rotated', 'Empty'])}></span>
+    <span className={parseCSSModules(styles, ["HexMenuItem", props.rotated && "Rotated", "Empty"])}></span>
   );
 
   if (!props.link) return menuItem;

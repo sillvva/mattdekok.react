@@ -1,15 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import type { ComponentType } from "react";
 import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from "react-markdown";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
 
 import type { NextPageWithLayout } from "../_app";
-import MainLayout, { headerClasses } from "../../layouts/main";
+import MainLayout from "../../layouts/main";
 import Page from "../../components/layouts/main/page";
 import { blogStyles, PostProps } from "../../components/blog";
 import { firebaseConfig, storage } from "../../lib/func";
@@ -19,7 +19,6 @@ import type { PostData } from "../api/get-posts";
 import PageMessage from "../../components/page-message";
 
 const ReactCodepen = dynamic(() => import("../../components/codepen"));
-const SyntaxHighlighter: ComponentType<any> = dynamic(() => import("react-syntax-highlighter").then((mod: any) => mod.PrismLight));
 
 type ServerProps = {
   data: PostProps;
@@ -192,7 +191,7 @@ Blog.getLayout = function (page, { data }) {
   };
   
   return (
-    <MainLayout title={data?.title} meta={meta} menu backTo>
+    <MainLayout title={data?.title} meta={meta} menu backTo="/blog">
       {page}
     </MainLayout>
   );
