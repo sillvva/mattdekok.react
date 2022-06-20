@@ -8,7 +8,7 @@ export default async function fetchPosts(object: functions.storage.ObjectMetadat
   const fileDir = path.dirname(filePath);
 
   if (fileDir == "blog/articles" && fileExtension == ".md") {
-    functions.logger.log(`Storage Trigger: ${context.eventType.replace("google.storage.object.", "")}: ${filePath}`);
+    console.log(`Storage Trigger: ${context.eventType.replace("google.storage.object.", "")}: ${filePath}`);
 
     const url = `${functions.config().api.path}/api/cron-blog`;
     let data: any;
