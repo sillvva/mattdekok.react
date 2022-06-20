@@ -19,8 +19,8 @@ const Blog: NextPageWithLayout = () => {
   useQuery(["backTo", "/blog"], async () => asPath, {
     refetchOnMount: "always"
   });
-  const { isLoading, data, error } = useQuery<{ posts: PostProps[]; pages: number }, Error>(["posts", page, search], async () => {
-    const res = await fetch(`/api/get-posts?p=${page}&q=${search}`);
+  const { isLoading, data, error } = useQuery<{ posts: PostProps[]; pages: number }, Error>(["posts", page, search], async ({ signal }) => {
+    const res = await fetch(`/api/get-posts?p=${page}&q=${search}`, { signal });
 
     if (!res.ok) {
       const err = await res.json();
