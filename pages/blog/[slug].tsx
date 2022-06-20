@@ -5,8 +5,18 @@ import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from "react-markdown";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
+
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
+import yaml from "react-syntax-highlighter/dist/cjs/languages/prism/yaml";
+import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
+import javascript from "react-syntax-highlighter/dist/cjs/languages/prism/javascript";
+import jsx from "react-syntax-highlighter/dist/cjs/languages/prism/jsx";
+import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
+import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
+import css from "react-syntax-highlighter/dist/cjs/languages/prism/css";
+import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
+import docker from "react-syntax-highlighter/dist/cjs/languages/prism/docker";
 
 import type { NextPageWithLayout } from "../_app";
 import MainLayout from "../../layouts/main";
@@ -19,6 +29,19 @@ import type { PostData } from "../api/get-posts";
 import PageMessage from "../../components/page-message";
 
 const ReactCodepen = dynamic(() => import("../../components/codepen"));
+
+SyntaxHighlighter.registerLanguage("yaml", yaml);
+SyntaxHighlighter.registerLanguage("yml", yaml);
+SyntaxHighlighter.registerLanguage("json", json);
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("js", javascript);
+SyntaxHighlighter.registerLanguage("jsx", jsx);
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("ts", typescript);
+SyntaxHighlighter.registerLanguage("tsx", tsx);
+SyntaxHighlighter.registerLanguage("css", css);
+SyntaxHighlighter.registerLanguage("scss", scss);
+SyntaxHighlighter.registerLanguage("docker", docker);
 
 type ServerProps = {
   data: PostProps;
@@ -121,6 +144,7 @@ const Blog: NextPageWithLayout<ServerProps> = props => {
         const language = (className || "").split("-")[1];
         if (!language) return <code>{children}</code>;
         if (language == "codepen") return <code>{children}</code>;
+
         return (
           <SyntaxHighlighter style={atomDark} language={language}>
             {children}
