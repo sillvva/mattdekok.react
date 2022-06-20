@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         res.status(200).json({ success: true, revalidated: !!revalidations.length, ...result });
       } else {
-        res.status(401).json({ success: false, statusCode: 401, message: `Unauthorized: ${authorization}` });
+        res.status(401).json({ success: false, statusCode: 401, message: `Unauthorized: ${authorization}, Debugging: ${process.env.API_SECRET_KEY}` });
       }
     } catch (err: any) {
       res.status(500).json({ success: false, statusCode: 500, message: err.message });
