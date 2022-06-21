@@ -11,7 +11,7 @@ import type { Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import type { PageHeadProps } from "../../../layouts/main";
-import { parseCSSModules, conClasses } from "../../../lib/auxx";
+import { parseCSSModules, conClasses } from "../../../lib/misc";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 

@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import Link from "next/link";
 import styles from "./HexMenu.module.scss";
 import { useRouter } from "next/router";
-import { conClasses, parseCSSModules } from "../../lib/auxx";
+import { conClasses, parseCSSModules } from "../../lib/misc";
 
 export type Item = {
   link: string;

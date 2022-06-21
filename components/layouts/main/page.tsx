@@ -3,7 +3,7 @@ import type { FunctionComponent, PropsWithChildren } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import { conClasses } from "../../../lib/auxx";
+import { conClasses } from "../../../lib/misc";
 
 type PageBgProps = {
   theme: string;
