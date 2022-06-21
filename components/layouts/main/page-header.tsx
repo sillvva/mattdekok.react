@@ -76,7 +76,7 @@ const PageHeader = ({ head, layoutMotion, onThemeChange }: PageHeaderProps) => {
           </button>
         )}
         <div className={conClasses([styles.PageMenuContainer, !head?.backTo && "lg:pl-14"])}>
-          {items.length ? <PageMenu key={router.pathname} items={items} /> : ""}
+          {items.length ? <PageMenu items={items} /> : ""}
         </div>
         <h1 className={conClasses([styles.PageTitle, smallTitle && styles.SmallTitle, "block lg:hidden flex-1"])}>{head?.title}</h1>
         <button

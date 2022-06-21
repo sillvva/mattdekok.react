@@ -9,7 +9,7 @@ type RippleProps = {
   y: number;
 };
 
-export default function Ripple({ onUnload, index, x, y }: RippleProps) {
+function Ripple({ onUnload, index, x, y }: RippleProps) {
   useEffect(() => {
     onUnload(index);
   }, [onUnload, index]);
@@ -53,14 +53,5 @@ export const useRipple = (props?: UseRippleProps) => {
     setRipples(new Map(ripples).set(key, ripple));
   };
 
-  const clickHandler: MouseEventHandler<any> = e => {
-    if (active) e.preventDefault();
-  };
-
-  const mouseEvents = {
-    onMouseDown: mouseHandler,
-    onClick: clickHandler
-  };
-
-  return { ripples: [...ripples.values()], mouseEvents, rippleClass: enabled ? ripple.Ripple : "" };
+  return { ripples: [...ripples.values()], mouseHandler, rippleClass: enabled ? ripple.Ripple : "" };
 };
