@@ -3,7 +3,7 @@
 }
 
 .Me {
-  @apply absolute top-0 left-0 bottom-0 right-0 grid grid-cols-12 grid-rows-6;
+  @apply absolute inset-0 grid grid-cols-12 grid-rows-6;
   @apply bg-left-bottom bg-no-repeat bg-cover;
   span {
     @apply transition-all duration-500;

@@ -3,7 +3,7 @@
 }
 
 .PageBg {
-  @apply fixed top-0 left-0 bottom-0 right-0 scale-x-[var(--bgScaleX)];
+  @apply fixed inset-0 scale-x-[var(--bgScaleX)];
   @apply bg-fixed bg-cover bg-no-repeat bg-[color:rgb(var(--background))] bg-[image:var(--bgImg)];
   &.FixedBg {
     opacity: 1 !important;

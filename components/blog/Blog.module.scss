@@ -37,8 +37,7 @@
         }
         &::after {
           content: "";
-          @apply absolute -z-10 left-[6px] top-[6px] rounded-[5px];
-          @apply w-[calc(100%-12px)] h-[calc(100%-12px)] bg-[color:var(--article)];
+          @apply absolute -z-10 inset-1 rounded-[5px] bg-[color:var(--article)];
         }
       }
     }

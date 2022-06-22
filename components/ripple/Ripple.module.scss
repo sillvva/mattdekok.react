@@ -1,7 +1,7 @@
 .Ripple {
   @apply isolate relative;
   .RipEl {
-    @apply absolute top-0 left-0 right-0 bottom-0 overflow-hidden;
+    @apply absolute inset-0 overflow-hidden;
     span {
       @apply absolute block top-[var(--y)] left-[var(--x)] -translate-x-1/2 -translate-y-1/2 opacity-0 -z-[1];
       @apply w-[120%] aspect-square rounded-full bg-[color:var(--link)] animate-ripple;
