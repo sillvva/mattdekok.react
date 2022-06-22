@@ -1,6 +1,6 @@
 import Router from "next/router";
 import * as NProgress from "nprogress";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 type NProgress = {
   /**
@@ -41,13 +41,11 @@ type NProgress = {
 };
 
 export default function NextNProgress({ color = "#29D", startPosition = 0.3, stopDelayMs = 200, height = 3, showOnShallow = true, options, nonce }: NProgress) {
-  const opts = useMemo(() => options, [options]);
-
   useEffect(() => {
     let timer: NodeJS.Timeout | null = null;
 
-    if (opts) {
-      NProgress.configure(opts);
+    if (options) {
+      NProgress.configure(options);
     }
 
     const routeChangeStart = (_: string, { shallow }: { shallow: boolean }) => {
@@ -77,7 +75,7 @@ export default function NextNProgress({ color = "#29D", startPosition = 0.3, sto
       Router.events.off("routeChangeComplete", routeChangeEnd);
       Router.events.off("routeChangeError", routeChangeEnd);
     };
-  }, [opts, showOnShallow, startPosition, stopDelayMs]);
+  }, [options, showOnShallow, startPosition, stopDelayMs]);
 
   return (
     <style nonce={nonce}>{`

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import { useRipple } from "../ripple";
 import buttons from "./Buttons.module.scss";
 
@@ -28,7 +28,7 @@ export default function AnimatedButton(props: AnimatedButtonProps) {
     clickRipple
   } = props;
   const { ripples, mouseHandler, rippleClass } = useRipple({ enabled: clickRipple, active });
-  const propClasses = useMemo(() => itemClasses.map(c => buttons[c] ?? c), [itemClasses]);
+  const propClasses = itemClasses.map(c => buttons[c] ?? c);
   const [classes, setClasses] = useState([buttons.Button, active ? buttons.Active : "", rippleClass, ...propClasses]);
   if (!classes.find(c => /Button\d+/.test(c))) {
     setClasses([...classes, buttons.Button5]);
