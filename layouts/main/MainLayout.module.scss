@@ -3,11 +3,8 @@
 }
 
 .PageBg {
-  @apply fixed top-0 left-0 bottom-0 right-0;
-  @apply bg-fixed bg-cover bg-no-repeat;
-  background-color: rgb(var(--background));
-  background-image: var(--bgImg);
-  transform: var(--bgTransform);
+  @apply fixed top-0 left-0 bottom-0 right-0 scale-x-[var(--bgScaleX)];
+  @apply bg-fixed bg-cover bg-no-repeat bg-[color:rgb(var(--background))] bg-[image:var(--bgImg)];
   &.FixedBg {
     opacity: 1 !important;
   }
@@ -19,8 +16,7 @@
     @apply fixed top-0 left-0 right-0 text-center;
   }
   html[data-scroll]:not([data-scroll="0"]) & {
-    @apply backdrop-blur-lg;
-    background-color: rgba(var(--background), var(--headerOpacity));
+    @apply backdrop-blur-lg bg-[color:rgba(var(--background),var(--headerOpacity))];
   }
 }
 
@@ -50,8 +46,7 @@
 
 .PageTitle {
   font-family: "Montserrat", sans-serif;
-  @apply text-3xl text-center lg:mt-4 lg:mb-4 font-medium;
-  color: var(--headers);
+  @apply text-3xl text-center lg:mt-4 lg:mb-4 font-medium text-[color:var(--headers)];
   text-shadow: 1px 1px 0 rgba(var(--background), var(--headerOpacity)), -1px -1px 0 rgba(var(--background), var(--headerOpacity)),
     1px -1px 0 rgba(var(--background), var(--headerOpacity)), -1px 1px 0 rgba(var(--background), var(--headerOpacity));
 }
@@ -62,23 +57,20 @@
 
 .PageArticle {
   @apply shadow-xl ring-1 rounded-lg ring-gray-900/5 overflow-hidden;
-  background-color: var(--article);
+  @apply bg-[color:var(--article)];
   @media (max-width: 960px) {
     .PageHeader + & {
-      margin-top: 74px;
+      @apply mt-20;
     }
   }
   section {
-    @apply p-5 border-solid border-b-black/25;
-    border-bottom-width: 1px;
-    color: var(--text);
+    @apply p-5 border-solid border-b-black/25 border-b-[1px] text-[color:var(--text)];
     &:last-child {
       @apply border-b-0;
     }
     h2 {
-      @apply text-xl font-semibold mb-4;
+      @apply text-xl font-semibold mb-4 text-[color:var(--text)];
       font-family: "Montserrat", sans-serif;
-      color: var(--text);
       @media (max-width: 576px) {
         @apply text-center font-semibold mb-2;
       }
@@ -99,22 +91,17 @@
       }
     }
     .SectionItems {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 20px 10px;
+      @apply grid grid-cols-2 gap-y-5 gap-x-2;
       @media (max-width: 991px) {
-        grid-template-columns: 1fr;
+        @apply grid-cols-1;
       }
       .SectionItem {
-        min-height: 60px;
-        overflow: hidden;
-        color: var(--text);
+        @apply text-[color:var(--text)] min-h-[60px] overflow-hidden;
         @media (max-width: 991px) {
+          @apply pb-5;
           border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-          padding-bottom: 20px;
           &:last-child {
-            padding-bottom: 0;
-            border: 0;
+            @apply pb-0 border-0;
           }
         }
         .SectionItem__Image {
@@ -149,39 +136,18 @@
 
 .Fab {
   @apply flex justify-center items-center w-14 h-14 rounded-full text-2xl cursor-pointer;
-  @apply transition-[background] duration-500 ease-linear;
-  background-color: transparent;
+  @apply transition-[background] duration-500 ease-linear bg-transparent;
   &.MenuFab {
     @apply lg:hidden;
   }
   svg {
-    @apply w-7;
-    color: var(--text);
-    transition: all 0.5s;
+    @apply w-7 text-[color:var(--text)] transition-all duration-500;
   }
   &:hover {
-    background-color: var(--link);
+    @apply bg-[color:var(--link)];
     svg {
-      color: var(--menuText);
+      @apply text-[color:var(--menuText)];
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-    }
-  }
-}
-
-.AnimatedButton {
-  padding: 0.75em 1.5em;
-  margin: 2px;
-  border-color: var(--item-color);
-  border-bottom-style: solid;
-  border-bottom-width: 2px;
-  &:hover,
-  &.active {
-    background: transparent;
-    background-image: linear-gradient(180deg, transparent 0%, var(--item-color) 100%);
-    border-color: white;
-    text-shadow: 1px 1px 1px black;
-    span.item-label {
-      color: white;
     }
   }
 }

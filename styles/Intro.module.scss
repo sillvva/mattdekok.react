@@ -4,11 +4,9 @@
 
 .Me {
   @apply absolute top-0 left-0 bottom-0 right-0 grid grid-cols-12 grid-rows-6;
-  background-position: bottom left;
-  background-repeat: no-repeat;
-  background-size: cover;
+  @apply bg-left-bottom bg-no-repeat bg-cover;
   span {
-    transition: all 0.5s;
+    @apply transition-all duration-500;
   }
   @media (max-width: 520px) {
     span {
@@ -19,12 +17,7 @@
     span {
       &::after {
         content: "";
-        position: fixed;
-        z-index: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 80vh;
+        @apply fixed z-0 left-0 right-0 bottom-0 h-[80vh];
         background-image: linear-gradient(transparent, rgba(var(--background), 0.8));
       }
     }

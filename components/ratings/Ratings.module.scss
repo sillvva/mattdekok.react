@@ -29,10 +29,8 @@
 
 .Zoom {
   svg {
-    @apply w-4;
+    @apply w-4 scale-0 inline-block;
     animation: zoom 300ms ease-in-out forwards;
-    transform: scale(0);
-    display: inline-block;
   }
   svg:nth-child(1) {
     animation-delay: 0.4s;

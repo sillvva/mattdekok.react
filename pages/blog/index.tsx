@@ -14,11 +14,13 @@ const Blog: NextPageWithLayout = () => {
     query: { p, q },
     asPath
   } = useRouter();
-  const page = (Array.isArray(p) ? p[0] : p) || 1;
-  const search = (Array.isArray(q) ? q[0] : q) || "";
+
   useQuery(["backTo", "/blog"], async () => asPath, {
     refetchOnMount: "always"
   });
+
+  const page = (Array.isArray(p) ? p[0] : p) || 1;
+  const search = (Array.isArray(q) ? q[0] : q) || "";
   const { isLoading, data, error } = useQuery<{ posts: PostProps[]; pages: number }, Error>(["posts", page, search], async ({ signal }) => {
     const res = await fetch(`/api/get-posts?p=${page}&q=${search}`, { signal });
 

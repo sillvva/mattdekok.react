@@ -4,9 +4,9 @@
     @apply basis-full md:basis-6/12 xl:basis-4/12 p-3;
     .BlogPost__Container {
       @apply flex overflow-hidden h-full shadow-lg ring-1 rounded-lg ring-gray-900/5;
+      @apply bg-[color:var(--article)];
       --tw-shadow-color: var(--shadowColor);
       --tw-shadow: var(--tw-shadow-colored);
-      background-color: var(--article);
       transition: all 0.5s linear;
       &:hover {
         @apply shadow-xl;
@@ -27,8 +27,7 @@
         &::before {
           content: "";
           @apply absolute -left-1/2 -top-1/2 -z-20 w-[200%] h-[200%];
-          background-color: rgb(var(--background));
-          background-repeat: no-repeat;
+          @apply bg-[color:rgb(var(--background))] bg-no-repeat;
           background-size: 51% 51%, 50% 50%;
           background-position: 0 0, 100% 0, 100% 100%, 0 100%;
           background-image: linear-gradient(var(--article), var(--article)), linear-gradient(var(--article), var(--link)),
@@ -38,8 +37,7 @@
         &::after {
           content: "";
           @apply absolute -z-10 left-[6px] top-[6px] rounded-[5px];
-          @apply w-[calc(100%-12px)] h-[calc(100%-12px)];
-          background: var(--article);
+          @apply w-[calc(100%-12px)] h-[calc(100%-12px)] bg-[color:var(--article)];
         }
       }
     }
