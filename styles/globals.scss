@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
 @mixin light-theme {
   --scheme: light;
   --background: 229, 229, 229;
@@ -96,8 +91,10 @@
   }
 }
 
-body {
-  overflow-y: scroll;
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.5s linear;
 }
 
 html {
@@ -139,6 +136,6 @@ html {
   }
 }
 
-* {
-  transition: background 0.5s linear;
+body {
+  overflow-y: scroll;
 }

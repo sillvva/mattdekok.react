@@ -16,7 +16,7 @@ const Home: NextPageWithLayout = () => {
 
   return (
     <div className={styles.Me}>
-      <Image src="/images/me4x.webp" id="me" alt="" layout="fill" objectFit="cover" objectPosition="left" />
+      <Image src="/images/me3x.webp" id="me" priority alt="" layout="fill" objectFit="cover" objectPosition="center" />
       <div className={styles.Intro}>
         <div className={styles.IntroSubject}>
           <h2 className={styles.IntroName}>Matt DeKok</h2>
