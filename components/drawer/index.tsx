@@ -1,11 +1,11 @@
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import MainLayoutContext, { menuItems } from "../../store/main-layout.context";
 import HexMenu from "../../components/hex-menu";
 import styles from "./Drawer.module.scss";
 
 const defaultMenuClasses = ["sm:scale-100", "md:scale-125"];
 
-const MainLayout = () => {
+const Drawer = () => {
   const { drawer } = useContext(MainLayoutContext);
   let [menuClasses, setMenuClasses] = useState(defaultMenuClasses);
   let [drawerClasses, setDrawerClasses] = useState("hidden opacity-0");
@@ -20,7 +20,7 @@ const MainLayout = () => {
       setMenuClasses([...defaultMenuClasses, styles.Close]);
       setDrawerClasses("flex opacity-0");
     } else if (!drawer.state) setDrawerClasses("hidden opacity-0");
-  }, [drawer.action, drawer.state]);
+  }, [drawer]);
 
   return (
     <nav className={`${styles.Drawer} ${drawerClasses}`} onClick={drawer.toggle}>
@@ -29,4 +29,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default Drawer;

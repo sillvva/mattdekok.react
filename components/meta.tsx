@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { PropsWithChildren, useMemo } from "react";
+import { PropsWithChildren } from "react";
 import { useTheme } from "next-themes";
 
 type MetaProps = {
@@ -17,24 +17,24 @@ const themeColors: { [key: string]: string } = {
 
 const PageMeta = (props: PropsWithChildren<MetaProps>) => {
   const { theme } = useTheme();
-  const color = useMemo(() => themeColors[theme || "dark"] ?? "#111", [theme]);
+  const color = themeColors[theme || "dark"] ?? "#111";
 
-  const dtitle = useMemo(() => props.title ? `${props.title} - Matt DeKok` : "Matt DeKok", [props.title]);
+  const dtitle = props.title ? `${props.title} - Matt DeKok` : "Matt DeKok";
   const description = props.description || "Experienced full stack web developer with a demonstrated history of working in the wireless industry.";
-  const ogProperties: any = useMemo(() => ({
+  const ogProperties: any = {
     title: dtitle,
     description: description,
     image: `https://matt.dekok.app${props.image || "/images/preview-me2.jpg"}`,
     url: "https://matt.dekok.app"
-  }), [props.image, dtitle, description]);
-  const twProperties: any = useMemo(() => ({
+  };
+  const twProperties: any = {
     site: "@sillvvasensei",
     card: "summary_large_image",
     ...ogProperties
-  }), [ogProperties]);
-  const articleProps: any = useMemo(() => ({
+  };
+  const articleProps: any = {
     ...props.articleMeta
-  }), [props.articleMeta]);
+  };
 
   return (
     <Head>
@@ -48,15 +48,15 @@ const PageMeta = (props: PropsWithChildren<MetaProps>) => {
       <meta name="msapplication-TileColor" content={color} />
       <meta name="msapplication-tap-highlight" content="no" />
       <meta name="theme-color" content={color} />
-      {useMemo(() => Object.keys(articleProps).map(t => {
+      {Object.keys(articleProps).map(t => {
         return <meta key={`article:${t}`} property={`article:${t}`} content={articleProps[t]} />;
-      }), [articleProps])}
-      {useMemo(() => Object.keys(ogProperties).map(t => {
+      })}
+      {Object.keys(ogProperties).map(t => {
         return <meta key={`og:${t}`} name={t} property={`og:${t}`} content={ogProperties[t]} />;
-      }), [ogProperties])}
-      {useMemo(() => Object.keys(twProperties).map(t => {
+      })}
+      {Object.keys(twProperties).map(t => {
         return <meta key={`tw:${t}`} name={`tw:${t}`} content={twProperties[t]} />;
-      }), [twProperties])}
+      })}
     </Head>
   );
 };

@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import type { ReactElement, ReactNode } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import "../styles/globals.scss";
+import "../styles/misc.scss";
 import "../styles/montserrat.font.css";
 
 export type NextPageWithLayout<P = {}> = NextPage<P> & {

@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Icon from "@mdi/react";
 import { mdiChevronLeft, mdiMenu, mdiBrightness6 } from "@mdi/js";
@@ -11,7 +11,7 @@ import type { Transition, Variants } from "framer-motion";
 import MainLayoutContext, { menuItems } from "../../../store/main-layout.context";
 import styles from "../../../layouts/main/MainLayout.module.scss";
 import type { PageHeadProps } from "../../../layouts/main";
-import { parseCSSModules, conClasses } from "../../../lib/auxx";
+import { parseCSSModules, conClasses } from "../../../lib/misc";
 
 const PageMenu = dynamic(() => import("./page-menu"));
 
@@ -39,12 +39,10 @@ const PageHeader = ({ head, layoutMotion, onThemeChange }: PageHeaderProps) => {
   }, [router.events]);
 
   const smallTitle = (head?.title?.length || 0) > 12;
-  const items = useMemo(() => (head?.menu && menu ? menuItems : []), [head?.menu, menu]);
-  const headerClasses = useMemo(() => parseCSSModules(styles, head?.headerClasses), [head?.headerClasses]);
-  const nextTheme = useMemo(() => {
-    const baseThemes = themes.filter(t => t !== "system");
-    return baseThemes[(baseThemes.indexOf(theme || "") + 1) % baseThemes.length];
-  }, [theme, themes]);
+  const items = head?.menu && menu ? menuItems : [];
+  const headerClasses = parseCSSModules(styles, head?.headerClasses);
+  const baseThemes = themes.filter(t => t !== "system");
+  const nextTheme = baseThemes[(baseThemes.indexOf(theme || "") + 1) % baseThemes.length];
 
   const themeChangeHandler = useCallback(
     (theme: string) => {
@@ -75,9 +73,7 @@ const PageHeader = ({ head, layoutMotion, onThemeChange }: PageHeaderProps) => {
             <Icon path={mdiMenu} />
           </button>
         )}
-        <div className={conClasses([styles.PageMenuContainer, !head?.backTo && "lg:pl-14"])}>
-          {items.length ? <PageMenu key={router.pathname} items={items} /> : ""}
-        </div>
+        <div className={conClasses([styles.PageMenuContainer, !head?.backTo && "lg:pl-14"])}>{items.length ? <PageMenu items={items} /> : ""}</div>
         <h1 className={conClasses([styles.PageTitle, smallTitle && styles.SmallTitle, "block lg:hidden flex-1"])}>{head?.title}</h1>
         <button
           type="button"

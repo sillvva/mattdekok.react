@@ -1,0 +1,21 @@
+.loading-line {
+  &.title,
+  &.text {
+    @apply flex items-center;
+    span {
+      @apply animate-pulse block overflow-hidden w-full rounded-full bg-gray-500/40;
+    }
+  }
+  &.title {
+    @apply w-full h-7;
+    span {
+      @apply h-[18px];
+    }
+  }
+  &.text {
+    @apply w-full h-6;
+    span {
+      @apply h-[14px];
+    }
+  }
+}

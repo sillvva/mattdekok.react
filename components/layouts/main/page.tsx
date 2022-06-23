@@ -3,7 +3,7 @@ import type { FunctionComponent, PropsWithChildren } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { mainMotion } from "../../../layouts/main";
 import styles from "../../../layouts/main/MainLayout.module.scss";
-import { conClasses } from "../../../lib/auxx";
+import { conClasses } from "../../../lib/misc";
 
 type PageBgProps = {
   theme: string;
@@ -49,9 +49,7 @@ interface PageSectionProps {
 
 const PageSection = (props: PropsWithChildren<PageSectionProps>) => {
   return (
-    <section
-      className={conClasses([props.className || "", "bg-cover bg-center"])}
-      style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
+    <section className={conClasses([props.className || "", props.bgImage ?? `bg-[image:url(${props.bgImage}))]`, `bg-cover bg-center`])}>
       {props.children}
     </section>
   );

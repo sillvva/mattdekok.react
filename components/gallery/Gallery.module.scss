@@ -9,7 +9,7 @@
     display: block !important;
   }
   .Cover {
-    @apply absolute top-0 bottom-0 left-0 right-0 m-2 p-2 flex flex-col justify-end;
+    @apply absolute inset-0 m-2 p-2 flex flex-col justify-end;
     background: rgba(255, 255, 255, 0.01);
     background: -moz-linear-gradient(top, rgba(255, 255, 255, 0.01) 40%, black 100%);
     background: -webkit-gradient(left top, left bottom, color-stop(40%, rgba(255, 255, 255, 0.01)), color-stop(100%, black));
