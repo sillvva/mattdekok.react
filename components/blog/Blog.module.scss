@@ -5,12 +5,9 @@
     .BlogPost__Container {
       @apply flex h-full shadow-lg ring-1 rounded-lg ring-gray-900/5 overflow-hidden;
       @apply bg-[color:var(--article)] transition-all duration-500 ease-linear;
-      --tw-shadow-color: var(--shadowColor);
-      --tw-shadow: var(--tw-shadow-colored);
+      @apply [--tw-shadow-color:var(--shadowColor)] [--tw-shadow:var(--tw-shadow-colored)];
       &:hover {
-        @apply shadow-xl;
-        --tw-shadow-color: var(--shadowHover);
-        --tw-shadow: var(--tw-shadow-colored);
+        @apply shadow-xl [--tw-shadow-color:var(--shadowHover)];
       }
       .BlogPost__Image {
         @apply relative bg-clip-content bg-cover bg-center h-full min-w-[128px] max-w-[30%] text-white bg-gray-500/60;

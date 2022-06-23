@@ -49,9 +49,7 @@ interface PageSectionProps {
 
 const PageSection = (props: PropsWithChildren<PageSectionProps>) => {
   return (
-    <section
-      className={conClasses([props.className || "", "bg-cover bg-center"])}
-      style={{ ...(props.bgImage && { backgroundImage: `url(${props.bgImage})` }) }}>
+    <section className={conClasses([props.className || "", props.bgImage ?? `bg-[image:url(${props.bgImage}))]`, `bg-cover bg-center`])}>
       {props.children}
     </section>
   );
