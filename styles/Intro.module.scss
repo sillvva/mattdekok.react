@@ -5,12 +5,11 @@
 .Me {
   @apply absolute inset-0 grid grid-cols-12 grid-rows-6;
   @apply bg-left-bottom bg-no-repeat bg-cover;
-  span {
-    @apply transition-all duration-500;
-  }
-  @media (max-width: 520px) {
-    span {
-      left: -140px !important;
+  > span {
+    @apply transition-all duration-500 bg-none;
+    @apply -left-36 sm:-left-12 md:left-0 #{!important};
+    img {
+      @apply object-left md:object-center #{!important};
     }
   }
   @media (max-width: 1024px) {
