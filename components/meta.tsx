@@ -41,7 +41,7 @@ const PageMeta = (props: PropsWithChildren<MetaProps>) => {
       <title>{dtitle}</title>
       <meta name="description" content={description} />
       <link rel="icon" href="/favicon.png" />
-      <link rel="apple-touch-icon" href={`${ogProperties.url}/icon_x128.png`}></link>
+      <link rel="apple-touch-icon" href={`${ogProperties.url}/apple-touch-icon.png`} />
       <link rel="manifest" href="/manifest.webmanifest" />
 
       <meta name="mobile-web-app-capable" content="yes" />
