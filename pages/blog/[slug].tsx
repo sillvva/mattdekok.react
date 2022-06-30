@@ -45,11 +45,12 @@ SyntaxHighlighter.registerLanguage("docker", docker);
 
 type ServerProps = {
   data: PostProps;
+  slug: string;
   content: string;
 };
 
 const Blog: NextPageWithLayout<ServerProps> = props => {
-  const { data, content } = props;
+  const { data, content, slug } = props;
 
   try {
     if (!data) throw new Error("Could not load post");
@@ -131,6 +132,14 @@ const Blog: NextPageWithLayout<ServerProps> = props => {
             if (language == "codepen") {
               const codepen = JSON.parse(value.trim());
               return <ReactCodepen {...codepen} />;
+            }
+            else if (language.startsWith("svelte")) {
+              return (
+                <p>
+                  If you&apos;re viewing this on matt.dekok.app, this demo will not work, because it was designed for Svelte. 
+                  To view the demo, visit the post on <a href={`https://sveltekit.dekok.app/blog/${slug}`}>sveltekit.dekok.app</a>.
+                </p>
+              )
             }
           }
         } catch (err) {
@@ -273,6 +282,7 @@ export async function getStaticProps(context: any) {
   return {
     props: {
       content,
+      slug,
       data
     }
   };
