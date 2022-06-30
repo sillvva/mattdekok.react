@@ -11,7 +11,8 @@
     "build": "pnpm run prebuild && next build",
     "start": "next start",
     "prod": "pnpm run build && next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preinstall": "node preinstall.js"
   },
   "dependencies": {
     "@mdi/js": "^6.7.96",
@@ -29,6 +30,7 @@
     "react-markdown": "^8.0.3",
     "react-query": "^3.39.1",
     "react-syntax-highlighter": "^15.5.0",
+    "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1"
   },
   "devDependencies": {

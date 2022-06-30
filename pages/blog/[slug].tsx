@@ -5,6 +5,7 @@ import { readFileSync, rmSync, existsSync, statSync } from "node:fs";
 import ReactMarkdown from "react-markdown";
 import matter from "gray-matter";
 import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import atomDark from "react-syntax-highlighter/dist/cjs/styles/prism/atom-dark";
@@ -50,7 +51,13 @@ type ServerProps = {
 };
 
 const Blog: NextPageWithLayout<ServerProps> = props => {
-  const { data, content, slug } = props;
+  let { data, content, slug } = props;
+
+  if (content) {
+    content = content.replace(/<pre>/g, `<pre><pre>`);
+    content = content.replace(/<\/pre>/g, `</pre></pre>`);
+  }
+  console.log(content)
 
   try {
     if (!data) throw new Error("Could not load post");
@@ -128,7 +135,7 @@ const Blog: NextPageWithLayout<ServerProps> = props => {
             const { properties, children } = code;
             const { className } = properties;
             const { value } = children[0];
-            const language = ((className || [""])[0] || "").split("-")[1];
+            const language = ((className || [""])[0] || "").split("-")[1] || "";
             if (language == "codepen") {
               const codepen = JSON.parse(value.trim());
               return <ReactCodepen {...codepen} />;
@@ -175,7 +182,7 @@ const Blog: NextPageWithLayout<ServerProps> = props => {
               {data.date} {data.updated && `(Updated: ${data.updated})`}
             </p>
             <div className={blogStyles.BlogContent}>
-              <ReactMarkdown components={renderers} remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown components={renderers} rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
                 {content}
               </ReactMarkdown>
             </div>
@@ -241,16 +248,22 @@ export async function getStaticProps(context: any) {
 
   let meta: any;
   let file: any;
+  let result = { data: "" };
   if (existsSync(postsPath)) {
     const data = readFileSync(postsPath, "utf8");
     const posts: PostData[] = JSON.parse(data);
     meta = posts.find(p => p.slug == slug);
-  } else {
+  }
+	if (!meta && existsSync(filePath)) {
+		result.data = readFileSync(filePath, 'utf8');
+		const { data } = matter(result.data);
+		meta = data;
+	}
+  if (!meta) {
     file = storage.file(`${firebaseConfig.blogStorage}/${slug}.md`);
     [meta] = await file.getMetadata();
   }
 
-  let result = { data: "" };
   let write = false;
   if (existsSync(filePath)) {
     const stat = statSync(filePath);
